@@ -390,9 +390,9 @@ body {
     transition: 0.2s;
 }
 
-.section a:hover {
+/* .section a:hover {
     color: #059669;
-}
+} */
 
 .internal-link a{
     color: #10b981;
