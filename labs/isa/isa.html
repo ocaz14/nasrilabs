@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flip Cards: ISA → IEC</title>
+  <style>
+    :root{--bg:#0f172a;--card:#0b1220;--accent:#06b6d4;--glass:rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,#071028 0%, #071b2f 60%);color:#e6eef6;display:flex;flex-direction:column;align-items:center;padding:28px}
+    h1{margin:6px 0 18px;font-size:20px}
+    .app{width:100%;max-width:1100px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .controls > *{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:inherit}
+    input.search{min-width:220px}
+    button{cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+
+    /* flip card */
+    .card{perspective:1000px;height:160px}
+    .card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s}
+    .card.is-flipped .card-inner{transform:rotateY(180deg)}
+    .card-face{position:absolute;inset:0;border-radius:12px;padding:14px;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .front{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+    .back{transform:rotateY(180deg);background:linear-gradient(180deg, rgba(6,182,212,0.06), rgba(6,182,212,0.03))}
+    .tag{font-size:12px;opacity:0.9}
+    .std-name{font-weight:700;margin:6px 0 4px}
+    .std-num{font-weight:600;color:var(--accent)}
+    .small{font-size:13px;opacity:0.85}
+
+    .toolbar{display:flex;gap:8px;align-items:center}
+    .muted{opacity:0.7;font-size:13px}
+    footer{margin-top:16px;opacity:0.7;font-size:13px}
+
+    /* responsive */
+    @media (max-width:520px){.card{height:150px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>Flip Cards — ISA ↔ IEC (editable)</h1>
+
+    <div class="controls">
+      <input class="search" placeholder="Cari ISA atau IEC..." id="search" />
+      <select id="filter">
+        <option value="all">Semua</option>
+        <option value="hasIEC">Sudah ada IEC</option>
+        <option value="noIEC">Belum ada IEC</option>
+      </select>
+      <div class="toolbar">
+        <button id="shuffle">Acak</button>
+        <button id="add">Tambah Card</button>
+        <button id="export">Export JSON</button>
+        <button id="import">Import JSON</button>
+      </div>
+    </div>
+
+    <div id="grid" class="grid" aria-live="polite"></div>
+
+    <footer>Ketuk kartu untuk membalik. Gunakan tombol <strong>Tambah Card</strong> untuk menambahkan/pengedit data. File dapat diekspor/impor sebagai JSON.</footer>
+  </div>
+
+  <!-- modal sederhana untuk tambah/edit -->
+  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);align-items:center;justify-content:center;padding:18px">
+    <div style="background:#071428;padding:16px;border-radius:10px;max-width:520px;width:100%">
+      <h3 style="margin:0 0 10px">Tambah / Edit Card</h3>
+      <div style="display:grid;gap:8px">
+        <input id="m_isa" placeholder="Contoh: ANSI/ISA-88 (Batch control)" />
+        <input id="m_name" placeholder="Nama ISA (singkat)" />
+        <input id="m_iec" placeholder="IEC equivalent (nomor) — biarkan kosong jika tidak ada" />
+        <textarea id="m_note" placeholder="Catatan / deskripsi (opsional)" rows="3"></textarea>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button id="m_cancel">Batal</button>
+          <button id="m_save">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="fileInput" accept="application/json" style="display:none" />
+
+  <script>
+    // Data awal: beberapa ISA populer dan IEC equivalent (sumber: publikasi ISA & IEC)
+    let cards = [
+      {id:1, isa:'ANSI/ISA-88 (ISA-88)', name:'Batch Control (ISA-88)', iec:'IEC 61512', note:'ISA-88 dikenal juga sebagai ANSI/ISA-88; IEC 61512 adalah adaptasinya untuk penggunaan internasional.'},
+      {id:2, isa:'ANSI/ISA-95 (ISA-95)', name:'Enterprise-Control Integration (ISA-95)', iec:'IEC 62264', note:'ISA-95 diakui internasional sebagai IEC 62264 untuk integrasi enterprise-manufacturing.'},
+      {id:3, isa:'ANSI/ISA S84 / ISA-84', name:'Functional Safety / SIS (ISA-84)', iec:'IEC 61511', note:'ISA S84 / ISA-84 berhubungan erat dan diadopsi dalam IEC 61511.'},
+      {id:4, isa:'ANSI/ISA-18.2', name:'Management of Alarms (ISA-18.2)', iec:'IEC 62682 (related)', note:'IEC 62682 adalah standar alarm untuk proses industri yang sebanding dengan ISA-18.2.'},
+      {id:5, isa:'ANSI/ISA-5.1', name:'Instrumentation Symbols & Identification (ISA-5.1)', iec:'No single direct IEC equivalent — see IEC 60617 for graphical symbols', note:'ISA-5.1 fokus ke penomoran dan simbol instrumen; IEC 60617 adalah database simbol grafis IEC.'}
+    ];
+
+    const grid = document.getElementById('grid');
+    const search = document.getElementById('search');
+    const filter = document.getElementById('filter');
+
+    function render(){
+      const q = search.value.trim().toLowerCase();
+      const f = filter.value;
+      grid.innerHTML='';
+      const list = cards.filter(c => {
+        if(f==='hasIEC' && !c.iec) return false;
+        if(f==='noIEC' && c.iec) return false;
+        if(!q) return true;
+        return (c.isa+c.name+c.iec+(c.note||'')).toLowerCase().includes(q);
+      });
+      if(list.length===0){ grid.innerHTML = '<div class="muted">Tidak ada hasil.</div>'; return }
+      list.forEach(c => {
+        const card = document.createElement('div'); card.className='card';
+        const inner = document.createElement('div'); inner.className='card-inner';
+        const front = document.createElement('div'); front.className='card-face front';
+        const back = document.createElement('div'); back.className='card-face back';
+        front.innerHTML = `<div class="tag">${escapeHtml(c.isa)}</div><div class="std-name">${escapeHtml(c.name)}</div><div class="std-num">${escapeHtml(c.iec||'—')}</div><div class="small" style="margin-top:6px">Ketuk untuk membalik • Klik tiga titik untuk edit</div>`;
+        back.innerHTML = `<div class="tag">Detail</div><div class="small" style="margin-top:6px">${escapeHtml(c.note||'—')}</div><div style="margin-top:10px;font-size:12px;opacity:0.9">ID: ${c.id} • <a href="#" data-id="${c.id}" class="edit">Edit</a> | <a href="#" data-id="${c.id}" class="del">Hapus</a></div>`;
+        inner.appendChild(front); inner.appendChild(back);
+        card.appendChild(inner);
+
+        // flip on click
+        card.addEventListener('click', (e)=>{
+          // avoid flipping when clicking edit/delete links
+          if(e.target.classList.contains('edit')||e.target.classList.contains('del')) return;
+          card.classList.toggle('is-flipped');
+        });
+
+        // edit link
+        back.querySelector('.edit').addEventListener('click',(ev)=>{ev.preventDefault(); openModal(c);});
+        back.querySelector('.del').addEventListener('click',(ev)=>{ev.preventDefault(); if(confirm('Hapus card ini?')){cards = cards.filter(x=>x.id!==c.id); render();}});
+
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]}); }
+
+    // controls
+    document.getElementById('shuffle').addEventListener('click',()=>{cards = shuffle(cards); render();});
+    document.getElementById('add').addEventListener('click',()=>openModal());
+    document.getElementById('export').addEventListener('click',()=>{ const blob = new Blob([JSON.stringify(cards,null,2)],{type:'application/json'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='isa_to_iec_cards.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); });
+    document.getElementById('import').addEventListener('click',()=>document.getElementById('fileInput').click());
+    document.getElementById('fileInput').addEventListener('change',async (e)=>{
+      const f = e.target.files[0]; if(!f) return;
+      try{ const txt = await f.text(); const parsed = JSON.parse(txt); if(Array.isArray(parsed)){ cards = parsed.map((c,i)=>({id:c.id||i+1, isa:c.isa||'', name:c.name||'', iec:c.iec||'', note:c.note||''})); render(); alert('Import berhasil'); } else alert('Format JSON tidak sesuai'); }
+      catch(err){ alert('Gagal import: '+err.message); }
+      e.target.value='';
+    });
+
+    search.addEventListener('input', render); filter.addEventListener('change', render);
+
+    // modal
+    const modal = document.getElementById('modal'); const m_isa = document.getElementById('m_isa'); const m_name = document.getElementById('m_name'); const m_iec = document.getElementById('m_iec'); const m_note = document.getElementById('m_note'); let editingId = null;
+    document.getElementById('m_cancel').addEventListener('click', ()=>{ closeModal(); });
+    document.getElementById('m_save').addEventListener('click', ()=>{
+      const isa = m_isa.value.trim(); const name = m_name.value.trim(); const iec = m_iec.value.trim(); const note = m_note.value.trim();
+      if(!isa || !name){ alert('Isi minimal kolom ISA dan Nama'); return }
+      if(editingId){ const idx = cards.findIndex(c=>c.id===editingId); if(idx!==-1){ cards[idx] = {...cards[idx], isa, name, iec, note}; } }
+      else{ const nid = cards.reduce((a,b)=>Math.max(a,b.id),0)+1; cards.push({id:nid, isa, name, iec, note}); }
+      closeModal(); render();
+    });
+
+    function openModal(card){ editingId = card ? card.id : null; modal.style.display='flex'; m_isa.value = card?card.isa:''; m_name.value = card?card.name:''; m_iec.value = card?card.iec:''; m_note.value = card?card.note:''; }
+    function closeModal(){ modal.style.display='none'; editingId = null; m_isa.value=''; m_name.value=''; m_iec.value=''; m_note.value=''; }
+
+    function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a }
+
+    // initial render
+    render();
+  </script>
+</body>
+</html>

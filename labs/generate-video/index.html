@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lo-fi Player</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #e0e5ec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container */
+.player {
+    width: 350px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #e0e5ec;
+    box-shadow: 10px 10px 20px #b8bcc3,
+                -10px -10px 20px #ffffff;
+    text-align: center;
+}
+
+/* Background */
+.cover {
+    width: 100%;
+    height: 200px;
+    border-radius: 15px;
+    background-image: url('lofi.png'); /* ganti dengan gambar kamu */
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 20px;
+}
+
+/* Title */
+h2 {
+    margin: 10px 0;
+    color: #333;
+}
+
+/* Button */
+.btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    margin: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background: #e0e5ec;
+    box-shadow: 6px 6px 12px #b8bcc3,
+                -6px -6px 12px #ffffff;
+}
+
+.btn:active {
+    box-shadow: inset 6px 6px 12px #b8bcc3,
+                inset -6px -6px 12px #ffffff;
+}
+
+/* Volume */
+input[type=range] {
+    width: 100%;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="player">
+    <div class="cover"></div>
+    <h2>Lo-fi Chill</h2>
+
+    <button class="btn" onclick="togglePlay()">▶</button>
+
+    <input type="range" min="0" max="1" step="0.01" onchange="setVolume(this.value)">
+</div>
+
+<audio id="audio" src="music.mp3" loop></audio>
+
+<script>
+let audio = document.getElementById("audio");
+let isPlaying = false;
+
+function togglePlay() {
+    if (isPlaying) {
+        audio.pause();
+    } else {
+        audio.play();
+    }
+    isPlaying = !isPlaying;
+}
+
+function setVolume(val) {
+    audio.volume = val;
+}
+</script>
+
+</body>
+</html>

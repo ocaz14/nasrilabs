@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pathfinding Lab</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+/* BODY FIX */
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* CONTAINER FULL HEIGHT */
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* CARD FIT SCREEN */
+.card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER AREA */
+.card h2,
+.card p,
+.card button {
+    flex-shrink: 0;
+}
+
+/* BOARD WRAPPER */
+.grid-board {
+    flex: 1;
+
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    gap: 4px;
+
+    margin-top: 10px;
+}
+
+/* CELL AUTO SCALE */
+.cell {
+    aspect-ratio: 1 / 1; /* key fix */
+    border-radius: 6px;
+
+    background: #e0e5ec;
+
+    box-shadow:
+        inset 2px 2px 5px rgba(0,0,0,0.08),
+        inset -2px -2px 5px rgba(255,255,255,0.7);
+
+    transition: all 0.2s ease;
+}
+
+/* START */
+.cell.active {
+    background: #10b981;
+    box-shadow: 0 0 6px rgba(16,185,129,0.6);
+}
+
+/* END */
+.cell.path {
+    background: #fbbf24;
+    box-shadow: 0 0 6px rgba(251,191,36,0.6);
+}
+
+/* WALL */
+.cell.wall {
+    background: #2d2d2d;
+    box-shadow: none;
+}
+
+/* VISITED */
+.cell.visited {
+    background: #60a5fa;
+    animation: visitPulse 0.25s ease;
+}
+
+@keyframes visitPulse {
+    0% { transform: scale(0.7); opacity: 0.6; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* PATH */
+.cell.path {
+    animation: pathGlow 0.3s ease;
+}
+
+@keyframes pathGlow {
+    0% { transform: scale(0.85); }
+    100% { transform: scale(1); }
+}
+
+/* HOVER */
+.cell:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* BUTTON */
+button.btn {
+    margin-top: 8px;
+    background: #10b981;
+    color: white;
+    border-radius: 8px;
+}
+
+button.btn:hover {
+    background: #059669;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="navbar">
+    <a href="../labs.html">← Back</a>
+</div>
+
+<div class="card neu">
+    <h2>🧭 Pathfinding Lab (BFS)</h2>
+    <p>Click to create walls. Start and End are fixed.</p>
+
+    <button class="btn neu" onclick="runBFS()">Run BFS</button>
+
+    <div id="board" class="grid-board"></div>
+</div>
+
+</div>
+
+<script src="bfs.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,495 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #e0e5ec;
+    color: #333;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+/* NEOMORPHISM */
+.neu {
+    border-radius: 16px;
+    background: #e0e5ec;
+    box-shadow: 5px 5px 12px #a3b1c6,
+                -5px -5px 12px #ffffff;
+    transition: 0.3s ease;
+}
+
+.neu:hover {
+    box-shadow: 8px 8px 18px #a3b1c6,
+                -8px -8px 18px #ffffff;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0 30px;
+}
+
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+    /* gap: 12px; */
+}
+
+.logo img {
+    height: 38px;
+}
+
+.logo span {
+    font-weight: bold;
+    font-size: 18px;
+    color: #10b981;
+}
+
+/* NAV LINKS */
+.nav-links a {
+    margin-left: 30px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* HOVER FADE */
+.nav-links a:hover {
+    opacity: 0.7;
+}
+
+/* UNDERLINE BASE */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    transition: 0.3s ease;
+}
+
+/* UNDERLINE ANIMATION */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* ===== WARNA PER SECTION (MULTI-PAGE) ===== */
+
+/* HOME → orange pastel */
+.nav-links a[href="index.html"]::after {
+    background: #f7b267;
+}
+
+/* LABS → MUTED EMERALD (UPDATED) */
+.nav-links a[href="labs.html"]::after {
+    background: #10b981;
+}
+
+/* WORKS → biru pastel */
+.nav-links a[href="works.html"]::after {
+    background: #a0c4ff;
+}
+
+/* THINKING → pink pastel */
+.nav-links a[href="thinking.html"]::after {
+    background: #ffafcc;
+}
+
+/* ===== ACTIVE STATE ===== */
+.nav-links a.active {
+    opacity: 1;
+}
+
+.nav-links a.active::after {
+    width: 100%;
+}
+
+/* HERO */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 0 80px;
+    gap: 40px;
+}
+
+.hero-text {
+    max-width: 520px;
+}
+
+.hero h1 {
+    font-size: 44px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+/* WORK ICON - BLUE */
+.icon-work {
+    filter: hue-rotate(200deg) saturate(2);
+}
+
+/* HOME ICON - WHITE */
+.icon-home {
+    filter: brightness(0) invert(1);
+}
+
+/* PROFILE */
+.profile-img {
+    width: 260px;
+    height: 260px;
+    object-fit: contain;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+/* BUTTON */
+.btn {
+    padding: 12px 22px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 10px;
+
+    background: #10b981;
+    color: white;
+
+    transition: all 0.25s ease;
+}
+
+/* HOVER */
+.btn:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+/* ACTIVE (click feel) */
+.btn:active {
+    background: #047857;
+    transform: translateY(0);
+}
+
+.btn {
+    box-shadow: 0 4px 12px rgba(16,185,129,0.35);
+}
+
+.btn:hover {
+    box-shadow: 0 6px 16px rgba(16,185,129,0.45);
+}
+
+
+/* SECTION */
+.section {
+    margin-top: 0px;
+}
+.margintop100px{
+    margin-top: 100px;
+}
+
+.section h2 {
+    margin-bottom: 30px;
+}
+
+/* GRID SCALABLE */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    column-gap: 20px;
+    row-gap: 70px;
+}
+
+/* FIX: anchor agar behave seperti card */
+.grid > a {
+    display: block;
+}
+
+/* CARD */
+.card {
+    flex: 1 1 280px;
+    padding: 25px;
+    transition: 0.25s ease;
+}
+
+.card {
+    height: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+/* HOVER EFFECT */
+.card:hover {
+    cursor: pointer;
+    box-shadow: 10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+}
+
+/* OPTIONAL: subtle hint */
+.card h3::after {
+    content: " →";
+    opacity: 0;
+    transition: 0.2s;
+}
+
+/* show arrow on hover */
+.card:hover h3::after {
+    opacity: 1;
+}
+
+/* PRESS EFFECT */
+.card:active {
+    transform: translateY(2px);
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+                inset -5px -5px 10px #ffffff;
+}
+
+/* WORK CARD */
+.case {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* THINKING */
+.thinking {
+    max-width: 900px;
+    line-height: 1.7;
+}
+
+.thinking p {
+    margin-bottom: 20px;
+}
+
+/* CTA */
+.cta {
+    text-align: center;
+    margin-top: 120px;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    margin-top: 80px;
+    padding-top: 20px;
+    font-size: 14px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 900px) {
+    .grid {
+        flex-wrap: wrap;
+    }
+
+    .grid > a {
+        flex: 1 1 calc(50% - 30px);
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .grid {
+        flex-wrap: wrap;
+    }
+
+    .grid > a {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* LAB META (atas card) */
+.lab-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+/* CTA bawah */
+.lab-action {
+    margin-top: 12px;
+}
+
+.lab-cta {
+    font-size: 13px;
+    font-weight: 500;
+    color: #10b981; /* UPDATED */
+}
+
+/* OPTIONAL HOVER CTA */
+.card:hover .lab-cta {
+    color: #059669;
+}
+
+/* Hover halus */
+.card.neu:hover {
+    transform: translateY(-4px);
+    transition: 0.2s;
+}
+
+/* ===== BLOG LINK STYLE ===== */
+
+/* remove default ugly link */
+.card a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* judul artikel */
+.card a h3 {
+    color: #333;
+    transition: 0.2s;
+}
+
+/* hover effect */
+.card a:hover h3 {
+    color: #10b981;
+}
+
+/* deskripsi */
+.card a p {
+    color: #6b7280;
+}
+
+.card a {
+    display: block;
+    height: 100%;
+}
+
+/* ===== RELATED LINKS ===== */
+
+.section a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.section a:hover {
+    color: #059669;
+}
+
+.internal-link a{
+    color: #10b981;
+    line-height: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background: #10b981;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background: #f3f4f6;
+}
+
+table tr:hover {
+    background: #e6f9f0;
+}
+
+.card h3 {
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.card ul {
+    padding-left: 18px;
+}
+
+.card ul li {
+    margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+    .hero {
+        padding: 30px 0 40px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+}
+
+.card strong {
+    color: #10b981;
+}
+
+.card {
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+.internal-link {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.internal-link a {
+    background: #e0e5ec;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    text-decoration: none;
+    color: #10b981;
+
+    box-shadow: 3px 3px 6px #a3b1c6,
+                -3px -3px 6px #ffffff;
+
+    transition: 0.2s ease;
+}
+
+.internal-link a:hover {
+    background: #10b981;
+    color: white;
+
+    box-shadow: inset 3px 3px 6px #059669,
+                inset -3px -3px 6px #34d399;
+}

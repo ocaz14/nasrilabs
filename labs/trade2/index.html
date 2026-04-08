@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .cont{
+            width: 900px;
+        }
+        .position{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: row;
+        }
+        .positionName{
+            margin: 0 20px;
+            font-size: 40px;
+            width: 200px;
+        }
+        .positionNum{
+            font-size: 60px;
+            min-width: 100px;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="position">
+            <span class="positionName">Iteration</span>
+            <span class="positionNum" id="iteration"></span>
+        </div>
+        <div class="position">
+            <span class="positionName">maxLose</span>
+            <span class="positionNum" id="maxLose"></span>
+        </div>
+        <div class="position">
+            <span class="positionName">minMoney</span>
+            <span class="positionNum" id="minMoney"></span>
+        </div>
+        <div class="position">
+            <span class="positionName">maxMoney</span>
+            <span class="positionNum" id="maxMoney"></span>
+        </div>
+        <div class="position">
+            <span class="positionName">Position</span>
+            <span class="positionNum" id="position"></span>
+        </div>
+        <div class="position">
+            <span class="positionName">Money</span>
+            <span class="positionNum" id="money"></span>
+        </div>
+    </div>
+
+</body>
+<script>
+    var iterationId = document.getElementById("iteration");
+    var maxLoseId = document.getElementById("maxLose");
+    var iteration = document.getElementById("iteration");
+    var moneyId = document.getElementById("money");
+    var minMoneyId = document.getElementById("minMoney");
+    var maxMoneyId = document.getElementById("maxMoney");
+
+    var positionValue = 0;
+    var iterationValue = 0;
+    var data = [0, 0];
+    var loseCount = 0;
+    var firstBid = 1;
+    var IdealAction = "";
+    var botAction = "";
+    var maxLose = 0;
+    var iterasi = 0;
+
+    const maxPips = 50;
+    var range = 10;
+    var money = 10000;   
+    var brokerFee = 5;
+    var factor = 2.7;
+
+    var rewardRatio = 1;  
+    var minMoney = money;
+    var maxMoney = money;
+
+    var saveMoney = 10000;
+
+    var stop = false;
+    var iterationLimit = 10000;
+
+    var initialValue = 0;
+
+    var reward = 0;
+    
+    
+
+    setInterval(myTimer, 1);
+
+    function myTimer() {
+        if(stop == false){
+            positionValue = randValue(positionValue);
+            document.getElementById("position").innerHTML = positionValue;
+
+            dataRecordPos();
+            // comparition(gap);
+
+            if(maxLose < loseCount){
+                maxLose = loseCount;
+                maxLoseId.innerText = maxLose;
+            }
+            if(money >= maxMoney){
+                maxMoney = money;
+            }
+            if(money <= minMoney){
+                minMoney = money;
+            }
+
+            if(money <= 0){
+                stop = true;
+                saveMoney = saveMoney - 10000;
+            }
+
+            iterationId.innerText = iterasi;
+            if(iterasi >= iterationLimit){
+                var profit = money - 10000;
+                console.log("profit: "+profit);
+                saveMoney = saveMoney + profit + 10000;
+
+                if(saveMoney >= 10000){
+                    money = 10000;
+                    saveMoney = saveMoney - money;                    
+                }else{
+                    money = saveMoney;
+                }
+                console.log(saveMoney);
+                iterasi = 0;
+            }
+
+
+
+
+            // console.log(" ");
+            // if(maxRangeValue >= initialValue - 10){
+            //     dataRecord()
+            //     console.log(data);
+            //     initialValue = maxRangeValue;
+            // }
+
+
+            // iterationValue += 1;
+            // if(iterationValue > 10){
+            //     iterationValue = 0;
+
+            //     dataRecord()
+
+            //     botAct();
+            //     IdealAct();
+            //     var gap = gapValue();
+
+            //     console.log(gap);
+            //     var reward = comparition(gap);
+                
+
+            // money = transaction(rewardRatio * reward);
+            // rewardRatio = Math.pow(factor, loseCount);
+
+            // iterationId.innerText = iterasi;
+            // moneyId.innerText = money;
+            // minMoneyId.innerText = minMoney;
+            // maxMoneyId.innerText = maxMoney;            
+
+            //     if(money < 0){
+            //         console.log("Failed");
+            //         console.log("iterasi: "+ iterasi);
+            //         console.log("maxLose: "+ maxLose);
+            //         console.log("maxMoney: "+ maxMoney);
+            //         console.log("minMoney: "+ minMoney);
+            //         stop = true;
+            //     }
+            //     if(iterasi > iterationLimit){
+            //         stop = true;
+            //     }
+
+
+
+            iterasi += 1;
+            // }
+        }
+    }
+
+    function dataRecordPos(){
+        var maxRangeValue = Math.abs((positionValue - initialValue));
+        // console.log("pos " + positionValue);
+        // console.log("ini " + initialValue);
+        // console.log("rng " + maxRangeValue);
+        if(maxRangeValue >= maxPips){
+            initialValue = positionValue;
+            dataRecord();
+            reward = comparition(maxRangeValue);   
+            //console.log(reward * rewardRatio);
+            money = transaction(rewardRatio * reward);            
+            // console.log("money: "+money);
+
+            rewardRatio = Math.pow(factor, loseCount);
+
+            
+            moneyId.innerText = money; 
+            minMoneyId.innerText = minMoney;
+            maxMoneyId.innerText = maxMoney;              
+        }
+    }
+
+    function transaction(reward){
+        return money + reward;
+    }
+
+    function brokerTax(gap){
+        return reward = gap - brokerFee;
+    }
+
+    function comparition(gap){
+        if(IdealAction == botAction){
+            var y = gap
+            loseCount = 0;
+            // console.log("Win");
+        }else{
+            var y = turnToNegatif(gap)
+            loseCount += 1;
+            // console.log("Lose");
+        }
+        return y - brokerFee;
+    }
+
+    function dataRecord(){
+        data.splice(0,1)
+        data.push(positionValue);
+
+        action();
+        // console.log(data); 
+    }
+
+    function action(){
+        botAct();
+        IdealAct();
+    }
+
+    function botAct(){
+        //botAction = IdealAction;
+        botAction = "Buy"
+    }
+
+    function IdealAct(){
+        if(data[1] > data[0]){
+            IdealAction = "Buy"
+        }else if(data[0]> data[1]){
+            IdealAction = "Sell"
+        }
+    }
+
+    function gapValue(){
+        return y = Math.abs(data[0] - data[1]);
+    }
+
+
+
+    function turnToNegatif(x){
+        return 0 - x;
+    }
+
+    function randValue(x){
+        y = Math.floor(Math.random()*(range*2+1)-range);
+        return x+y;
+    }
+
+</script>
+</html>

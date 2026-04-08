@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Math Speed Lab</title>
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet"/>
+
+<style>
+:root {
+  --bg: #e0e5ec;
+  --card: #e0e5ec;
+
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #d6dbe3;
+
+  /* 🌿 PASTEL GREEN SYSTEM */
+  --primary: #6ee7b7;
+  --primary-strong: #34d399;
+  --primary-soft: #a7f3d0;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+
+  --shadow-soft:
+    4px 4px 10px rgba(0,0,0,0.08),
+    -4px -4px 10px rgba(255,255,255,0.7);
+}
+
+/* RESET */
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* LAYOUT */
+.container {
+  max-width: 900px;
+  margin: auto;
+  display: grid;
+  gap: 24px;
+}
+
+/* CARD (SOFT NEUMORPHISM) */
+.card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* INPUT & SELECT */
+select,
+.input-text {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #f5f7fa;
+  color: var(--text);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+select:focus,
+.input-text:focus {
+  border-color: var(--primary-strong);
+  box-shadow: 0 0 0 2px rgba(52,211,153,0.15);
+}
+
+/* BUTTON */
+button,
+.start {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+
+  background: var(--primary);
+  color: #064e3b;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+}
+
+button:hover,
+.start:hover {
+  background: var(--primary-strong);
+  transform: translateY(-1px);
+}
+
+button:active,
+.start:active {
+  transform: translateY(0);
+}
+
+/* PROGRESS BAR */
+.progress {
+  position: relative;
+  height: 8px;
+  background: #d6dbe3;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.progress-bar {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+
+  background: linear-gradient(90deg, #6ee7b7, #a7f3d0);
+
+  transition: width 1s linear;
+
+  /* SOFT GLOW */
+  box-shadow:
+    0 0 6px rgba(110,231,183,0.45),
+    0 0 12px rgba(110,231,183,0.2);
+}
+
+/* SHIMMER (SUBTLE) */
+.progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.3),
+    transparent
+  );
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -50%; }
+  100% { left: 100%; }
+}
+
+/* GAME */
+.main-area {
+  text-align: center;
+}
+
+/* TIMER */
+#timer {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* SOAL */
+.angka {
+  font-size: 42px;
+  font-weight: 600;
+  margin: 24px 0;
+  letter-spacing: 2px;
+}
+
+/* INPUT AREA */
+.input {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* SCORE */
+.poin {
+  margin-top: 16px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* FEEDBACK */
+.correct {
+  animation: correctFlash 0.3s;
+}
+
+.wrong {
+  animation: shake 0.3s;
+}
+
+@keyframes correctFlash {
+  0% { background: rgba(110,231,183,0.25); }
+  100% { background: transparent; }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* MODAL */
+.winning-message {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(4px);
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.winning-message.show {
+  display: flex;
+}
+
+.winning-message > div {
+  background: white;
+  padding: 20px 28px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  color: var(--text);
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  body {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .input {
+    flex-direction: column;
+  }
+
+  .angka {
+    font-size: 34px;
+  }
+}
+.logo img{
+ height: 38px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="card">
+    <div class="header">
+    <div class="logo">
+      <a href="/index.html">
+        <img src="/logo.png" alt="Nasri Labs Logo">
+      </a>
+    </div>
+
+      <div class="nav">
+        <select id="operators">
+          <option value="tambah">Tambah (+)</option>
+          <option value="kurang">Kurang (-)</option>
+          <option value="kali">Kali (×)</option>
+          <option value="bagi">Bagi (÷)</option>
+        </select>
+
+        <div class="start" onclick="startGame()">START</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div class="card">
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="main-area">
+
+      <p id="timer">Klik START untuk Memulai</p>
+
+      <div class="angka" id="angkaBox">
+        <span id="angka1"></span>
+        <span id="aritmatika"></span>
+        <span id="angka2"></span>
+        <span></span>
+        <span id="jawaban"></span>
+      </div>
+
+      <div class="input">
+        <input id="input" type="number" class="input-text" placeholder="Jawaban"/>
+        <button id="tebakBtn" onclick="myTebak()">Tebak</button>
+      </div>
+
+      <p class="poin" id="poin"></p>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- RESULT -->
+<div class="winning-message" id="winningMessage">
+  <div>Waktu Habis</div>
+  <div id="poinMessage"></div>
+  <button onclick="startGame()">Restart</button>
+</div>
+
+<script>
+const winningMessageElement = document.getElementById("winningMessage");
+const progressBar = document.getElementById("progressBar");
+const angkaBox = document.getElementById("angkaBox");
+
+var operasi, hasil, poin = 0, mulai = 0;
+var pilihanWaktu = 30;
+var timeLeft = pilihanWaktu;
+
+document.getElementById("input").style.display = "none";
+document.getElementById("tebakBtn").style.display = "none";
+
+function startGame() {
+  if (mulai == 0) setInterval(countdown, 1000);
+
+  document.getElementById("input").style.display = "block";
+  document.getElementById("tebakBtn").style.display = "block";
+
+  operasi = document.getElementById("operators").value;
+  winningMessageElement.classList.remove("show");
+
+  poin = 0;
+  timeLeft = pilihanWaktu;
+
+  myTebak();
+}
+
+function myTebak() {
+  var tebakan = document.getElementById("input").value;
+
+  if (tebakan != "" && timeLeft != 0) {
+    if (tebakan == hasil) {
+      poin += 2;
+      angkaBox.classList.add("correct");
+      setTimeout(()=>angkaBox.classList.remove("correct"),300);
+    } else {
+      poin -= 1;
+      angkaBox.classList.add("wrong");
+      setTimeout(()=>angkaBox.classList.remove("wrong"),300);
+    }
+  }
+
+  document.getElementById("poin").innerHTML = "Score: " + poin;
+  document.getElementById("input").value = "";
+
+  if (timeLeft != 0) myNext();
+}
+
+function myNext() {
+  let a = Math.floor(Math.random()*10);
+  let b = Math.floor(Math.random()*10);
+
+  document.getElementById("angka1").innerHTML = a;
+  document.getElementById("angka2").innerHTML = b;
+
+  if (operasi == "tambah") {
+    hasil = a + b; document.getElementById("aritmatika").innerHTML = "+";
+  } else if (operasi == "kurang") {
+    hasil = a - b; document.getElementById("aritmatika").innerHTML = "-";
+  } else if (operasi == "kali") {
+    hasil = a * b; document.getElementById("aritmatika").innerHTML = "×";
+  } else {
+    hasil = a / b; document.getElementById("aritmatika").innerHTML = "÷";
+  }
+}
+
+function countdown() {
+  if (timeLeft <= 0) {
+    winningMessageElement.classList.add("show");
+    document.getElementById("poinMessage").innerHTML = "Score: " + poin;
+  } else {
+    document.getElementById("timer").innerHTML = "Time: " + timeLeft;
+    progressBar.style.width = (timeLeft / pilihanWaktu * 100) + "%";
+    timeLeft--;
+  }
+  mulai = 1;
+}
+</script>
+
+</body>
+</html>

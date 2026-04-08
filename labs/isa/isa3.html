@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flip Cards ISA ↔ IEC — 20 Standar Populer</title>
+  <style>
+    :root { --bg:#0f172a; --card:#0b1220; --accent:#06b6d4; --glass:rgba(255,255,255,0.03); }
+    html, body { margin:0; font-family:Inter, sans-serif; background:var(--bg); color:#e6eef6; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .app { width:100%; max-width:600px; }
+    h1 { text-align:center; margin-bottom:20px; }
+    .controls { display:flex; gap:8px; justify-content:center; margin-bottom:20px; }
+    .controls > * { background:var(--glass); border:1px solid rgba(255,255,255,0.04); padding:8px 12px; border-radius:8px; color:inherit; }
+    #grid { grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:14px; }
+    .card { perspective:1000px; height:160px; }
+    .card-inner { margin: 20px; position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .6s; }
+    .card.is-flipped .card-inner { transform:rotateY(180deg); }
+    .card-face { width: 200px; position:absolute; inset:0; border-radius:12px; padding:16px; backface-visibility:hidden; box-shadow:0 6px 18px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03); display:flex; flex-direction:column; justify-content:center; align-items:center; }
+    .front { background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); font-size:20px; font-weight:700; }
+    .back { transform:rotateY(180deg); background:linear-gradient(180deg, rgba(6,182,212,0.06), rgba(6,182,212,0.03)); font-size:14px; text-align:center; }
+    .small { font-size:12px; opacity:0.9; margin-top:8px; }
+    #studyBar { margin-bottom:20px; display:flex; gap:10px; justify-content:center; }
+    .study-card-wrapper { display:flex; justify-content:center; }
+    .study-card-wrapper .card { width:100%; max-width:450px; height:320px; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>Standar ISA Populer (ISA ↔ IEC)</h1>
+    <div id="studyBar">
+      <button id="startStudy">Mulai Mode Belajar</button>
+      <button id="prevCard" style="display:none">Sebelumnya</button>
+      <button id="nextCard" style="display:none">Berikutnya</button>
+      <button id="exitStudy" style="display:none">Keluar</button>
+    </div>
+    <div class="controls">
+      <button id="shuffle">Acak</button>
+      <button id="export">Export JSON</button>
+      <button id="import">Import JSON</button>
+    </div>
+    <div id="grid"></div>
+  </div>
+
+  <input type="file" id="fileInput" accept="application/json" style="display:none" />
+
+  <script>
+    // Data 20 standar populer
+    let cards = [
+      { id: 1, isa: 'ISA-5.1', name: 'Instrumentation Symbols & Identification', iec: '', note: 'Simbol instrumen dan penomoran dalam P&ID.' },
+      { id: 2, isa: 'ISA-5.2', name: 'Binary Logic Control Diagrams', iec: '', note: 'Diagram kontrol logika biner untuk sistem kontrol digital.' },
+      { id: 3, isa: 'ISA-5.4', name: 'Instrument Loop Diagrams', iec: '', note: 'Diagram loop instrumen: alur sinyal, kontrol dan pengukuran.' },
+      { id: 4, isa: 'ISA-7', name: 'Instrument Air', iec: '', note: 'Sistem udara instrumen (kompresi, distribusi, persyaratan agar tidak polusi).'},
+      { id: 5, isa: 'ISA-12', name: 'Electrical Equipment for Hazardous Locations', iec: '', note: 'Peralatan listrik di area berbahaya / intrinsically safe wiring.'},
+      { id: 6, isa: 'ISA-18.2', name: 'Management of Alarm Systems', iec: 'IEC 62682', note: 'Manajemen alarm di industri proses. ISA-18.2 ↔ IEC 62682.'},
+      { id: 7, isa: 'ISA-20', name: 'Instrumentation Specification Forms', iec: '', note: 'Formulir spesifikasi instrumen untuk dokumentasi teknis.'},
+      { id: 8, isa: 'ISA-50', name: 'Electrical Control Signals (4-20 mA)', iec: '', note: 'Standar sinyal analog dan digital kontrol (misal 4-20 mA).'},
+      { id: 9, isa: 'ISA-75', name: 'Control Valve Design, Specification & Testing', iec: '', note: 'Desain, spesifikasi, dan pengujian katup kontrol.'},
+      { id: 10, isa: 'ISA-77', name: 'Power Plant Control Systems', iec: '', note: 'Standar sistem kontrol pembangkit listrik.'},
+      { id: 11, isa: 'ISA-84', name: 'Functional Safety / Safety Instrumented Systems', iec: 'IEC 61511', note: 'Sistem keamanan fungsional (SIS). ISA-84 ↔ IEC 61511.'},
+      { id: 12, isa: 'ISA-88', name: 'Batch Control Systems', iec: 'IEC 61512', note: 'Kontrol batch; ISA-88 ↔ IEC 61512.'},
+      { id: 13, isa: 'ISA-95', name: 'Enterprise-Control System Integration', iec: 'IEC 62264', note: 'Integrasi antara sistem kontrol dan sistem bisnis (ERP). ISA-95 ↔ IEC 62264.'},
+      { id: 14, isa: 'ISA-96', name: 'Valve Actuators', iec: '', note: 'Aktuator katup – penggerak mekanik untuk katup.'},
+      { id: 15, isa: 'ISA-99', name: 'Industrial Automation & Control System Cybersecurity', iec: 'IEC 62443', note: 'Keamanan siber untuk sistem otomasi dan kontrol (IACS). ISA-99 / IEC 62443.'},
+      { id: 16, isa: 'ISA-100', name: 'Wireless Systems for Automation', iec: 'IEC 62734', note: 'Sistem nirkabel untuk otomasi pabrik.'},
+      { id: 17, isa: 'ISA-101', name: 'Human-Machine Interface Design', iec: 'IEC 63303', note: 'Desain antarmuka manusia-mesin (HMI) untuk otomasi proses.'},
+      { id: 18, isa: 'ISA-105', name: 'Commissioning / Loop-Check / FAT-SAT', iec: '', note: 'Komisioning sistem, loop-check, dan pengujian pabrik (FAT / SAT).'},
+      { id: 19, isa: 'ISA-106', name: 'Procedure Automation (Continuous)', iec: '', note: 'Automasi prosedur untuk proses yang berjalan kontinu.'},
+      { id: 20, isa: 'ISA-108', name: 'Intelligent Device Management', iec: '', note: 'Manajemen perangkat cerdas (perangkat lapangan, IoT), dalam pengembangan.'}
+    ];
+
+    const grid = document.getElementById('grid');
+    const startStudy = document.getElementById('startStudy');
+    const prevCard = document.getElementById('prevCard');
+    const nextCard = document.getElementById('nextCard');
+    const exitStudy = document.getElementById('exitStudy');
+    const shuffleBtn = document.getElementById('shuffle');
+    const exportBtn = document.getElementById('export');
+    const importBtn = document.getElementById('import');
+    const fileInput = document.getElementById('fileInput');
+
+    let studyMode = false;
+    let studyIndex = 0;
+
+    function escapeHtml(s) {
+      return (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]));
+    }
+
+    function makeCard(c) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const inner = document.createElement('div');
+      inner.className = 'card-inner';
+      const front = document.createElement('div');
+      front.className = 'card-face front';
+      const back = document.createElement('div');
+      back.className = 'card-face back';
+
+      // Front: hanya nomor ISA
+      front.textContent = c.isa;
+
+      // Back: deskripsi + IEC + catatan
+      let backHtml = `<div><strong>${escapeHtml(c.name)}</strong></div>`;
+      if (c.iec) {
+        backHtml += `<div class="small">IEC: ${escapeHtml(c.iec)}</div>`;
+      }
+      backHtml += `<div class="small">${escapeHtml(c.note)}</div>`;
+      back.innerHTML = backHtml;
+
+      inner.appendChild(front);
+      inner.appendChild(back);
+      card.appendChild(inner);
+
+      card.addEventListener('click', () => {
+        card.classList.toggle('is-flipped');
+      });
+
+      return card;
+    }
+
+    function render() {
+      studyMode = false;
+      grid.innerHTML = '';
+      grid.classList.remove('study-mode');
+      document.querySelector('.controls').style.display = 'flex';
+      startStudy.style.display = 'inline-block';
+      prevCard.style.display = 'none';
+      nextCard.style.display = 'none';
+      exitStudy.style.display = 'none';
+
+      cards.forEach(c => {
+        const card = makeCard(c);
+        grid.appendChild(card);
+      });
+    }
+
+    function renderStudy() {
+      studyMode = true;
+      grid.innerHTML = '';
+      grid.classList.add('study-mode');
+      document.querySelector('.controls').style.display = 'none';
+      startStudy.style.display = 'none';
+
+      prevCard.style.display = (studyIndex > 0) ? 'inline-block' : 'none';
+      nextCard.style.display = (studyIndex < cards.length - 1) ? 'inline-block' : 'none';
+      exitStudy.style.display = 'inline-block';
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'study-card-wrapper';
+      wrapper.appendChild(makeCard(cards[studyIndex]));
+      grid.appendChild(wrapper);
+    }
+
+    startStudy.onclick = () => { studyIndex = 0; renderStudy(); };
+    prevCard.onclick = () => { if (studyIndex > 0) studyIndex--; renderStudy(); };
+    nextCard.onclick = () => { if (studyIndex < cards.length - 1) studyIndex++; renderStudy(); };
+    exitStudy.onclick = () => { render(); };
+
+    shuffleBtn.onclick = () => { cards = shuffle(cards); render(); };
+
+    exportBtn.onclick = () => {
+      const blob = new Blob([JSON.stringify(cards, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'isa_standards_cards.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    importBtn.onclick = () => { fileInput.click(); };
+    fileInput.onchange = async e => {
+      const f = e.target.files[0];
+      if (!f) return;
+      try {
+        const txt = await f.text();
+        const parsed = JSON.parse(txt);
+        if (Array.isArray(parsed)) {
+          cards = parsed;
+          render();
+          alert('Import berhasil');
+        } else {
+          alert('Format JSON salah');
+        }
+      } catch (e) {
+        alert('Gagal import: ' + e);
+      }
+      fileInput.value = '';
+    };
+
+    function shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    // Inisialisasi
+    render();
+  </script>
+</body>
+</html>

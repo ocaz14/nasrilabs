@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Music Generator</title>
+
+<style>
+:root {
+  --bg: #e0e5ec;
+  --shadow-light: #ffffff;
+  --shadow-dark: #a3b1c6;
+  --text: #333;
+
+  /* Emerald button */
+  --primary: #10b981;
+  --primary-dark: #059669;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+/* Main Card */
+.card {
+  background: var(--bg);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 10px 10px 20px var(--shadow-dark),
+              -10px -10px 20px var(--shadow-light);
+}
+
+/* Title */
+.title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+/* Grid presets */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Preset card */
+.preset {
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 5px 5px 10px var(--shadow-dark),
+              -5px -5px 10px var(--shadow-light);
+  transition: 0.2s;
+}
+
+.preset:hover {
+  transform: translateY(-3px);
+}
+
+.preset.active {
+  box-shadow: inset 5px 5px 10px var(--shadow-dark),
+              inset -5px -5px 10px var(--shadow-light);
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 15px;
+  background: var(--primary);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+/* Player */
+.player {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: inset 5px 5px 10px var(--shadow-dark),
+              inset -5px -5px 10px var(--shadow-light);
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <div class="title">🎧 AI Music Generator</div>
+
+    <!-- Preset -->
+    <div class="grid">
+      <div class="preset" onclick="selectPreset(this, 'coding night')">💻 Coding</div>
+      <div class="preset" onclick="selectPreset(this, 'rain focus')">🌧️ Rain</div>
+      <div class="preset" onclick="selectPreset(this, 'cinematic epic')">🎬 Epic</div>
+      <div class="preset" onclick="selectPreset(this, 'industrial tech')">⚙️ Tech</div>
+    </div>
+
+    <!-- Button -->
+    <button onclick="generate()">Generate Music</button>
+
+    <!-- Loading -->
+    <div class="loading" id="loading"></div>
+
+    <!-- Player -->
+    <div class="player">
+      <audio id="audio" controls style="width:100%"></audio>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let selectedMood = "coding night";
+
+function selectPreset(el, mood) {
+  document.querySelectorAll(".preset").forEach(p => p.classList.remove("active"));
+  el.classList.add("active");
+  selectedMood = mood;
+}
+
+async function generate() {
+  const loading = document.getElementById("loading");
+  const audio = document.getElementById("audio");
+
+  loading.innerText = "⏳ Generating music...";
+  audio.src = "";
+
+  try {
+    const res = await fetch("http://localhost:3000/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ mood: selectedMood })
+    });
+
+    const data = await res.json();
+    audio.src = data.audioUrl;
+
+    loading.innerText = "✅ Done!";
+  } catch (err) {
+    loading.innerText = "❌ Error generating music";
+  }
+}
+</script>
+
+</body>
+</html>

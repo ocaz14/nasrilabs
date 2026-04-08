@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta id="theme-color" name="theme-color" content="#111111" />
+    <link id="icon" rel="icon" href="" type="image/png">
+    <meta
+      name="description"
+      content="
+      Kalkulato Online FPB (Faktor Persekutuan terBesar) dari empat nilai.
+      Mudah, cepat, praktis, dan GRATIS.       
+      Misalnya FPB dari 8, 12, 24 dan 32 adalah 4
+      Temukan Kalkulator yang anda butuhkan Disini.
+      "
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator FPB Empat Nilai</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/project/calculator/css/calc.css" />
+    <link rel="stylesheet" href="/project/calculator/css/footer.css">
+
+
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "HowTo",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://nasrianas.website/project/calculator/img/rich-snippets/bilangan/FPBEmpatNilai_2.PNG"
+        },
+        "name": "Kalkulator FPB Empat Nilai",
+        "totalTime": "PT5S",
+        "step":[
+          {
+            "@type": "HowToStep",
+            "name": "Persiapan",
+            "text": "Masukkan Nilai",
+            "image": "https://nasrianas.website/project/calculator/img/rich-snippets/bilangan/FPBEmpatNilai_1.PNG",
+            "url": "https://nasrianas.website/project/calculator/bilangan/115-kalkulator-FPB-empat-nilai"
+          }, {
+            "@type": "HowToStep",
+            "name": "Eksekusi",
+            "text": "Klik Tombol HITUNG",
+            "image": "https://nasrianas.website/project/calculator/img/rich-snippets/bilangan/FPBEmpatNilai_2.PNG",
+            "url": "https://nasrianas.website/project/calculator/bilangan/115-kalkulator-FPB-empat-nilai"
+          }
+        ]
+      }
+    </script>
+
+    <script src="/project/calculator/js/utility-function.js" defer></script>
+    <script src="/project/calculator/js/input-calc.js" defer></script>
+    <script src="/project/calculator/js/sidebar-calc.js" defer></script>    
+    <script src="/project/calculator/js/arrow-calc.js" defer></script>
+    <script src="/project/calculator/js/calc-newFooter.js" defer></script>
+    <script src="/project/calculator/js/link.js" defer></script>
+    <script src="/js/meta.js" defer></script>
+    <script src="/js/header-nav2.js" defer></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4121909078887048"
+    crossorigin="anonymous"> 
+    </script>
+    <script async src="https://cse.google.com/cse.js?cx=17656d558951068bd"></script>
+
+    <style>
+      .full-width{
+        width: 100%;
+      }
+      .input-cont{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header-nav"></header>
+    <div class="line-color"></div>
+
+    <div class="top-ads">
+      <!-- calc_Display -->
+      <ins class="adsbygoogle"
+          style="display: flex; justify-content: center; align-items: center;"
+          data-ad-client="ca-pub-4121909078887048"
+          data-ad-slot="1867580510"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <div class="content">
+      <div id="sidebar" class="sidebar"></div>  
+      <div class="main-content">
+        <div class="full-width">
+          <div class="head">
+            <h1 id="Blogtitle"></h1>
+            <div id="Nov20-ProK_57" class="page-active" href="#"></div>
+            <h6>
+              Dapat digunakan untuk mencari Faktor Persekutuan terBesar 
+              (FPB) dari empat nilai. Misalnya FPB dari 8, 12, 24 dan 32 adalah 4
+            </h6>
+          </div>
+          <div id="share-btn-top" class="share-btn"></div>
+
+          <div>
+            <div><p>Masukkan Bilangan Bulat Positif</p></div>
+            <div class="input-cont">
+              <input id="input1" type="number" placeholder="0"/>
+              <input id="input2" type="number" placeholder="0"/>
+              <input id="input3" type="number" placeholder="0"/>
+              <input id="input4" type="number" placeholder="0"/>
+            </div>
+          </div>
+          <div>
+            <button onclick="calculate()">HITUNG</button>
+            <button onclick="reset()">HAPUS</button>
+          </div>
+          <div>
+            <p>
+              Klik "HITUNG" untuk melihat hasil
+            </p>
+          </div>
+          <div id="result-container">
+            <p class="exp-result" id="exp1"></p>
+            <div class="result_b" id="result1"></div>
+            <p class="exp-result" id="exp2"></p>
+            <div class="result_b" id="result2"></div>
+            <p class="exp-result" id="exp3"></p>
+            <div class="result_b" id="result3"></div>
+            <p class="exp-result" id="exp4"></p>
+            <div class="result_b" id="result4"></div>
+            <p class="exp-result">Faktor Persekutuan Terbesar (FPB)</p>
+            <div class="result_b" id="result"></div>
+          </div>
+
+          <!-- calc_Disp_in -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-4121909078887048"
+               data-ad-slot="5191453012"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+
+        </div>
+              <!--start arrow-->
+        <div class="arrow">
+          <a id="leftArrow" href=""><div class="left-arrow">Previous</div></a>
+          <div class="arrow-space"></div>
+          <a id="rightArrow" href=""><div class="right-arrow">Next</div></a>
+        </div>
+        <!--end arrow-->
+      </div>
+
+
+    </div>
+    <div class="line-color"></div>
+    <div id="footer" class="footer"></div>
+
+    <script>
+      addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+          calculate();
+        }
+      });
+      var error = 0;
+      reset();      
+
+      function calculate() { 
+        error = 0;      
+        var value1 = document.getElementById("input1").value;  
+        var value2 = document.getElementById("input2").value;  
+        var value3 = document.getElementById("input3").value; 
+        var value4 = document.getElementById("input4").value; 
+
+        bilB_Check(value1);
+        bilB_Check(value2);
+        bilB_Check(value3);
+        bilB_Check(value4);
+
+        if(value1 == "" || value2 == "" || value3 == "" || value4 == "" ){
+          document.getElementById("result-container").style.display = "none";
+          alert("Masukkan Bilangan Bulat Positif")
+        }else{
+          if(value1 <= 0 || value2 <= 0|| value3 <= 0 || value4 <= 0 || error == 1){
+            document.getElementById("result-container").style.display = "none";
+            alert("Masukkan Bilangan Bulat Posisif");
+          }else{
+            var a = faktorPrima(value1);
+            var b = faktorPrima(value2);
+            var c = faktorPrima(value3);
+            var d = faktorPrima(value4);
+
+            var a_factor = [...a];
+            var b_factor = [...b];
+            var c_factor = [...c];
+            var d_factor = [...d];
+
+            //Faktor Prima
+            disp("result1", a);
+            disp("result2", b);
+            disp("result3", c);
+            disp("result4", d);
+
+            //FPB
+            var z = [];
+            for(var i = 0; i < a_factor.length; i++){
+              for(var j = 0 ; j < b_factor.length; j++){            
+                for(var k = 0 ; k < c_factor.length; k++){            
+                  for(var l = 0 ; l < d_factor.length; l++){            
+                    if( a_factor[i] == b_factor[j] 
+                        && a_factor[i] == c_factor[k] 
+                        && a_factor[i] == d_factor[l]
+                      ){
+                      z.push(a_factor[i])
+                      a_factor[i] = "";
+                      b_factor[j] = "";
+                      c_factor[k] = "";
+                      d_factor[l] = "";
+                      break
+                    }            
+                  }         
+                }        
+              }
+            }        
+
+            var result = 1;
+            for(var q = 0; q < z.length; q++){
+              result = result * z[q];
+            }
+            
+            document.getElementById("exp1").innerHTML = "Faktor Prima dari " + value1 + ":";
+            document.getElementById("exp2").innerHTML = "Faktor Prima dari " + value2 + ":";
+            document.getElementById("exp3").innerHTML = "Faktor Prima dari " + value3 + ":";
+            document.getElementById("exp4").innerHTML = "Faktor Prima dari " + value4 + ":";
+            document.getElementById("result").innerHTML = result;
+            document.getElementById("result-container").style.display = "block"; 
+          }
+        }
+      }
+
+      function reset() {
+        document.getElementById("input1").value = "";
+        document.getElementById("input2").value = "";
+        document.getElementById("input3").value = "";
+        document.getElementById("input4").value = "";
+        document.getElementById("result-container").style.display = "none";
+      }
+
+      function faktorPrima(value){
+        var faktorPrima = [];
+        while(value > 1){
+          for (var i = 2; i <= value; i++) {
+            if (value % i == 0) {
+              faktorPrima.push(i);
+              value = value / i;
+              break
+            }          
+          }
+        }
+        return faktorPrima
+      }      
+
+      function disp(id, arr){
+        if(arr == ""){
+          document.getElementById(id).innerHTML = "1";
+        }else{
+          for(var i = 0; i < arr.length - 1; i++){
+            arr[i] = arr[i] + " <span class='lightgrey'> x </span> ";
+          }
+          document.getElementById(id).innerHTML = arr.join("");
+        }
+      }
+
+      function bilB_Check(bil){
+        var a = bil % 1;
+        if(a > 0){
+          error = 1;
+        }
+      }
+
+    </script>
+
+  </body>
+</html>

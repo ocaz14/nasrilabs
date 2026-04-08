@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta id="theme-color" name="theme-color" content="#111111" />
+    <link id="icon" rel="icon" href="" type="image/png">
+    <meta
+      name="description"
+      content="
+      Kalkulator Online KPK (Kelipatan Persekutuan terKecil) dari dua nilai.
+      Mudah, cepat, praktis, dan GRATIS.       
+      Misalnya KPK dari 12 dan 20 adalah 60
+      Temukan Kalkulator yang anda butuhkan Disini.
+      "
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator KPK Dua Nilai</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/project/calculator/css/calc.css" />
+    <link rel="stylesheet" href="/project/calculator/css/footer.css">
+
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "HowTo",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://nasrianas.website/project/calculator/img/rich-snippets/bilangan/KPKDuaNilai_2.PNG"
+        },
+        "name": "Kalkulator KPK Dua Nilai",
+        "totalTime": "PT5S",
+        "step":[
+          {
+            "@type": "HowToStep",
+            "name": "Persiapan",
+            "text": "Masukkan Nilai",
+            "image": "https://nasrianas.website/project/calculator/img/rich-snippets/bilangan/KPKDuaNilai_1.PNG",
+            "url": "https://nasrianas.website/project/calculator/bilangan/117-kalkulator-KPK-dua-nilai"
+          }, {
+            "@type": "HowToStep",
+            "name": "Eksekusi",
+            "text": "Klik Tombol HITUNG",
+            "image": "https://nasrianas.website/project/calculator/img/rich-snippets/bilangan/KPKDuaNilai_2.PNG",
+            "url": "https://nasrianas.website/project/calculator/bilangan/117-kalkulator-KPK-dua-nilai"
+          }
+        ]
+      }
+    </script>
+
+    <script src="/project/calculator/js/utility-function.js" defer></script>
+    <script src="/project/calculator/js/input-calc.js" defer></script>
+    <script src="/project/calculator/js/sidebar-calc.js" defer></script>    
+    <script src="/project/calculator/js/arrow-calc.js" defer></script>
+    <script src="/project/calculator/js/calc-newFooter.js" defer></script>
+    <script src="/project/calculator/js/link.js" defer></script>
+    <script src="/js/meta.js" defer></script>
+    <script src="/js/header-nav2.js" defer></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4121909078887048"
+    crossorigin="anonymous"> 
+    </script>
+    <script async src="https://cse.google.com/cse.js?cx=17656d558951068bd"></script>
+
+    <style>
+      .full-width{
+        width: 100%;
+      }
+      .input-cont{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header-nav"></header>
+    <div class="line-color"></div>
+
+    <div class="top-ads">
+      <!-- calc_Display -->
+      <ins class="adsbygoogle"
+          style="display: flex; justify-content: center; align-items: center;"
+          data-ad-client="ca-pub-4121909078887048"
+          data-ad-slot="1867580510"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <div class="content">
+      <div id="sidebar" class="sidebar"></div>  
+      <div class="main-content">
+        <div class="full-width">
+          <div class="head">
+            <h1 id="Blogtitle"></h1>
+            <div id="Nov20-ProK_59" class="page-active" href="#"></div>
+            <h6>
+              Dapat digunakan untuk mencari Kelipatan Persekutuan terKecil (KPK) 
+              dari dua nilai. Misalnya KPK dari 12 dan 20 adalah 60
+            </h6>
+          </div>
+          <div id="share-btn-top" class="share-btn"></div>
+
+          <div>
+            <div><p>Masukkan Bilangan Bulat Positif</p></div>
+            <div class="input-cont">
+              <input id="input1" type="number" placeholder="0"/>
+              <input id="input2" type="number" placeholder="0"/>
+            </div>
+          </div>
+          <div>
+            <button onclick="calculate()">HITUNG</button>
+            <button onclick="reset()">HAPUS</button>
+          </div>
+          <div>
+            <p>
+              Klik "HITUNG" untuk melihat hasil
+            </p>
+          </div>
+          <div id="result-container">
+            <p class="exp-result" id="exp1"></p>
+            <div class="result_b" id="result1"></div>
+            <p class="exp-result" id="exp2"></p>
+            <div class="result_b" id="result2"></div>
+            <p class="exp-result">Kelipatan Persekutuan terKecil (KPK)</p>
+            <div class="result_b" id="result3"></div>
+          </div>
+
+          <!-- calc_Disp_in -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-4121909078887048"
+               data-ad-slot="5191453012"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+
+        </div>
+              <!--start arrow-->
+        <div class="arrow">
+          <a id="leftArrow" href=""><div class="left-arrow">Previous</div></a>
+          <div class="arrow-space"></div>
+          <a id="rightArrow" href=""><div class="right-arrow">Next</div></a>
+        </div>
+        <!--end arrow-->
+      </div>
+
+
+    </div>
+    <div class="line-color"></div>
+    <div id="footer" class="footer"></div>
+
+    <script>
+      addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+          calculate();
+        }
+      });
+      var resultArr = [];
+      var error = 0;
+      reset();      
+
+      function calculate() { 
+        error = 0;      
+        var value1 = document.getElementById("input1").value;  
+        var value2 = document.getElementById("input2").value;  
+
+        bilB_Check(value1);
+        bilB_Check(value2);
+
+        if(value1 == "" || value2 == "" ){
+          document.getElementById("result-container").style.display = "none";
+          alert("Masukkan Bilangan Bulat Positif")
+        }else{
+          if(value1 <= 0 || value2 <= 0 || error == 1){
+            document.getElementById("result-container").style.display = "none";
+            alert("Masukkan Bilangan Bulat Posisif");
+          }else{
+            var a = faktorPrima(value1);
+            var b = faktorPrima(value2);
+
+            var fa = kpk_factor(a)
+            var fb = kpk_factor(b)
+            var result = kpk(fa, fb)
+
+            //Display faktor prima
+            disp("result1", a);
+            disp("result2", b);       
+
+            document.getElementById("exp1").innerHTML = "Faktor Prima dari " + value1 + ":";
+            document.getElementById("exp2").innerHTML = "Faktor Prima dari " + value2 + ":";
+            document.getElementById("result3").innerHTML = result;
+            document.getElementById("result-container").style.display = "block"; 
+          }
+        }
+      }
+
+      function reset() {
+        document.getElementById("input1").value = "";
+        document.getElementById("input2").value = "";
+        document.getElementById("result-container").style.display = "none";
+      }
+
+      function faktorPrima(value){
+        var faktorPrima = [];
+        while(value > 1){
+          for (var i = 2; i <= value; i++) {
+            if (value % i == 0) {
+              faktorPrima.push(i);
+              value = value / i;
+              break
+            }          
+          }
+        }
+        return faktorPrima
+      }
+
+      function disp(id, arr){
+        if(arr == ""){
+          document.getElementById(id).innerHTML = "1";
+        }else{
+          for(var i = 0; i < arr.length - 1; i++){
+            arr[i] = arr[i] + " <span class='lightgrey'> x </span> ";
+          }
+          document.getElementById(id).innerHTML = arr.join("");
+        }
+      }
+
+      function bilB_Check(bil){
+        var a = bil % 1;
+        if(a > 0){
+          error = 1;
+        }
+      }
+
+      function kpk_factor(arr){
+        var prev = "";
+        var newArr = [];
+        for(var i = 0; i < arr.length; i++){
+          if(arr[i] != prev){
+            newArr.push(arr[i])
+            prev = arr[i];
+          }
+        }
+        var newArr2 = [];
+        var facTotal = 0;
+        for(var i = 0; i < newArr.length; i++){
+          facTotal = 0;
+          for(var j = 0; j < arr.length; j++){
+            if(newArr[i] == arr[j]){
+              facTotal = facTotal + 1; 
+            }            
+          }
+          newArr2[i] = [newArr[i], facTotal];          
+        }
+        return newArr2
+      }
+
+      // function kpk(a, b){
+      //   var arr1 = [...a];
+      //   var arr2 = [...b];
+      //   var maxArr = [];
+      //   for(var i = 0; i< arr1.length; i++){
+      //     for(var j = 0; j< arr2.length; j++){
+      //       if(arr1[i][0] == arr2[j][0]){
+      //         if(arr1[i][1] >= arr2[j][1]){
+      //           maxArr.push(arr1[i])
+      //           arr1[i] = "";
+      //           arr2[j] = "";
+      //         }else{
+      //           maxArr.push(arr2[j])
+      //           arr1[i] = "";
+      //           arr2[j] = "";
+      //         }
+      //       }
+      //     }
+      //   }
+        
+        
+      //   resultArr = [...maxArr];
+      //   theRest(arr1)
+      //   theRest(arr2)
+
+      //   console.log(resultArr);
+
+      //   finishing
+      //   var result = 1;
+      //   for(var i = 0; i < resultArr.length; i++){
+      //     result = result * Math.pow(resultArr[i][0], resultArr[i][1])
+      //   }       
+      //   return result
+      // }
+
+      function kpk(a, b){
+        var arr1 = [...a];
+        var arr2 = [...b];
+        var maxArr = [...arr1];
+
+        maxArr = partResult(maxArr, arr2);
+
+        console.log(maxArr);
+        //finishing
+        var resultArr = [...maxArr]
+        var result = 1;
+        for(var i = 0; i < resultArr.length; i++){
+          result = result * Math.pow(resultArr[i][0], resultArr[i][1])
+        }       
+        return result
+      }
+
+      function theRest(maxArr, arr){
+        for(var i=0; i< arr.length; i++){
+          if(arr[i] != ""){
+            maxArr.push(arr[i]);
+          }
+        }
+        return maxArr
+      }
+
+      function arr_check(maxArr, arr){
+        for(var n = 0; n<arr.length; n++){
+          for(var i = 0; i< maxArr.length; i++){
+            if(maxArr[i][0] == arr[n][0]){
+              if(maxArr[i][1] <= arr[n][1]){
+                maxArr[i] = arr[n];
+                arr[n] = "";
+              }else{
+                arr[n] = "";
+              }
+            }       
+          }
+        }
+        return [maxArr, arr]
+      }
+
+      function partResult(maxArr, arr){
+        var [halfResult, rest] = arr_check(maxArr, arr)   
+        return maxArr = theRest(halfResult, rest) 
+      }
+
+    </script>
+
+  </body>
+</html>
