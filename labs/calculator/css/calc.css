@@ -575,3 +575,91 @@ input:focus {
 .full-width .adsbygoogle ins {
   box-shadow: rgba(68, 68, 68, 0.1) 0px 4px 12px;
 } */
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px 0 0px;
+}
+
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+    /* gap: 12px; */
+}
+
+.logo img {
+    height: 38px;
+}
+
+.logo span {
+    font-weight: bold;
+    font-size: 18px;
+    color: #10b981;
+}
+
+
+/* NAV LINKS */
+.nav-links a {
+    margin-left: 30px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* HOVER FADE */
+.nav-links a:hover {
+    opacity: 0.7;
+}
+
+/* UNDERLINE BASE */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    transition: 0.3s ease;
+}
+
+/* UNDERLINE ANIMATION */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* ===== WARNA PER SECTION (MULTI-PAGE) ===== */
+
+/* HOME → orange pastel */
+.nav-links a[href="index.html"]::after {
+    background: #f7b267;
+}
+
+/* LABS → MUTED EMERALD (UPDATED) */
+.nav-links a[href="labs.html"]::after {
+    background: #10b981;
+}
+
+/* WORKS → biru pastel */
+.nav-links a[href="works.html"]::after {
+    background: #a0c4ff;
+}
+
+/* THINKING → pink pastel */
+.nav-links a[href="thinking.html"]::after {
+    background: #ffafcc;
+}
+
+/* ===== ACTIVE STATE ===== */
+.nav-links a.active {
+    opacity: 1;
+}
+
+.nav-links a.active::after {
+    width: 100%;
+}
+
