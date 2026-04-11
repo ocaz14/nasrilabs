@@ -348,7 +348,7 @@ body {
 
 /* Hover halus */
 .card.neu:hover {
-    transform: translateY(-4px);
+    /* transform: translateY(-4px); */
     transition: 0.2s;
 }
 
