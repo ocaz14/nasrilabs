@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kalkulator cm ke mm (Konversi Cepat & Akurat)</title>
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<meta name="description" content="Kalkulator cm ke mm online. Konversi centimeter ke millimeter dengan cepat dan akurat.">
+
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/calculator.css">
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"WebApplication",
+"name":"Kalkulator cm ke mm",
+"applicationCategory":"Calculator",
+"operatingSystem":"All"
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar">
+<div class="logo">
+<img src="/logo.png">
+<span>.com</span>
+</div>
+<div class="nav-links">
+<a href="/index.html">Home</a>
+<a href="/labs.html">Labs</a>
+<a href="/works.html">Works</a>
+<a href="/thinking.html">Thinking</a>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Kalkulator cm ke mm</h1>
+<p>Konversi centimeter ke millimeter secara instan ⚡</p>
+</div>
+</div>
+
+<!-- KALKULATOR -->
+<div class="section">
+<div class="page">
+
+<h2>📏 Konversi cm ke mm</h2>
+
+<div class="input-group">
+<input 
+type="number" 
+id="cmInput" 
+placeholder="Masukkan nilai cm..."
+oninput="convert()"
+>
+</div>
+
+<div class="button-group">
+<button class="btn neu" onclick="convert()">Hitung</button>
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+</div>
+</div>
+
+<!-- PENJELASAN -->
+<div class="section">
+<div class="page">
+
+<h2>🧠 Cara Konversi cm ke mm</h2>
+<p>Untuk mengubah centimeter ke millimeter, cukup kalikan nilai cm dengan 10.</p>
+
+<p><strong>Rumus:</strong></p>
+<p>cm × 10 = mm</p>
+
+<ul>
+<li>1 cm = 10 mm</li>
+<li>2.5 cm = 25 mm</li>
+<li>10 cm = 100 mm</li>
+</ul>
+
+<h3>🔗 Contoh Konversi</h3>
+<p class="internal-link">
+<a href="/blog/posts/length/cm-mm/1-cm-berapa-mm.html">1 cm ke mm</a>
+<a href="/blog/posts/length/cm-mm/5-cm-berapa-mm.html">5 cm ke mm</a>
+<a href="/blog/posts/length/cm-mm/10-cm-berapa-mm.html">10 cm ke mm</a>
+</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+function convert() {
+  const cm = document.getElementById("cmInput").value;
+
+  if (cm === "") {
+    document.getElementById("result").innerText = "-";
+    return;
+  }
+
+  let mm = Number(cm * 10).toPrecision(10);
+  mm = parseFloat(mm); // hilangkan trailing nol
+
+  if (Math.abs(mm) < 0.000001) {
+    mm = Number(mm).toExponential(3);
+  }
+
+  document.getElementById("result").innerText = mm + " mm";
+}
+</script>
+
+</body>
+</html>

@@ -193,7 +193,7 @@ body {
 
 /* SECTION */
 .section {
-    margin-top: 0px;
+    margin-top: 20px;
 }
 .margintop100px{
     margin-top: 100px;
@@ -475,7 +475,7 @@ table tr:hover {
 .internal-link a {
     background: #e0e5ec;
     padding: 8px 14px;
-    border-radius: 999px;
+    border-radius: 5px;
     font-size: 13px;
     text-decoration: none;
     color: #10b981;
@@ -511,4 +511,61 @@ table {
 td, th {
   border: 1px solid #ddd;
   padding: 8px;
+}
+
+/* INPUT */
+.input-group input {
+  /* width: 300px; */
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: #f0f5fc;
+  box-shadow: inset 2px 2px 5px #bebebe,
+              inset -2px -2px 5px #ffffff;
+}
+
+/* BUTTON */
+.button-group {
+  margin-top: 20px;
+}
+
+/* RESULT */
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.page {
+    flex: 1 1 280px;
+    padding: 40px;
+    transition: 0.25s ease;
+    /* border-radius: 16px; */
+    background: #e0e5ec;
+    box-shadow: 5px 5px 12px #a3b1c6,
+                -5px -5px 12px #ffffff;
+    transition: 0.3s ease;
+}
+
+.page h3 {
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.page p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.page ul {
+    padding-left: 18px;
+}
+
+.page ul li {
+    margin-bottom: 6px;
+}
+
+.page strong {
+    color: #10b981;
 }
