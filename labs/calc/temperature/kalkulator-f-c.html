@@ -4,22 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kalkulator cm ke mm (Konversi Cepat & Akurat)</title>
+<title>Kalkulator F ke C (Konversi Cepat & Akurat)</title>
 
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator cm ke mm online. Konversi centimeter ke millimeter dengan cepat dan akurat.">
+<meta name="description" content="Kalkulator F ke C online. Konversi Fahrenheit ke Celcius dengan cepat dan akurat.">
 
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/calculator.css">
 
+<!-- Schema -->
 <script type="application/ld+json">
 {
 "@context":"https://schema.org",
 "@type":"WebApplication",
-"name":"Kalkulator cm ke mm",
+"name":"Kalkulator F ke C",
 "applicationCategory":"Calculator",
 "operatingSystem":"All"
 }
@@ -47,8 +48,8 @@
 <!-- HERO -->
 <div class="hero">
 <div class="hero-text">
-<h1>Kalkulator cm ke mm</h1>
-<p>Konversi centimeter ke millimeter secara instan ⚡</p>
+<h1>Kalkulator F ke C</h1>
+<p>Konversi Fahrenheit ke Celcius secara instan 🌡️</p>
 </div>
 </div>
 
@@ -56,15 +57,15 @@
 <div class="section">
 <div class="page">
 
-<h2>📏 Konversi cm ke mm</h2>
+<h2>🌡️ Konversi F ke C</h2>
 
 <div class="input-group">
 <input 
 type="number" 
-id="cmInput" 
-placeholder="Masukkan nilai cm..."
+id="fInput" 
+placeholder="Masukkan suhu Fahrenheit..."
 oninput="convert()"
-> cm
+> F
 </div>
 
 <div class="button-group">
@@ -80,31 +81,34 @@ oninput="convert()"
 <div class="section">
 <div class="page">
 
-<h2>🧠 Cara Konversi cm ke mm</h2>
-<p>Untuk mengubah centimeter ke millimeter, cukup kalikan nilai cm dengan 10.</p>
+<h2>🧠 Cara Konversi F ke C</h2>
 
-<p><strong>Rumus:</strong></p>
-<p>cm × 10 = mm</p>
-
-<ul>
-<li>1 cm = 10 mm</li>
-<li>2.5 cm = 25 mm</li>
-<li>10 cm = 100 mm</li>
-</ul>
-
-<h3>🔗 Contoh Konversi</h3>
-<p class="internal-link">
-<a href="/blog/posts/length/cm-mm/1-cm-berapa-mm.html">1 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/5-cm-berapa-mm.html">5 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/10-cm-berapa-mm.html">10 cm ke mm</a>
+<p>
+Konversi <strong>Fahrenheit ke Celcius</strong> dilakukan dengan mengurangi 32 dari nilai Fahrenheit,
+kemudian dikalikan dengan 5/9.
 </p>
 
+<p><strong>Rumus:</strong></p>
+<p>(F − 32) × 5/9 = C</p>
+
+<ul>
+<li>32°F = 0°C</li>
+<li>77°F = 25°C</li>
+<li>212°F = 100°C</li>
+</ul>
+
+<!-- <h3>🔗 Contoh Konversi</h3>
+<p class="internal-link">
+<a href="/blog/posts/temperature/f-c/32-f-berapa-c.html">32°F ke C</a>
+<a href="/blog/posts/temperature/f-c/77-f-berapa-c.html">77°F ke C</a>
+<a href="/blog/posts/temperature/f-c/212-f-berapa-c.html">212°F ke C</a>
+</p> -->
+
+<!-- Cross Calculator -->
 <h3>🔁 Kalkulator Lainnya</h3>
 <p class="internal-link">
 <a href="/labs/calc/unit-converter.html">Kalkulator</a>
-<a href="/labs/calc/length/kalkulator-mm-cm.html">mm ke cm</a>
-<a href="/labs/calc/length/kalkulator-cm-m.html">cm ke m</a>
-<a href="/labs/calc/length/kalkulator-m-cm.html">m ke cm</a>
+<a href="/labs/calc/temperature/kalkulator-c-f.html">C ke F</a>
 </p>
 
 </div>
@@ -115,28 +119,24 @@ oninput="convert()"
 
 </div>
 
+<!-- SCRIPT -->
 <script>
 function convert() {
-  const cm = parseFloat(document.getElementById("cmInput").value);
+  const f = parseFloat(document.getElementById("fInput").value);
 
-  if (cm === "") {
+  if (isNaN(f)) {
     document.getElementById("result").innerText = "-";
     return;
   }
 
-  let mm = Number(cm * 10).toPrecision(10);
-  mm = parseFloat(mm); // hilangkan trailing nol
+  let c = Number((f - 32) * 5/9).toPrecision(10);
+  c = parseFloat(c);
 
-  if (Math.abs(mm) < 0.000001) {
-    mm = Number(mm).toExponential(3);
+  if (Math.abs(c) < 1e-7) {
+    c = Number(c).toExponential(3);
   }
 
-  if (isNaN(cm)) {
-    document.getElementById("result").innerText = "-";
-    return;
-  }
-
-  document.getElementById("result").innerText = mm + " mm";
+  document.getElementById("result").innerText = c + " °C";
 }
 </script>
 

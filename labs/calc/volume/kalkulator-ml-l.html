@@ -4,22 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kalkulator cm ke mm (Konversi Cepat & Akurat)</title>
+<title>Kalkulator ml ke l (Konversi Cepat & Akurat)</title>
 
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator cm ke mm online. Konversi centimeter ke millimeter dengan cepat dan akurat.">
+<meta name="description" content="Kalkulator ml ke l online. Konversi mililiter ke liter dengan cepat dan akurat.">
 
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/calculator.css">
 
+<!-- Schema -->
 <script type="application/ld+json">
 {
 "@context":"https://schema.org",
 "@type":"WebApplication",
-"name":"Kalkulator cm ke mm",
+"name":"Kalkulator ml ke l",
 "applicationCategory":"Calculator",
 "operatingSystem":"All"
 }
@@ -47,8 +48,8 @@
 <!-- HERO -->
 <div class="hero">
 <div class="hero-text">
-<h1>Kalkulator cm ke mm</h1>
-<p>Konversi centimeter ke millimeter secara instan ⚡</p>
+<h1>Kalkulator ml ke l</h1>
+<p>Konversi mililiter ke liter secara instan ⚡</p>
 </div>
 </div>
 
@@ -56,15 +57,15 @@
 <div class="section">
 <div class="page">
 
-<h2>📏 Konversi cm ke mm</h2>
+<h2>🥤 Konversi ml ke l</h2>
 
 <div class="input-group">
 <input 
 type="number" 
-id="cmInput" 
-placeholder="Masukkan nilai cm..."
+id="mlInput" 
+placeholder="Masukkan nilai ml..."
 oninput="convert()"
-> cm
+> ml
 </div>
 
 <div class="button-group">
@@ -80,31 +81,34 @@ oninput="convert()"
 <div class="section">
 <div class="page">
 
-<h2>🧠 Cara Konversi cm ke mm</h2>
-<p>Untuk mengubah centimeter ke millimeter, cukup kalikan nilai cm dengan 10.</p>
+<h2>🧠 Cara Konversi ml ke l</h2>
 
-<p><strong>Rumus:</strong></p>
-<p>cm × 10 = mm</p>
-
-<ul>
-<li>1 cm = 10 mm</li>
-<li>2.5 cm = 25 mm</li>
-<li>10 cm = 100 mm</li>
-</ul>
-
-<h3>🔗 Contoh Konversi</h3>
-<p class="internal-link">
-<a href="/blog/posts/length/cm-mm/1-cm-berapa-mm.html">1 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/5-cm-berapa-mm.html">5 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/10-cm-berapa-mm.html">10 cm ke mm</a>
+<p>
+Konversi <strong>mililiter ke liter</strong> dilakukan dengan membagi nilai mililiter dengan 1000,
+karena 1 liter sama dengan 1000 mililiter.
 </p>
 
+<p><strong>Rumus:</strong></p>
+<p>ml ÷ 1000 = l</p>
+
+<ul>
+<li>1000 ml = 1 l</li>
+<li>500 ml = 0.5 l</li>
+<li>250 ml = 0.25 l</li>
+</ul>
+
+<!-- <h3>🔗 Contoh Konversi</h3>
+<p class="internal-link">
+<a href="/blog/posts/volume/ml-l/1000-ml-berapa-l.html">1000 ml ke l</a>
+<a href="/blog/posts/volume/ml-l/500-ml-berapa-l.html">500 ml ke l</a>
+<a href="/blog/posts/volume/ml-l/250-ml-berapa-l.html">250 ml ke l</a>
+</p> -->
+
+<!-- Cross Calculator -->
 <h3>🔁 Kalkulator Lainnya</h3>
 <p class="internal-link">
 <a href="/labs/calc/unit-converter.html">Kalkulator</a>
-<a href="/labs/calc/length/kalkulator-mm-cm.html">mm ke cm</a>
-<a href="/labs/calc/length/kalkulator-cm-m.html">cm ke m</a>
-<a href="/labs/calc/length/kalkulator-m-cm.html">m ke cm</a>
+<a href="/labs/calc/volume/kalkulator-l-ml.html">l ke ml</a>
 </p>
 
 </div>
@@ -115,28 +119,24 @@ oninput="convert()"
 
 </div>
 
+<!-- SCRIPT -->
 <script>
 function convert() {
-  const cm = parseFloat(document.getElementById("cmInput").value);
+  const ml = parseFloat(document.getElementById("mlInput").value);
 
-  if (cm === "") {
+  if (isNaN(ml)) {
     document.getElementById("result").innerText = "-";
     return;
   }
 
-  let mm = Number(cm * 10).toPrecision(10);
-  mm = parseFloat(mm); // hilangkan trailing nol
+  let l = Number(ml / 1000).toPrecision(10);
+  l = parseFloat(l);
 
-  if (Math.abs(mm) < 0.000001) {
-    mm = Number(mm).toExponential(3);
+  if (Math.abs(l) < 1e-7) {
+    l = Number(l).toExponential(3);
   }
 
-  if (isNaN(cm)) {
-    document.getElementById("result").innerText = "-";
-    return;
-  }
-
-  document.getElementById("result").innerText = mm + " mm";
+  document.getElementById("result").innerText = l + " l";
 }
 </script>
 

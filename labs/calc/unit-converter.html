@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Universal Unit Converter (Semua Satuan)</title>
+
+<meta name="description" content="Konverter satuan lengkap: panjang, berat, volume, suhu. Cepat dan akurat.">
+
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/calculator.css">
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"WebApplication",
+"name":"Universal Unit Converter",
+"applicationCategory":"Calculator",
+"operatingSystem":"All"
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar">
+<div class="logo">
+<img src="/logo.png">
+<span>.com</span>
+</div>
+<div class="nav-links">
+<a href="/index.html">Home</a>
+<a href="/labs.html">Labs</a>
+<a href="/works.html">Works</a>
+<a href="/thinking.html">Thinking</a>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Universal Converter</h1>
+<p>Konversi semua satuan dalam satu tempat ⚡</p>
+</div>
+</div>
+
+<!-- CONVERTER -->
+<div class="section">
+<div class="page">
+
+<h2>🔄 Unit Converter</h2>
+
+<select id="category" onchange="updateUnits()">
+<option value="length">Length</option>
+<option value="weight">Weight</option>
+<option value="volume">Volume</option>
+<option value="temperature">Temperature</option>
+</select>
+
+<div class="input-group">
+<input 
+type="number" 
+id="inputValue" 
+placeholder="Masukkan nilai..." 
+oninput="convert()"
+>
+</div>
+
+<div class="converter-row">
+
+<select id="fromUnit" onchange="convert()"></select>
+
+<button class="btn neu" onclick="swap()">↔️</button>
+
+<select id="toUnit" onchange="convert()"></select>
+
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+
+// UNIT DATA
+const units = {
+  length: {
+    mm: 0.001,
+    cm: 0.01,
+    m: 1,
+    km: 1000
+  },
+  weight: {
+    mg: 0.001,
+    g: 1,
+    kg: 1000
+  },
+  volume: {
+    ml: 0.001,
+    l: 1
+  }
+};
+
+// INIT UNIT OPTIONS
+function updateUnits() {
+  const category = document.getElementById("category").value;
+  const from = document.getElementById("fromUnit");
+  const to = document.getElementById("toUnit");
+
+  from.innerHTML = "";
+  to.innerHTML = "";
+
+  if (category === "temperature") {
+    ["C","F"].forEach(u => {
+      from.innerHTML += `<option value="${u}">${u}</option>`;
+      to.innerHTML += `<option value="${u}">${u}</option>`;
+    });
+  } else {
+    Object.keys(units[category]).forEach(u => {
+      from.innerHTML += `<option value="${u}">${u}</option>`;
+      to.innerHTML += `<option value="${u}">${u}</option>`;
+    });
+  }
+
+  convert();
+}
+
+// SWAP FUNCTION
+function swap(){
+  const from = document.getElementById("fromUnit");
+  const to = document.getElementById("toUnit");
+
+  const temp = from.value;
+  from.value = to.value;
+  to.value = temp;
+
+  convert();
+}
+
+// LOAD FROM URL
+function loadFromURL() {
+  const params = new URLSearchParams(window.location.search);
+
+  const category = params.get("category");
+  const from = params.get("from");
+  const to = params.get("to");
+  const value = params.get("value");
+
+  if (category) {
+    document.getElementById("category").value = category;
+  }
+
+  updateUnits();
+
+  if (from) document.getElementById("fromUnit").value = from;
+  if (to) document.getElementById("toUnit").value = to;
+  if (value) document.getElementById("inputValue").value = value;
+
+  convert();
+}
+
+// MAIN CONVERT
+function convert() {
+  const val = parseFloat(document.getElementById("inputValue").value);
+  const category = document.getElementById("category").value;
+  const from = document.getElementById("fromUnit").value;
+  const to = document.getElementById("toUnit").value;
+
+  if (isNaN(val)) {
+    document.getElementById("result").innerText = "-";
+    return;
+  }
+
+  let result;
+
+  if (category === "temperature") {
+    if (from === "C" && to === "F") {
+      result = (val * 9/5) + 32;
+    } else if (from === "F" && to === "C") {
+      result = (val - 32) * 5/9;
+    } else {
+      result = val;
+    }
+  } else {
+    const base = val * units[category][from];
+    result = base / units[category][to];
+  }
+
+  // FORMAT
+  result = Number(result).toPrecision(10);
+  result = parseFloat(result);
+
+  if (Math.abs(result) < 1e-7) {
+    result = Number(result).toExponential(3);
+  }
+
+  document.getElementById("result").innerText = result + " " + to;
+
+  // UPDATE URL
+  const url = `?category=${category}&from=${from}&to=${to}&value=${val}`;
+  window.history.replaceState({}, '', url);
+}
+
+// INIT
+loadFromURL();
+
+</script>
+
+</body>
+</html>

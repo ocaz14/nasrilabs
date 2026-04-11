@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kalkulator cm ke mm (Konversi Cepat & Akurat)</title>
+<title>Kalkulator km ke m (Konversi Cepat & Akurat)</title>
 
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator cm ke mm online. Konversi centimeter ke millimeter dengan cepat dan akurat.">
+<meta name="description" content="Kalkulator km ke m online. Konversi kilometer ke meter dengan cepat dan akurat.">
 
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/calculator.css">
@@ -19,7 +19,7 @@
 {
 "@context":"https://schema.org",
 "@type":"WebApplication",
-"name":"Kalkulator cm ke mm",
+"name":"Kalkulator km ke m",
 "applicationCategory":"Calculator",
 "operatingSystem":"All"
 }
@@ -47,8 +47,8 @@
 <!-- HERO -->
 <div class="hero">
 <div class="hero-text">
-<h1>Kalkulator cm ke mm</h1>
-<p>Konversi centimeter ke millimeter secara instan ⚡</p>
+<h1>Kalkulator km ke m</h1>
+<p>Konversi kilometer ke meter secara instan ⚡</p>
 </div>
 </div>
 
@@ -56,15 +56,15 @@
 <div class="section">
 <div class="page">
 
-<h2>📏 Konversi cm ke mm</h2>
+<h2>📏 Konversi km ke m</h2>
 
 <div class="input-group">
 <input 
 type="number" 
-id="cmInput" 
-placeholder="Masukkan nilai cm..."
+id="kmInput" 
+placeholder="Masukkan nilai km..."
 oninput="convert()"
-> cm
+> km
 </div>
 
 <div class="button-group">
@@ -80,31 +80,31 @@ oninput="convert()"
 <div class="section">
 <div class="page">
 
-<h2>🧠 Cara Konversi cm ke mm</h2>
-<p>Untuk mengubah centimeter ke millimeter, cukup kalikan nilai cm dengan 10.</p>
+<h2>🧠 Cara Konversi km ke m</h2>
+<p>Untuk mengubah kilometer ke meter, cukup kalikan nilai km dengan 1000.</p>
 
 <p><strong>Rumus:</strong></p>
-<p>cm × 10 = mm</p>
+<p>km × 1000 = m</p>
 
 <ul>
-<li>1 cm = 10 mm</li>
-<li>2.5 cm = 25 mm</li>
-<li>10 cm = 100 mm</li>
+<li>1 km = 1000 m</li>
+<li>2.5 km = 2500 m</li>
+<li>0.1 km = 100 m</li>
 </ul>
 
-<h3>🔗 Contoh Konversi</h3>
+<!-- <h3>🔗 Contoh Konversi</h3>
 <p class="internal-link">
-<a href="/blog/posts/length/cm-mm/1-cm-berapa-mm.html">1 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/5-cm-berapa-mm.html">5 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/10-cm-berapa-mm.html">10 cm ke mm</a>
-</p>
+<a href="/blog/posts/length/km-m/1-km-berapa-m.html">1 km ke m</a>
+<a href="/blog/posts/length/km-m/5-km-berapa-m.html">5 km ke m</a>
+<a href="/blog/posts/length/km-m/10-km-berapa-m.html">10 km ke m</a>
+</p> -->
 
 <h3>🔁 Kalkulator Lainnya</h3>
 <p class="internal-link">
 <a href="/labs/calc/unit-converter.html">Kalkulator</a>
-<a href="/labs/calc/length/kalkulator-mm-cm.html">mm ke cm</a>
-<a href="/labs/calc/length/kalkulator-cm-m.html">cm ke m</a>
+<a href="/labs/calc/length/kalkulator-m-km.html">m ke km</a>
 <a href="/labs/calc/length/kalkulator-m-cm.html">m ke cm</a>
+<a href="/labs/calc/length/kalkulator-cm-m.html">cm ke m</a>
 </p>
 
 </div>
@@ -117,26 +117,21 @@ oninput="convert()"
 
 <script>
 function convert() {
-  const cm = parseFloat(document.getElementById("cmInput").value);
+  const km = parseFloat(document.getElementById("kmInput").value);
 
-  if (cm === "") {
+  if (isNaN(km)) {
     document.getElementById("result").innerText = "-";
     return;
   }
 
-  let mm = Number(cm * 10).toPrecision(10);
-  mm = parseFloat(mm); // hilangkan trailing nol
+  let m = Number(km * 1000).toPrecision(10);
+  m = parseFloat(m);
 
-  if (Math.abs(mm) < 0.000001) {
-    mm = Number(mm).toExponential(3);
+  if (Math.abs(m) < 1e-7) {
+    m = Number(m).toExponential(3);
   }
 
-  if (isNaN(cm)) {
-    document.getElementById("result").innerText = "-";
-    return;
-  }
-
-  document.getElementById("result").innerText = mm + " mm";
+  document.getElementById("result").innerText = m + " m";
 }
 </script>
 

@@ -4,22 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kalkulator cm ke mm (Konversi Cepat & Akurat)</title>
+<title>Kalkulator kg ke g (Konversi Cepat & Akurat)</title>
 
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator cm ke mm online. Konversi centimeter ke millimeter dengan cepat dan akurat.">
+<meta name="description" content="Kalkulator kg ke g online. Konversi kilogram ke gram dengan cepat dan akurat.">
 
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/calculator.css">
 
+<!-- Schema -->
 <script type="application/ld+json">
 {
 "@context":"https://schema.org",
 "@type":"WebApplication",
-"name":"Kalkulator cm ke mm",
+"name":"Kalkulator kg ke g",
 "applicationCategory":"Calculator",
 "operatingSystem":"All"
 }
@@ -47,8 +48,8 @@
 <!-- HERO -->
 <div class="hero">
 <div class="hero-text">
-<h1>Kalkulator cm ke mm</h1>
-<p>Konversi centimeter ke millimeter secara instan ⚡</p>
+<h1>Kalkulator kg ke g</h1>
+<p>Konversi kilogram ke gram secara instan ⚖️</p>
 </div>
 </div>
 
@@ -56,15 +57,15 @@
 <div class="section">
 <div class="page">
 
-<h2>📏 Konversi cm ke mm</h2>
+<h2>⚖️ Konversi kg ke g</h2>
 
 <div class="input-group">
 <input 
 type="number" 
-id="cmInput" 
-placeholder="Masukkan nilai cm..."
+id="kgInput" 
+placeholder="Masukkan nilai kilogram..."
 oninput="convert()"
-> cm
+> kg
 </div>
 
 <div class="button-group">
@@ -80,31 +81,34 @@ oninput="convert()"
 <div class="section">
 <div class="page">
 
-<h2>🧠 Cara Konversi cm ke mm</h2>
-<p>Untuk mengubah centimeter ke millimeter, cukup kalikan nilai cm dengan 10.</p>
+<h2>🧠 Cara Konversi kg ke g</h2>
 
-<p><strong>Rumus:</strong></p>
-<p>cm × 10 = mm</p>
-
-<ul>
-<li>1 cm = 10 mm</li>
-<li>2.5 cm = 25 mm</li>
-<li>10 cm = 100 mm</li>
-</ul>
-
-<h3>🔗 Contoh Konversi</h3>
-<p class="internal-link">
-<a href="/blog/posts/length/cm-mm/1-cm-berapa-mm.html">1 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/5-cm-berapa-mm.html">5 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/10-cm-berapa-mm.html">10 cm ke mm</a>
+<p>
+Konversi <strong>kilogram ke gram</strong> dilakukan dengan mengalikan nilai kilogram dengan 1000,
+karena 1 kilogram sama dengan 1000 gram.
 </p>
 
+<p><strong>Rumus:</strong></p>
+<p>kg × 1000 = g</p>
+
+<ul>
+<li>1 kg = 1000 g</li>
+<li>2.5 kg = 2500 g</li>
+<li>0.1 kg = 100 g</li>
+</ul>
+
+<!-- <h3>🔗 Contoh Konversi</h3>
+<p class="internal-link">
+<a href="/blog/posts/weight/kg-g/1-kg-berapa-g.html">1 kg ke g</a>
+<a href="/blog/posts/weight/kg-g/2-5-kg-berapa-g.html">2.5 kg ke g</a>
+<a href="/blog/posts/weight/kg-g/10-kg-berapa-g.html">10 kg ke g</a>
+</p> -->
+
+<!-- Cross Calculator -->
 <h3>🔁 Kalkulator Lainnya</h3>
 <p class="internal-link">
 <a href="/labs/calc/unit-converter.html">Kalkulator</a>
-<a href="/labs/calc/length/kalkulator-mm-cm.html">mm ke cm</a>
-<a href="/labs/calc/length/kalkulator-cm-m.html">cm ke m</a>
-<a href="/labs/calc/length/kalkulator-m-cm.html">m ke cm</a>
+<a href="/labs/calc/weight/kalkulator-g-kg.html">g ke kg</a>
 </p>
 
 </div>
@@ -115,28 +119,24 @@ oninput="convert()"
 
 </div>
 
+<!-- SCRIPT -->
 <script>
 function convert() {
-  const cm = parseFloat(document.getElementById("cmInput").value);
+  const kg = parseFloat(document.getElementById("kgInput").value);
 
-  if (cm === "") {
+  if (isNaN(kg)) {
     document.getElementById("result").innerText = "-";
     return;
   }
 
-  let mm = Number(cm * 10).toPrecision(10);
-  mm = parseFloat(mm); // hilangkan trailing nol
+  let g = Number(kg * 1000).toPrecision(10);
+  g = parseFloat(g);
 
-  if (Math.abs(mm) < 0.000001) {
-    mm = Number(mm).toExponential(3);
+  if (Math.abs(g) < 1e-7) {
+    g = Number(g).toExponential(3);
   }
 
-  if (isNaN(cm)) {
-    document.getElementById("result").innerText = "-";
-    return;
-  }
-
-  document.getElementById("result").innerText = mm + " mm";
+  document.getElementById("result").innerText = g + " g";
 }
 </script>
 

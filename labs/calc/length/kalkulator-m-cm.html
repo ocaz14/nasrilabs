@@ -4,22 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kalkulator cm ke mm (Konversi Cepat & Akurat)</title>
+<title>Kalkulator m ke cm (Konversi Cepat & Akurat)</title>
 
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator cm ke mm online. Konversi centimeter ke millimeter dengan cepat dan akurat.">
+<meta name="description" content="Kalkulator m ke cm online. Konversi meter ke centimeter dengan cepat dan akurat.">
 
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/calculator.css">
 
+<!-- Schema -->
 <script type="application/ld+json">
 {
 "@context":"https://schema.org",
 "@type":"WebApplication",
-"name":"Kalkulator cm ke mm",
+"name":"Kalkulator m ke cm",
 "applicationCategory":"Calculator",
 "operatingSystem":"All"
 }
@@ -47,8 +48,8 @@
 <!-- HERO -->
 <div class="hero">
 <div class="hero-text">
-<h1>Kalkulator cm ke mm</h1>
-<p>Konversi centimeter ke millimeter secara instan ⚡</p>
+<h1>Kalkulator m ke cm</h1>
+<p>Konversi meter ke centimeter secara instan ⚡</p>
 </div>
 </div>
 
@@ -56,15 +57,15 @@
 <div class="section">
 <div class="page">
 
-<h2>📏 Konversi cm ke mm</h2>
+<h2>📏 Konversi m ke cm</h2>
 
 <div class="input-group">
 <input 
 type="number" 
-id="cmInput" 
-placeholder="Masukkan nilai cm..."
+id="mInput" 
+placeholder="Masukkan nilai meter..."
 oninput="convert()"
-> cm
+> meter
 </div>
 
 <div class="button-group">
@@ -80,31 +81,37 @@ oninput="convert()"
 <div class="section">
 <div class="page">
 
-<h2>🧠 Cara Konversi cm ke mm</h2>
-<p>Untuk mengubah centimeter ke millimeter, cukup kalikan nilai cm dengan 10.</p>
+<h2>🧠 Cara Konversi m ke cm</h2>
+
+<p>
+Konversi <strong>meter ke centimeter</strong> dilakukan dengan mengalikan nilai meter dengan 100,
+karena 1 meter sama dengan 100 centimeter dalam sistem metrik.
+</p>
 
 <p><strong>Rumus:</strong></p>
-<p>cm × 10 = mm</p>
+<p>m × 100 = cm</p>
 
 <ul>
-<li>1 cm = 10 mm</li>
-<li>2.5 cm = 25 mm</li>
-<li>10 cm = 100 mm</li>
+<li>1 m = 100 cm</li>
+<li>2.5 m = 250 cm</li>
+<li>0.1 m = 10 cm</li>
 </ul>
 
 <h3>🔗 Contoh Konversi</h3>
 <p class="internal-link">
-<a href="/blog/posts/length/cm-mm/1-cm-berapa-mm.html">1 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/5-cm-berapa-mm.html">5 cm ke mm</a>
-<a href="/blog/posts/length/cm-mm/10-cm-berapa-mm.html">10 cm ke mm</a>
+<a href="/labs/calc/unit-converter.html">Kalkulator</a>
+<a href="/labs/calc/length/kalkulator-m-cm.html">m ke cm</a>
+<a href="/labs/calc/length/kalkulator-cm-mm.html">cm ke mm</a>
+<a href="/labs/calc/length/kalkulator-m-mm.html">m ke mm</a>
 </p>
 
+<!-- Cross Calculator -->
 <h3>🔁 Kalkulator Lainnya</h3>
 <p class="internal-link">
 <a href="/labs/calc/unit-converter.html">Kalkulator</a>
-<a href="/labs/calc/length/kalkulator-mm-cm.html">mm ke cm</a>
 <a href="/labs/calc/length/kalkulator-cm-m.html">cm ke m</a>
-<a href="/labs/calc/length/kalkulator-m-cm.html">m ke cm</a>
+<a href="/labs/calc/length/kalkulator-cm-mm.html">cm ke mm</a>
+<a href="/labs/calc/length/kalkulator-m-mm.html">m ke mm</a>
 </p>
 
 </div>
@@ -115,28 +122,24 @@ oninput="convert()"
 
 </div>
 
+<!-- SCRIPT -->
 <script>
 function convert() {
-  const cm = parseFloat(document.getElementById("cmInput").value);
+  const m = parseFloat(document.getElementById("mInput").value);
 
-  if (cm === "") {
+  if (isNaN(m)) {
     document.getElementById("result").innerText = "-";
     return;
   }
 
-  let mm = Number(cm * 10).toPrecision(10);
-  mm = parseFloat(mm); // hilangkan trailing nol
+  let cm = Number(m * 100).toPrecision(10);
+  cm = parseFloat(cm);
 
-  if (Math.abs(mm) < 0.000001) {
-    mm = Number(mm).toExponential(3);
+  if (Math.abs(cm) < 1e-7) {
+    cm = Number(cm).toExponential(3);
   }
 
-  if (isNaN(cm)) {
-    document.getElementById("result").innerText = "-";
-    return;
-  }
-
-  document.getElementById("result").innerText = mm + " mm";
+  document.getElementById("result").innerText = cm + " cm";
 }
 </script>
 

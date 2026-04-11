@@ -475,7 +475,7 @@ table tr:hover {
 .internal-link a {
     background: #e0e5ec;
     padding: 8px 14px;
-    border-radius: 5px;
+    border-radius: 12px;
     font-size: 13px;
     text-decoration: none;
     color: #10b981;
@@ -521,6 +521,7 @@ td, th {
   border: none;
   outline: none;
   font-size: 16px;
+  margin-right: 15px;
   background: #f0f5fc;
   box-shadow: inset 2px 2px 5px #bebebe,
               inset -2px -2px 5px #ffffff;
@@ -548,9 +549,13 @@ td, th {
     transition: 0.3s ease;
 }
 
+.page h2 {
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
 .page h3 {
-    margin-top: 20px;
-    margin-bottom: 8px;
+    margin-top: 40px;
+    margin-bottom: 30px;
 }
 
 .page p {
@@ -568,4 +573,10 @@ td, th {
 
 .page strong {
     color: #10b981;
+}
+
+@media (max-width: 900px) {
+    .page{
+        padding: 30px;
+    }
 }
