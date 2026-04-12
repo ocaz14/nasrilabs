@@ -51,7 +51,8 @@ a{
 .logo span {
     font-weight: bold;
     font-size: 18px;
-    color: #10b981;
+    margin-left: 10px;
+    color: #333;
 }
 
 /* NAV LINKS */
