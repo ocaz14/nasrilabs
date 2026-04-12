@@ -4,6 +4,9 @@ body {
     background: #e0e5ec;
     color: #333;
 }
+a{
+    height: 100%;
+}
 
 /* CONTAINER */
 .container {
@@ -385,7 +388,7 @@ body {
 
 .section a {
     text-decoration: none;
-    color: #333;
+    /* color: #333; */
     font-weight: 500;
     transition: 0.2s;
 }
@@ -394,10 +397,6 @@ body {
     color: #059669;
 } */
 
-.internal-link a{
-    color: #10b981;
-    line-height: 30px;
-}
 
 table {
     width: 100%;
@@ -468,30 +467,19 @@ table tr:hover {
 .internal-link {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 6px;
+    margin-top: 5px;
+    line-height: 1;
 }
 
 .internal-link a {
-    background: #e0e5ec;
+    display: flex;
     padding: 8px 14px;
-    border-radius: 12px;
+    border-radius: 5px;
     font-size: 13px;
     text-decoration: none;
-    color: #10b981;
-
-    box-shadow: 3px 3px 6px #a3b1c6,
-                -3px -3px 6px #ffffff;
-
     transition: 0.2s ease;
-}
-
-.internal-link a:hover {
-    background: #10b981;
-    color: white;
-
-    box-shadow: inset 3px 3px 6px #059669,
-                inset -3px -3px 6px #34d399;
+    margin: 0px;
 }
 
 .result-box {
