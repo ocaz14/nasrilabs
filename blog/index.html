@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -8,39 +8,102 @@
 <meta name="description" content="Kumpulan artikel konversi dan insight sederhana dari Nasri Labs.">
 
 <link rel="stylesheet" href="/style.css">
+
+<style>
+/* HERO UPGRADE */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    opacity: 0.7;
+}
+
+/* FEATURED BOX */
+.featured {
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 16px;
+    padding-bottom: 50px
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 65px 10px;
+}
+
+.grid a{
+    color: #333;
+}
+
+/* CARD INTERACTION */
+.card {
+    transition: all 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* TAG */
+.tag {
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 5px;
+}
+</style>
+
 </head>
 <body>
 <div class="container">
+
+<!-- NAVBAR -->
 <div class="navbar">
-<div class="logo">
-<img src="/logo.png" alt="NasriLabs Logo">
-        <span>NasriLabs.com</span>
-</div>
-<div class="nav-links">
-<a href="/index.html">Home</a>
-<a href="/labs.html">Labs</a>
-<a href="/works.html">Works</a>
-<a href="/thinking.html">Thinking</a>
-</div>
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-    <div class="hero-text">
-        <h1>Blog</h1>
-        <p>
-            Simple answers for everyday measurement questions.
-        </p>
-    </div>
+    <h1>📚 Blog</h1>
+    <p>Jawaban cepat + tools sederhana untuk kebutuhan sehari-hari.</p>
 </div>
 
-<!-- LIST ARTIKEL -->
 <div class="section">
 
+    <!-- 🔥 FEATURED -->
+    <div class="featured neu">
+        <h2>🔥 Paling Banyak Dicari</h2>
+        <a href="/blog/posts/length/cm-mm/1-cm-berapa-mm.html" class="btn neu">
+            1 cm berapa mm?
+        </a>
+    </div>
+
+    <!-- GRID -->
     <div class="grid">
 
         <a href="/blog/posts/length/cm-mm/1-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Konversi</div>
                 <h3>1 cm Berapa mm?</h3>
                 <p class="case">Jawaban cepat dan cara menghitung.</p>
             </div>
@@ -48,6 +111,7 @@
 
         <a href="/blog/posts/length/cm-mm/2-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Konversi</div>
                 <h3>2 cm Berapa mm?</h3>
                 <p class="case">Konversi cm ke mm dengan mudah.</p>
             </div>
@@ -55,6 +119,7 @@
 
         <a href="/blog/posts/length/cm-mm/5-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Konversi</div>
                 <h3>5 cm Berapa mm?</h3>
                 <p class="case">Perhitungan sederhana dan cepat.</p>
             </div>
@@ -62,6 +127,7 @@
 
         <a href="/blog/posts/length/cm-mm/10-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Konversi</div>
                 <h3>10 cm Berapa mm?</h3>
                 <p class="case">Jawaban dan contoh lengkap.</p>
             </div>
@@ -69,6 +135,7 @@
 
         <a href="/blog/posts/length/cm-mm/20-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Konversi</div>
                 <h3>20 cm Berapa mm?</h3>
                 <p class="case">Konversi cepat cm ke mm.</p>
             </div>
@@ -76,6 +143,7 @@
 
         <a href="/blog/posts/length/cm-mm/50-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Konversi</div>
                 <h3>50 cm Berapa mm?</h3>
                 <p class="case">Cara menghitung dengan mudah.</p>
             </div>
@@ -83,6 +151,7 @@
 
         <a href="/blog/posts/length/cm-mm/100-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Konversi</div>
                 <h3>100 cm Berapa mm?</h3>
                 <p class="case">Jawaban langsung dan jelas.</p>
             </div>
@@ -90,6 +159,7 @@
 
         <a href="/blog/posts/length/cm-mm/0-5-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Desimal</div>
                 <h3>0.5 cm Berapa mm?</h3>
                 <p class="case">Konversi desimal cm ke mm.</p>
             </div>
@@ -97,6 +167,7 @@
 
         <a href="/blog/posts/length/cm-mm/1-5-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Desimal</div>
                 <h3>1.5 cm Berapa mm?</h3>
                 <p class="case">Perhitungan cepat dan akurat.</p>
             </div>
@@ -104,6 +175,7 @@
 
         <a href="/blog/posts/length/cm-mm/2-5-cm-berapa-mm.html">
             <div class="card neu">
+                <div class="tag">Desimal</div>
                 <h3>2.5 cm Berapa mm?</h3>
                 <p class="case">Jawaban + cara menghitung.</p>
             </div>
@@ -119,6 +191,21 @@
 </div>
 
 </div>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
 
 </body>
 </html>

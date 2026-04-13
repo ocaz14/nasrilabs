@@ -35,16 +35,22 @@
 <body>
 <div class="container">
 <div class="navbar">
-<div class="logo">
-<img src="/logo.png" alt="NasriLabs Logo">
-        <span>NasriLabs.com</span>
-</div>
-<div class="nav-links">
-<a href="/index.html">Home</a>
-<a href="/labs.html">Labs</a>
-<a href="/works.html">Works</a>
-<a href="/thinking.html">Thinking</a>
-</div>
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <!-- Hamburger -->
+  <div class="menu-toggle" id="menuToggle">
+    ☰
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
 </div>
 
 <div class="hero">
@@ -59,6 +65,30 @@
 
 <h2>📏 Jawaban</h2>
 <p><strong>1.0 cm = 10.0 mm</strong></p>
+<div class="">
+
+<h2>⚡ Kalkulator cm ke mm</h2>
+
+<p style="opacity:0.7;">💡 1 cm = 10 mm</p>
+<div class="input-group">
+<input 
+type="number" 
+id="cmInput" 
+value="1"
+step="any"
+inputmode="decimal"
+placeholder="Masukkan nilai cm..."
+oninput="convert()"
+> cm
+</div>
+
+<div class="button-group">
+<button class="btn neu" onclick="convert()">Hitung</button>
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+</div>
 
  <h2>⚙️ Cara Menghitung </h2>
 <p>Kalikan nilai centimeter dengan 10.</p>
@@ -115,5 +145,49 @@
 
 <div class="footer">© 2026 Nasri Labs</div>
 </div>
+<script>
+function convert() {
+  const input = document.getElementById("cmInput").value;
+  const cm = parseFloat(input);
+
+  // validasi input kosong / invalid
+  if (!input || isNaN(cm)) {
+    document.getElementById("result").innerText = "-";
+    return;
+  }
+
+  let mm = cm * 10;
+
+  // rapikan angka (hindari floating error)
+  mm = parseFloat(mm.toFixed(6));
+
+  // handle angka sangat kecil
+  if (Math.abs(mm) < 0.000001 && mm !== 0) {
+    mm = mm.toExponential(3);
+  }
+
+  document.getElementById("result").innerText = mm + " mm";
+}
+
+// auto run saat load
+window.onload = convert;
+</script>
+
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+
+  // klik luar = close
+  document.addEventListener("click", (e) => {
+    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+      navLinks.classList.remove("active");
+    }
+  });
+</script>
+
 </body>
 </html>

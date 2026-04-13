@@ -569,3 +569,60 @@ td, th {
         padding: 30px;
     }
 }
+
+/* Hamburger */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Default nav */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+/* Mobile mode */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+
+    flex-direction: column;
+    gap: 10px;
+
+    background: #e0e5ec;
+    padding: 15px;
+    border-radius: 12px;
+
+    /* hidden */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+
+    transition: all 0.3s ease;
+
+  }
+
+  .nav-links.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* .nav-links a {
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.nav-links a:hover {
+  background: #d1d9e6;
+} */

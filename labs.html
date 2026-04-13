@@ -15,19 +15,24 @@
 
 <div class="container">
 
-<!-- NAVBAR (SAMA PERSIS) -->
+<!-- NAVBAR -->
 <div class="navbar">
-    <div class="logo">
-<img src="/logo.png" alt="NasriLabs Logo">
-        <span>NasriLabs.com</span>
-    </div>
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
 
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="labs.html" class="active">Labs</a>
-        <a href="works.html">Works</a>
-        <a href="thinking.html">Thinking</a>
-    </div>
+  <!-- Hamburger -->
+  <div class="menu-toggle" id="menuToggle">
+    ☰
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -346,6 +351,22 @@
 </div>
 
 </div>
+
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+
+  // klik luar = close
+  document.addEventListener("click", (e) => {
+    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+      navLinks.classList.remove("active");
+    }
+  });
+</script>
 
 </body>
 </html>
