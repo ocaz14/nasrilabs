@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kalkulator g ke kg (Konversi Cepat & Akurat)</title>
+<title>Kalkulator Gram ke Kg (Konversi Cepat & Akurat)</title>
 
 <link rel="icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-16.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator g ke kg online. Konversi gram ke kilogram dengan cepat dan akurat.">
+<meta name="description" content="Kalkulator gram ke kg online. Konversi g ke kilogram secara cepat dan akurat. Cek 1 gram berapa kg, lengkap dengan rumus dan contoh.">
+<meta name="keywords" content="gram ke kg, g ke kg, konversi gram ke kilogram, 1 gram berapa kg">
 
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/calculator.css">
@@ -21,7 +22,7 @@
 {
 "@context":"https://schema.org",
 "@type":"WebApplication",
-"name":"Kalkulator g ke kg",
+"name":"Kalkulator Gram ke Kg",
 "applicationCategory":"Calculator",
 "operatingSystem":"All"
 }
@@ -39,7 +40,6 @@
     <span>NasriLabs.com</span>
   </div>
 
-  <!-- Hamburger -->
   <div class="menu-toggle" id="menuToggle">
     ☰
   </div>
@@ -55,8 +55,11 @@
 <!-- HERO -->
 <div class="hero">
 <div class="hero-text">
-<h1>Kalkulator g ke kg</h1>
-<p>Konversi gram ke kilogram secara instan ⚖️</p>
+<h1>Kalkulator Gram ke Kg</h1>
+<p>
+Konversi <strong>gram ke kilogram (g ke kg)</strong> secara instan, cepat, dan akurat.
+Cocok untuk kebutuhan sekolah, memasak, hingga perhitungan teknik.
+</p>
 </div>
 </div>
 
@@ -88,7 +91,7 @@ oninput="convert()"
 <div class="section">
 <div class="page">
 
-<h2>🧠 Cara Konversi g ke kg</h2>
+<h2>🧠 Cara Konversi Gram ke Kilogram</h2>
 
 <p>
 Konversi <strong>gram ke kilogram</strong> dilakukan dengan membagi nilai gram dengan 1000,
@@ -104,11 +107,18 @@ karena 1 kilogram sama dengan 1000 gram.
 <li>100 g = 0.1 kg</li>
 </ul>
 
-<!-- <h3>🔗 Contoh Konversi</h3>
+<p>
+Kalkulator ini membantu Anda melakukan <strong>konversi gram ke kg</strong> dengan mudah tanpa perlu menghitung manual.
+Baik Anda ingin mengetahui <strong>1 gram berapa kg</strong>, atau mengubah nilai besar seperti ribuan gram,
+semua bisa dilakukan dalam hitungan detik.
+</p>
+
+<!-- Internal Links -->
+<!-- <h3>🔗 Contoh Konversi Populer</h3>
 <p class="internal-link">
-<a href="/blog/posts/weight/g-kg/1000-g-berapa-kg.html">1000 g ke kg</a>
-<a href="/blog/posts/weight/g-kg/500-g-berapa-kg.html">500 g ke kg</a>
-<a href="/blog/posts/weight/g-kg/100-g-berapa-kg.html">100 g ke kg</a>
+<a href="/blog/posts/weight/g-kg/1000-g-berapa-kg.html">1000 gram ke kg</a>
+<a href="/blog/posts/weight/g-kg/500-g-berapa-kg.html">500 gram ke kg</a>
+<a href="/blog/posts/weight/g-kg/100-g-berapa-kg.html">100 gram ke kg</a>
 </p> -->
 
 <!-- Cross Calculator -->
@@ -119,6 +129,30 @@ karena 1 kilogram sama dengan 1000 gram.
 <a class="btn neu" href="/labs/calc/index.html">Semua kalkulator</a>
 </p>
 
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ Seputar Gram ke Kilogram</h2>
+
+<div class="faq">
+
+<h3>1 gram berapa kg?</h3>
+<p>1 gram = 0.001 kilogram. Untuk mengubah gram ke kg, cukup bagi dengan 1000.</p>
+
+<h3>100 gram berapa kg?</h3>
+<p>100 gram = 0.1 kg.</p>
+
+<h3>Kenapa gram dibagi 1000?</h3>
+<p>Karena dalam sistem metrik, 1 kilogram setara dengan 1000 gram.</p>
+
+<h3>Bagaimana cara cepat konversi gram ke kilogram?</h3>
+<p>Cukup geser koma 3 digit ke kiri atau gunakan kalkulator otomatis di halaman ini.</p>
+
+</div>
 
 </div>
 </div>
@@ -150,19 +184,18 @@ function convert() {
 </script>
 
 <script>
-  const menuToggle = document.getElementById("menuToggle");
-  const navLinks = document.getElementById("navLinks");
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
 
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
 
-  // klik luar = close
-  document.addEventListener("click", (e) => {
-    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-      navLinks.classList.remove("active");
-    }
-  });
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
 </script>
 
 </body>

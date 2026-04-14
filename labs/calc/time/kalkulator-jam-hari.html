@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kalkulator Jam ke Hari (Konversi Jam ke Hari Cepat & Akurat)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<meta name="description" content="Kalkulator jam ke hari online. Konversi jam ke hari dengan cepat, akurat, dan mudah. Berapa jam dalam 1 hari? Hitung sekarang!">
+
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/calculator.css">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"WebApplication",
+"name":"Kalkulator Jam ke Hari",
+"applicationCategory":"Calculator",
+"operatingSystem":"All",
+"description":"Konversi jam ke hari secara instan dan akurat"
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">
+    ☰
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Kalkulator Jam ke Hari</h1>
+<p>Konversi jam ke hari secara instan, cepat, dan akurat ⚡</p>
+</div>
+</div>
+
+<!-- KALKULATOR -->
+<div class="section">
+<div class="page">
+
+<h2>⏱️ Konversi Jam ke Hari</h2>
+
+<div class="input-group">
+<input 
+type="number" 
+id="hourInput" 
+placeholder="Masukkan jumlah jam..."
+oninput="convert()"
+> jam
+</div>
+
+<div class="button-group">
+<button class="btn neu" onclick="convert()">Hitung</button>
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+</div>
+</div>
+
+<!-- PENJELASAN -->
+<div class="section">
+<div class="page">
+
+<h2>🧠 Cara Menghitung Jam ke Hari</h2>
+
+<p>
+Konversi <strong>jam ke hari</strong> sangat sederhana. Dalam sistem waktu,
+<strong>1 hari = 24 jam</strong>. Jadi untuk mengubah jam menjadi hari,
+kita cukup membagi jumlah jam dengan 24.
+</p>
+
+<p>
+Kalkulator ini membantu kamu menghitung:
+<ul>
+<li>Berapa hari dari sejumlah jam tertentu</li>
+<li>Konversi jam ke hari secara cepat</li>
+<li>Perhitungan waktu untuk kerja, proyek, atau belajar</li>
+</ul>
+</p>
+
+<p><strong>Rumus konversi jam ke hari:</strong></p>
+<p>jam ÷ 24 = hari</p>
+
+<ul>
+<li>24 jam = 1 hari</li>
+<li>48 jam = 2 hari</li>
+<li>12 jam = 0.5 hari</li>
+<li>100 jam = 4.17 hari</li>
+</ul>
+
+<h3>📊 Contoh Perhitungan</h3>
+<p>
+Misalnya kamu ingin mengetahui <strong>72 jam berapa hari</strong>:
+</p>
+
+<p>
+72 ÷ 24 = 3 hari
+</p>
+
+<p>
+Jadi, <strong>72 jam = 3 hari</strong>.
+</p>
+
+<h3>❓ FAQ Seputar Konversi Jam ke Hari</h3>
+
+<p><strong>1. 1 hari berapa jam?</strong><br>
+1 hari = 24 jam.</p>
+
+<p><strong>2. 100 jam berapa hari?</strong><br>
+100 ÷ 24 = 4.17 hari.</p>
+
+<p><strong>3. 48 jam berapa hari?</strong><br>
+48 ÷ 24 = 2 hari.</p>
+
+<p><strong>4. Cara cepat menghitung jam ke hari?</strong><br>
+Cukup bagi jumlah jam dengan 24.</p>
+
+<!-- Internal Links -->
+<h3>🔗 Kalkulator Terkait</h3>
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/unit-converter.html">Unit Converter</a>
+<a class="btn neu" href="/labs/calc/time/kalkulator-hari-jam.html">Hari ke Jam</a>
+<a class="btn neu" href="/labs/calc/index.html">Semua Kalkulator</a>
+</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function convert() {
+  const hour = parseFloat(document.getElementById("hourInput").value);
+
+  if (isNaN(hour)) {
+    document.getElementById("result").innerText = "-";
+    return;
+  }
+
+  let day = Number(hour / 24).toPrecision(10);
+  day = parseFloat(day);
+
+  if (Math.abs(day) < 1e-7) {
+    day = Number(day).toExponential(3);
+  }
+
+  document.getElementById("result").innerText = day + " hari";
+}
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
