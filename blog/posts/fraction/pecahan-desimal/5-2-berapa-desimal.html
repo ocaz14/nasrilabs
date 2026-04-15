@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>5/2 Berapa Desimal? (2.5) Cara Hitung</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="5/2 berapa desimal? Jawaban 2.5 dan cara menghitung pecahan ke desimal dengan mudah.">
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{"@type":"Question","name":"5/2 berapa desimal?","acceptedAnswer":{"@type":"Answer","text":"5/2 = 2.5"}}
+]
+}
+</script>
+
+</head>
+<body>
+<div class="container">
+
+<div class="navbar">
+<div class="logo">
+<img src="/logo.png">
+<span>NasriLabs.com</span>
+</div>
+</div>
+
+<div class="hero">
+<div class="hero-text">
+<h1>5/2 Berapa Desimal?</h1>
+<p>Konversi cepat pecahan ke desimal</p>
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>📏 Jawaban</h2>
+<p><strong>5/2 = 2.5</strong></p>
+
+<h2>⚡ Kalkulator Pecahan</h2>
+<div class="input-group">
+<input type="number" id="num" value="5" oninput="convert()"> /
+<input type="number" id="den" value="2" oninput="convert()">
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>⚙️ Cara Menghitung</h2>
+<p>5 ÷ 2 = 2.5</p>
+
+<h2>🧠 Penjelasan</h2>
+<p>Pecahan 5/2 dapat diubah ke desimal dengan membagi pembilang dengan penyebut.</p>
+
+<h2>❓ FAQ</h2>
+<p><strong>5/2 berapa desimal?</strong><br>2.5</p>
+<p><strong>Cara cepat?</strong><br>Bagi pembilang dengan penyebut.</p>
+
+</div>
+</div>
+
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+function convert() {
+let num = document.getElementById("num").value;
+let den = document.getElementById("den").value;
+if(!num || !den) return;
+let res = parseFloat(num/den);
+res = parseFloat(res.toFixed(10));
+document.getElementById("result").innerText = res;
+}
+window.onload = convert;
+</script>
+
+</body>
+</html>

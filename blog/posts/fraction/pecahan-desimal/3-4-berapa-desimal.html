@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>3/4 Berapa Desimal? (0.75) Cara Hitung</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="3/4 berapa desimal? Jawaban 0.75 dan cara menghitung pecahan ke desimal dengan mudah.">
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{"@type":"Question","name":"3/4 berapa desimal?","acceptedAnswer":{"@type":"Answer","text":"3/4 = 0.75"}}
+]
+}
+</script>
+
+</head>
+<body>
+<div class="container">
+
+<div class="navbar">
+<div class="logo">
+<img src="/logo.png">
+<span>NasriLabs.com</span>
+</div>
+</div>
+
+<div class="hero">
+<div class="hero-text">
+<h1>3/4 Berapa Desimal?</h1>
+<p>Konversi cepat pecahan ke desimal</p>
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>📏 Jawaban</h2>
+<p><strong>3/4 = 0.75</strong></p>
+
+<h2>⚡ Kalkulator Pecahan</h2>
+<div class="input-group">
+<input type="number" id="num" value="3" oninput="convert()"> /
+<input type="number" id="den" value="4" oninput="convert()">
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>⚙️ Cara Menghitung</h2>
+<p>3 ÷ 4 = 0.75</p>
+
+<h2>🧠 Penjelasan</h2>
+<p>Pecahan 3/4 dapat diubah ke desimal dengan membagi pembilang dengan penyebut.</p>
+
+<h2>❓ FAQ</h2>
+<p><strong>3/4 berapa desimal?</strong><br>0.75</p>
+<p><strong>Cara cepat?</strong><br>Bagi pembilang dengan penyebut.</p>
+
+</div>
+</div>
+
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+function convert() {
+let num = document.getElementById("num").value;
+let den = document.getElementById("den").value;
+if(!num || !den) return;
+let res = parseFloat(num/den);
+res = parseFloat(res.toFixed(10));
+document.getElementById("result").innerText = res;
+}
+window.onload = convert;
+</script>
+
+</body>
+</html>

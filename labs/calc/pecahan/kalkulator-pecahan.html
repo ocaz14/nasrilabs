@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kalkulator Pecahan Online (Tambah, Kurang, Kali, Bagi)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/calculator.css">
+
+<meta name="description" content="Kalkulator pecahan online untuk tambah, kurang, kali, dan bagi pecahan. Hasil otomatis disederhanakan + bentuk desimal.">
+
+<style>
+    /* Background lebih soft */
+/* body {
+  background: #eef2f7;
+} */
+
+/* Wrapper utama */
+.fraction-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Box pecahan */
+.fraction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #eef2f7;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 6px 6px 12px #d1d9e6,
+              -6px -6px 12px #ffffff;
+}
+
+/* Input */
+.fraction input {
+  width: 70px;
+  height: 40px;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #eef2f7;
+  box-shadow: inset 4px 4px 8px #d1d9e6,
+              inset -4px -4px 8px #ffffff;
+}
+
+/* Garis pecahan */
+.line {
+  width: 70px;
+  height: 2px;
+  background: #555;
+  margin: 6px 0;
+  opacity: 0.4;
+}
+
+/* Operator */
+.operator {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #eef2f7;
+  box-shadow: 6px 6px 12px #d1d9e6,
+              -6px -6px 12px #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Equals */
+.equals {
+  font-size: 22px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Result box (highlight utama) */
+.result-box {
+  min-width: 120px;
+  padding: 20px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff, #dfe6f1);
+  box-shadow: 8px 8px 16px #c8d0e0,
+              -8px -8px 16px #ffffff;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Tombol utama */
+.btn.neu {
+  background: linear-gradient(145deg, #1abc9c, #16a085);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.btn.neu:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+}
+
+/* Desimal highlight */
+#resultDecimal {
+  color: #1abc9c;
+  font-weight: bold;
+  font-size: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Kalkulator Pecahan</h1>
+<p>Hitung pecahan (tambah, kurang, kali, bagi) dengan mudah</p>
+</div>
+</div>
+
+<!-- KALKULATOR -->
+<div class="section">
+<div class="page">
+
+<h2>🧮 Hitung Pecahan</h2>
+
+<div class="fraction-wrapper">
+
+<!-- Pecahan 1 -->
+<div class="fraction">
+<input type="number" id="a" placeholder="a">
+<div class="line"></div>
+<input type="number" id="b" placeholder="b">
+</div>
+
+<!-- Operator -->
+<select id="operator" class="operator">
+<option value="+">+</option>
+<option value="-">−</option>
+<option value="*">×</option>
+<option value="/">÷</option>
+</select>
+
+<!-- Pecahan 2 -->
+<div class="fraction">
+<input type="number" id="c" placeholder="c">
+<div class="line"></div>
+<input type="number" id="d" placeholder="d">
+</div>
+
+<!-- Equals -->
+<div class="equals">=</div>
+
+<!-- Result -->
+<div class="fraction result-box">
+<span id="resultFraction">-</span>
+</div>
+
+</div>
+
+<div class="button-group">
+<button class="btn neu" onclick="calculate()">Hitung</button>
+</div>
+
+<h3>Desimal: <strong id="resultDecimal">-</strong></h3>
+
+</div>
+</div>
+
+<!-- PENJELASAN -->
+<div class="section">
+<div class="page">
+
+<h2>📘 Cara Menghitung Pecahan</h2>
+
+<p>
+Kalkulator pecahan ini memungkinkan Anda menghitung berbagai operasi pecahan seperti penjumlahan, pengurangan,
+perkalian, dan pembagian pecahan secara otomatis. Hasil akan langsung disederhanakan sehingga lebih mudah dipahami.
+</p>
+
+<ul>
+<li><strong>Penjumlahan pecahan:</strong> samakan penyebut</li>
+<li><strong>Pengurangan pecahan:</strong> samakan penyebut lalu kurangi</li>
+<li><strong>Perkalian pecahan:</strong> kalikan pembilang dan penyebut</li>
+<li><strong>Pembagian pecahan:</strong> balik pecahan kedua lalu kalikan</li>
+</ul>
+
+</div>
+</div>
+
+<!-- FAQ SEO -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ Kalkulator Pecahan</h2>
+
+<h3>Apa itu kalkulator pecahan?</h3>
+<p>Kalkulator pecahan adalah alat online untuk menghitung operasi pecahan seperti tambah, kurang, kali, dan bagi secara otomatis.</p>
+
+<h3>Bagaimana cara menghitung pecahan dengan cepat?</h3>
+<p>Anda bisa menggunakan kalkulator pecahan ini untuk mendapatkan hasil instan tanpa perlu menghitung manual.</p>
+
+<h3>Bagaimana cara menjumlahkan pecahan?</h3>
+<p>Untuk menjumlahkan pecahan, samakan penyebut terlebih dahulu, lalu jumlahkan pembilangnya.</p>
+
+<h3>Bagaimana cara mengubah pecahan ke desimal?</h3>
+<p>Bagi pembilang dengan penyebut untuk mendapatkan nilai desimal.</p>
+
+<h3>Apakah kalkulator ini bisa menyederhanakan pecahan?</h3>
+<p>Ya, hasil pecahan otomatis disederhanakan ke bentuk paling sederhana.</p>
+
+<h3>Apakah kalkulator pecahan ini akurat?</h3>
+<p>Ya, perhitungan dilakukan dengan rumus matematika standar sehingga hasilnya akurat.</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<!-- STYLE TAMBAHAN -->
+<style>
+.fraction-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.fraction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fraction input {
+  width: 60px;
+  text-align: center;
+}
+
+.line {
+  width: 60px;
+  height: 2px;
+  background: #333;
+  margin: 4px 0;
+}
+
+.operator {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.equals {
+  font-size: 20px;
+}
+
+.result-box {
+  min-width: 80px;
+  text-align: center;
+  font-weight: bold;
+}
+</style>
+
+<!-- SCRIPT -->
+<script>
+function gcd(a, b) {
+  return b === 0 ? a : gcd(b, a % b);
+}
+
+function simplify(n, d) {
+  const g = gcd(n, d);
+  return [n / g, d / g];
+}
+
+function calculate() {
+  let a = +document.getElementById("a").value;
+  let b = +document.getElementById("b").value;
+  let c = +document.getElementById("c").value;
+  let d = +document.getElementById("d").value;
+  let op = document.getElementById("operator").value;
+
+  // validasi input
+  if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)) return;
+
+  if (b === 0 || d === 0) {
+    alert("Penyebut tidak boleh 0");
+    return;
+  }
+
+  let num, den;
+
+  if (op === "+") {
+    num = a*d + c*b;
+    den = b*d;
+  } else if (op === "-") {
+    num = a*d - c*b;
+    den = b*d;
+  } else if (op === "*") {
+    num = a*c;
+    den = b*d;
+  } else {
+    num = a*d;
+    den = b*c;
+  }
+
+  let [sn, sd] = simplify(num, den);
+
+  // jika hasil bilangan bulat
+  if (sd === 1) {
+    document.getElementById("resultFraction").innerText = sn;
+  } else {
+    document.getElementById("resultFraction").innerText = sn + "/" + sd;
+  }
+
+  // format desimal pintar (tidak ada nol berlebihan)
+  let decimal = sn / sd;
+  let formatted = parseFloat(decimal.toFixed(10)).toString();
+
+  document.getElementById("resultDecimal").innerText = formatted;
+}
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
