@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kalkulator Pecahan Lengkap (Konversi & Operasi)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Kumpulan kalkulator pecahan lengkap: pecahan ke desimal, desimal ke pecahan, dan operasi pecahan. Cepat dan akurat.">
+<meta name="keywords" content="kalkulator pecahan, pecahan ke desimal, desimal ke pecahan, operasi pecahan">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"CollectionPage",
+"name":"Kalkulator Pecahan",
+"description":"Kumpulan kalkulator pecahan lengkap dan konversi pecahan"
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Kalkulator Pecahan</h1>
+<p>
+Kumpulan kalkulator <strong>pecahan</strong> lengkap mulai dari konversi ke desimal,
+desimal ke pecahan, hingga operasi matematika pecahan.
+</p>
+</div>
+</div>
+
+<!-- KALKULATOR UTAMA -->
+<div class="section">
+<div class="page">
+
+<h2>🔢 Kalkulator Pecahan</h2>
+
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/fraction/kalkulator-pecahan.html">Operasi pecahan</a>
+<a class="btn neu" href="/labs/calc/fraction/pecahan-ke-desimal.html">Pecahan ke desimal</a>
+<a class="btn neu" href="/labs/calc/fraction/desimal-ke-pecahan.html">Desimal ke pecahan</a>
+</p>
+
+</div>
+</div>
+
+<!-- KONVERSI POPULER -->
+<div class="section">
+<div class="page">
+
+<h2>🔥 Konversi Pecahan Populer</h2>
+
+<p class="internal-link">
+<a class="btn neu" href="/blog/posts/fraction/1-2-berapa-desimal.html">1/2 ke desimal</a>
+<a class="btn neu" href="/blog/posts/fraction/3-4-berapa-desimal.html">3/4 ke desimal</a>
+<a class="btn neu" href="/blog/posts/fraction/1-3-berapa-desimal.html">1/3 ke desimal</a>
+<a class="btn neu" href="/blog/posts/fraction/2-5-berapa-desimal.html">2/5 ke desimal</a>
+<a class="btn neu" href="/blog/posts/fraction/3-5-berapa-desimal.html">3/5 ke desimal</a>
+</p>
+
+</div>
+</div>
+
+<!-- TABEL -->
+<div class="section">
+<div class="page">
+
+<h2>📊 Tabel Pecahan ke Desimal</h2>
+
+<table>
+<tr><th>Pecahan</th><th>Desimal</th></tr>
+<tr><td>1/2</td><td>0.5</td></tr>
+<tr><td>1/4</td><td>0.25</td></tr>
+<tr><td>3/4</td><td>0.75</td></tr>
+<tr><td>1/5</td><td>0.2</td></tr>
+<tr><td>1/10</td><td>0.1</td></tr>
+</table>
+
+</div>
+</div>
+
+<!-- PENJELASAN -->
+<div class="section">
+<div class="page">
+
+<h2>🧠 Tentang Pecahan</h2>
+
+<p>
+Pecahan adalah cara untuk merepresentasikan bagian dari suatu keseluruhan.
+Pecahan terdiri dari pembilang dan penyebut, yang dapat dikonversi ke bentuk desimal.
+</p>
+
+<p>
+Dengan kalkulator di halaman ini, Anda dapat dengan mudah mengubah pecahan menjadi desimal
+atau melakukan operasi matematika tanpa menghitung manual.
+</p>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ Pecahan</h2>
+
+<h3>Apa itu pecahan?</h3>
+<p>Pecahan adalah bilangan yang menyatakan bagian dari keseluruhan.</p>
+
+<h3>Bagaimana cara mengubah pecahan ke desimal?</h3>
+<p>Bagi pembilang dengan penyebut.</p>
+
+<h3>Apa itu desimal berulang?</h3>
+<p>Desimal yang memiliki pola angka berulang, seperti 1/3 = 0.333...</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>

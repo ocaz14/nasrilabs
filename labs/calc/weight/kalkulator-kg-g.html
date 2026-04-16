@@ -11,7 +11,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator kg ke g online. Konversi kilogram ke gram dengan cepat dan akurat. 1 kg = 1000 gram.">
+<meta name="description" content="Kalkulator kilogram ke gram (kg ke g) online. Konversi cepat, akurat, dan mudah. Cek 1 kg berapa gram lengkap dengan rumus dan contoh.">
+<meta name="keywords" content="kg ke g, kilogram ke gram, konversi kg ke gram, 1 kg berapa gram">
 
 <link rel="stylesheet" href="/style.css">
 
@@ -23,26 +24,6 @@
 "name":"Kalkulator kg ke g",
 "applicationCategory":"Calculator",
 "operatingSystem":"All"
-}
-</script>
-
-<!-- FAQ Schema -->
-<script type="application/ld+json">
-{
-"@context":"https://schema.org",
-"@type":"FAQPage",
-"mainEntity":[
-{
-"@type":"Question",
-"name":"1 kg berapa gram?",
-"acceptedAnswer":{"@type":"Answer","text":"1 kilogram sama dengan 1000 gram."}
-},
-{
-"@type":"Question",
-"name":"Bagaimana cara mengubah kg ke gram?",
-"acceptedAnswer":{"@type":"Answer","text":"Kalikan nilai kilogram dengan 1000."}
-}
-]
 }
 </script>
 
@@ -58,9 +39,7 @@
     <span>NasriLabs.com</span>
   </div>
 
-  <div class="menu-toggle" id="menuToggle">
-    ☰
-  </div>
+  <div class="menu-toggle" id="menuToggle">☰</div>
 
   <div class="nav-links" id="navLinks">
     <a href="/index.html">Home</a>
@@ -73,28 +52,26 @@
 <!-- HERO -->
 <div class="hero">
 <div class="hero-text">
-<h1>Kalkulator kg ke g</h1>
-<p>Konversi kilogram ke gram secara instan ⚖️</p>
+<h1>Kalkulator Kilogram ke Gram</h1>
+<p>
+Konversi <strong>kilogram ke gram (kg ke g)</strong> secara instan, cepat, dan akurat.
+Cocok untuk kebutuhan sekolah, memasak, hingga perhitungan teknik.
+</p>
 </div>
 </div>
 
-<!-- CONTENT -->
+<!-- KALKULATOR -->
 <div class="section">
 <div class="page">
-
-<!-- SNIPPET TARGET -->
-<h2>📏 Jawaban Cepat</h2>
-<p><strong>1 kg = 1000 g</strong></p>
 
 <h2>⚖️ Konversi kg ke g</h2>
 
 <div class="input-group">
 <input 
 type="number" 
-id="kgInput"
-step="any"
-inputmode="decimal"
+id="kgInput" 
 placeholder="Masukkan nilai kilogram..."
+step="any"
 oninput="convert()"
 > kg
 </div>
@@ -112,11 +89,11 @@ oninput="convert()"
 <div class="section">
 <div class="page">
 
-<h2>🧠 Cara Konversi kg ke g</h2>
+<h2>🧠 Cara Konversi Kilogram ke Gram</h2>
 
 <p>
 Konversi <strong>kilogram ke gram</strong> dilakukan dengan mengalikan nilai kilogram dengan 1000,
-karena 1 kilogram sama dengan 1000 gram.
+karena dalam sistem metrik <strong>1 kilogram sama dengan 1000 gram</strong>.
 </p>
 
 <p><strong>Rumus:</strong></p>
@@ -128,12 +105,52 @@ karena 1 kilogram sama dengan 1000 gram.
 <li>0.1 kg = 100 g</li>
 </ul>
 
+<p>
+Kalkulator ini membantu Anda melakukan <strong>konversi kg ke gram</strong> secara instan tanpa perlu menghitung manual.
+Baik Anda ingin mengetahui <strong>1 kg berapa gram</strong>, atau mengubah nilai besar seperti puluhan kilogram,
+semuanya bisa dilakukan dalam hitungan detik.
+</p>
+
+<!-- Internal Links -->
+<h3>🔗 Contoh Konversi Populer</h3>
+<p class="internal-link">
+<a class="btn neu" href="/blog/posts/weight/kg-g/1-kg-berapa-g.html">1 kg ke gram</a>
+<a class="btn neu" href="/blog/posts/weight/kg-g/2-5-kg-berapa-g.html">2.5 kg ke gram</a>
+<a class="btn neu" href="/blog/posts/weight/kg-g/10-kg-berapa-g.html">10 kg ke gram</a>
+</p>
+
+<!-- Cross Calculator -->
 <h3>🔁 Kalkulator Lainnya</h3>
 <p class="internal-link">
 <a class="btn neu" href="/labs/calc/unit-converter.html">Kalkulator</a>
 <a class="btn neu" href="/labs/calc/weight/kalkulator-g-kg.html">g ke kg</a>
 <a class="btn neu" href="/labs/calc/index.html">Semua kalkulator</a>
 </p>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ Seputar Kilogram ke Gram</h2>
+
+<div class="faq">
+
+<h3>1 kg berapa gram?</h3>
+<p>1 kilogram = 1000 gram.</p>
+
+<h3>10 kg berapa gram?</h3>
+<p>10 kg = 10.000 gram.</p>
+
+<h3>Kenapa dikali 1000?</h3>
+<p>Karena sistem metrik menggunakan basis 1000 antara kilogram dan gram.</p>
+
+<h3>Bagaimana cara cepat konversi kg ke gram?</h3>
+<p>Cukup geser koma 3 digit ke kanan atau gunakan kalkulator otomatis di halaman ini.</p>
+
+</div>
 
 </div>
 </div>
@@ -146,29 +163,21 @@ karena 1 kilogram sama dengan 1000 gram.
 <!-- SCRIPT -->
 <script>
 function convert() {
-  const input = document.getElementById("kgInput").value;
-  const kg = parseFloat(input);
+  const kg = parseFloat(document.getElementById("kgInput").value);
 
-  if (!input || isNaN(kg)) {
+  if (isNaN(kg)) {
     document.getElementById("result").innerText = "-";
     return;
   }
 
-  let g = kg * 1000;
+  let g = parseFloat((kg * 1000).toFixed(10));
 
-  // format rapi (hilangkan nol berlebih)
-  g = parseFloat(g.toFixed(10));
-
-  // handle angka kecil
-  if (Math.abs(g) < 0.000001 && g !== 0) {
+  if (Math.abs(g) < 1e-7 && g !== 0) {
     g = g.toExponential(3);
   }
 
   document.getElementById("result").innerText = g + " g";
 }
-
-// auto run saat load
-window.onload = convert;
 </script>
 
 <script>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kalkulator Konversi Berat (Lengkap & Cepat)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Kumpulan kalkulator konversi berat lengkap: kg ke gram, gram ke kg, dan lainnya. Cepat, akurat, dan mudah digunakan.">
+<meta name="keywords" content="konversi berat, kg ke gram, gram ke kg, kalkulator berat">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"CollectionPage",
+"name":"Konversi Berat",
+"description":"Kumpulan kalkulator konversi berat seperti kg ke gram dan gram ke kg"
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Konversi Berat</h1>
+<p>
+Kumpulan kalkulator <strong>konversi berat</strong> lengkap dan akurat.
+Ubah kilogram ke gram, gram ke kilogram, dan lainnya dalam hitungan detik.
+</p>
+</div>
+</div>
+
+<!-- MAIN CALCULATORS -->
+<div class="section">
+<div class="page">
+
+<h2>⚖️ Kalkulator Utama</h2>
+
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/weight/kalkulator-kg-g.html">kg ke gram</a>
+<a class="btn neu" href="/labs/calc/weight/kalkulator-g-kg.html">gram ke kg</a>
+</p>
+
+</div>
+</div>
+
+<!-- POPULAR CONVERSIONS -->
+<div class="section">
+<div class="page">
+
+<h2>🔥 Konversi Populer</h2>
+
+<p class="internal-link">
+<a class="btn neu" href="/blog/posts/weight/kg-g/1-kg-berapa-g.html">1 kg ke gram</a>
+<a class="btn neu" href="/blog/posts/weight/kg-g/2-5-kg-berapa-g.html">2.5 kg ke gram</a>
+<a class="btn neu" href="/blog/posts/weight/kg-g/10-kg-berapa-g.html">10 kg ke gram</a>
+
+<a class="btn neu" href="/blog/posts/weight/g-kg/1000-g-berapa-kg.html">1000 g ke kg</a>
+<a class="btn neu" href="/blog/posts/weight/g-kg/500-g-berapa-kg.html">500 g ke kg</a>
+<a class="btn neu" href="/blog/posts/weight/g-kg/100-g-berapa-kg.html">100 g ke kg</a>
+</p>
+
+</div>
+</div>
+
+<!-- TABLE -->
+<div class="section">
+<div class="page">
+
+<h2>📊 Tabel Konversi Cepat</h2>
+
+<table>
+<tr><th>Kilogram</th><th>Gram</th></tr>
+<tr><td>1 kg</td><td>1000 g</td></tr>
+<tr><td>2 kg</td><td>2000 g</td></tr>
+<tr><td>5 kg</td><td>5000 g</td></tr>
+<tr><td>10 kg</td><td>10000 g</td></tr>
+</table>
+
+</div>
+</div>
+
+<!-- PENJELASAN -->
+<div class="section">
+<div class="page">
+
+<h2>🧠 Tentang Konversi Berat</h2>
+
+<p>
+Konversi berat dalam sistem metrik didasarkan pada kelipatan 1000.
+Kilogram dan gram adalah satuan yang paling sering digunakan dalam kehidupan sehari-hari.
+</p>
+
+<p>
+Dengan memahami hubungan antara kg dan gram, Anda dapat dengan mudah mengubah satuan berat
+tanpa perlu kalkulator, atau menggunakan alat otomatis di halaman ini.
+</p>
+
+<h3>🔗 Konversi & Perhitungan Lainnya</h3>
+
+<p>
+Selain konversi berat seperti kilogram ke gram, Anda juga mungkin membutuhkan
+perhitungan lain seperti pecahan dan desimal dalam matematika.
+</p>
+
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/fraction/pecahan-ke-desimal.html">Pecahan ke desimal</a>
+<a class="btn neu" href="/labs/calc/fraction/desimal-ke-pecahan.html">Desimal ke pecahan</a>
+<a class="btn neu" href="/labs/calc/fraction/kalkulator-pecahan.html">Kalkulator pecahan</a>
+</p>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ Konversi Berat</h2>
+
+<h3>1 kg berapa gram?</h3>
+<p>1 kilogram = 1000 gram.</p>
+
+<h3>Bagaimana cara konversi gram ke kg?</h3>
+<p>Bagi gram dengan 1000.</p>
+
+<h3>Kenapa sistem metrik pakai 1000?</h3>
+<p>Karena sistem metrik berbasis kelipatan 10 sehingga mudah digunakan.</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
