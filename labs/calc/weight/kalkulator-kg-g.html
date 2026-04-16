@@ -11,10 +11,9 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator kg ke g online. Konversi kilogram ke gram dengan cepat dan akurat.">
+<meta name="description" content="Kalkulator kg ke g online. Konversi kilogram ke gram dengan cepat dan akurat. 1 kg = 1000 gram.">
 
 <link rel="stylesheet" href="/style.css">
-<link rel="stylesheet" href="/calculator.css">
 
 <!-- Schema -->
 <script type="application/ld+json">
@@ -24,6 +23,26 @@
 "name":"Kalkulator kg ke g",
 "applicationCategory":"Calculator",
 "operatingSystem":"All"
+}
+</script>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{
+"@type":"Question",
+"name":"1 kg berapa gram?",
+"acceptedAnswer":{"@type":"Answer","text":"1 kilogram sama dengan 1000 gram."}
+},
+{
+"@type":"Question",
+"name":"Bagaimana cara mengubah kg ke gram?",
+"acceptedAnswer":{"@type":"Answer","text":"Kalikan nilai kilogram dengan 1000."}
+}
+]
 }
 </script>
 
@@ -39,7 +58,6 @@
     <span>NasriLabs.com</span>
   </div>
 
-  <!-- Hamburger -->
   <div class="menu-toggle" id="menuToggle">
     ☰
   </div>
@@ -60,16 +78,22 @@
 </div>
 </div>
 
-<!-- KALKULATOR -->
+<!-- CONTENT -->
 <div class="section">
 <div class="page">
+
+<!-- SNIPPET TARGET -->
+<h2>📏 Jawaban Cepat</h2>
+<p><strong>1 kg = 1000 g</strong></p>
 
 <h2>⚖️ Konversi kg ke g</h2>
 
 <div class="input-group">
 <input 
 type="number" 
-id="kgInput" 
+id="kgInput"
+step="any"
+inputmode="decimal"
 placeholder="Masukkan nilai kilogram..."
 oninput="convert()"
 > kg
@@ -104,14 +128,6 @@ karena 1 kilogram sama dengan 1000 gram.
 <li>0.1 kg = 100 g</li>
 </ul>
 
-<!-- <h3>🔗 Contoh Konversi</h3>
-<p class="internal-link">
-<a href="/blog/posts/weight/kg-g/1-kg-berapa-g.html">1 kg ke g</a>
-<a href="/blog/posts/weight/kg-g/2-5-kg-berapa-g.html">2.5 kg ke g</a>
-<a href="/blog/posts/weight/kg-g/10-kg-berapa-g.html">10 kg ke g</a>
-</p> -->
-
-<!-- Cross Calculator -->
 <h3>🔁 Kalkulator Lainnya</h3>
 <p class="internal-link">
 <a class="btn neu" href="/labs/calc/unit-converter.html">Kalkulator</a>
@@ -130,38 +146,44 @@ karena 1 kilogram sama dengan 1000 gram.
 <!-- SCRIPT -->
 <script>
 function convert() {
-  const kg = parseFloat(document.getElementById("kgInput").value);
+  const input = document.getElementById("kgInput").value;
+  const kg = parseFloat(input);
 
-  if (isNaN(kg)) {
+  if (!input || isNaN(kg)) {
     document.getElementById("result").innerText = "-";
     return;
   }
 
-  let g = Number(kg * 1000).toPrecision(10);
-  g = parseFloat(g);
+  let g = kg * 1000;
 
-  if (Math.abs(g) < 1e-7) {
-    g = Number(g).toExponential(3);
+  // format rapi (hilangkan nol berlebih)
+  g = parseFloat(g.toFixed(10));
+
+  // handle angka kecil
+  if (Math.abs(g) < 0.000001 && g !== 0) {
+    g = g.toExponential(3);
   }
 
   document.getElementById("result").innerText = g + " g";
 }
+
+// auto run saat load
+window.onload = convert;
 </script>
 
 <script>
-  const menuToggle = document.getElementById("menuToggle");
-  const navLinks = document.getElementById("navLinks");
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
 
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
 
-  // klik luar = close
-  document.addEventListener("click", (e) => {
-    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-      navLinks.classList.remove("active");
-    }
-  });
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
 </script>
 
 </body>
