@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>4 Hektar Berapa Meter Persegi? (40000 m²)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="4 hektar berapa meter persegi? Jawaban 40000 m².">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"1 hektar berapa m2?","acceptedAnswer":{"@type":"Answer","text":"1 hektar = 10.000 m²."}},
+{"@type":"Question","name":"Cara konversi hektar ke m2?","acceptedAnswer":{"@type":"Answer","text":"Kalikan nilai hektar dengan 10.000."}},
+{"@type":"Question","name":"4 hektar berapa meter persegi?","acceptedAnswer":{"@type":"Answer","text":"4 hektar = 40000 meter persegi."}},
+{"@type":"Question","name":"Apakah hektar bisa ke meter persegi?","acceptedAnswer":{"@type":"Answer","text":"Ya, semua nilai bisa dikonversi."}}]}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<div class="hero">
+<div class="hero-text">
+<h1>4 Hektar Berapa m²?</h1>
+<p>Konversi hektar ke meter persegi secara cepat dan akurat</p>
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>📏 Jawaban Cepat</h2>
+<p><strong>4 ha = 40000 m²</strong></p>
+
+<h2>⚡ Kalkulator</h2>
+<div class="input-group">
+<input type="number" value="4" id="haInput" oninput="convert()"> ha
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>🧠 Penjelasan</h2>
+<p>4 hektar sama dengan 40000 meter persegi karena 1 hektar = 10.000 m².</p>
+
+<h2>⚙️ Cara Hitung</h2>
+<p>4 × 10.000 = 40000 m²</p>
+
+<h3>🔗 Konversi Terkait</h3>
+<p class="internal-link">
+<a class="btn neu" href="1-5-ha-berapa-m2.html">1.5 ha</a>
+<a class="btn neu" href="3-ha-berapa-m2.html">3 ha</a>
+<a class="btn neu" href="6-ha-berapa-m2.html">6 ha</a>
+</p>
+<h3>🔁 Jelajahi</h3>
+<p class="internal-link">
+<a class="btn neu" href="150-ha-berapa-m2.html">150 ha</a>
+<a class="btn neu" href="0-1-ha-berapa-m2.html">0.1 ha</a>
+</p>
+<h3>🔁 Kalkulator Lainnya</h3>
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/weight/kalkulator-kg-g.html">kg ke gram</a>
+<a class="btn neu" href="/labs/calc/fraction/pecahan-ke-desimal.html">pecahan ke desimal</a>
+<a class="btn neu" href="/labs/calc/index.html">semua kalkulator</a>
+</p>
+
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+<h2>❓ FAQ</h2>
+<h3>1 hektar berapa m2?</h3><p>1 hektar = 10.000 m².</p>
+<h3>Cara konversi hektar ke m2?</h3><p>Kalikan nilai hektar dengan 10.000.</p>
+<h3>4 hektar berapa meter persegi?</h3><p>4 hektar = 40000 meter persegi.</p>
+<h3>Apakah hektar bisa ke meter persegi?</h3><p>Ya, semua nilai bisa dikonversi.</p>
+
+</div>
+</div>
+
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+function convert(){
+let v=document.getElementById("haInput").value;
+if(!v) return;
+let m2=parseFloat(v)*10000;
+m2=parseFloat(m2.toFixed(10));
+document.getElementById("result").innerText=m2+" m²";
+}
+window.onload=convert;
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+menuToggle.addEventListener("click", () => {navLinks.classList.toggle("active");});
+document.addEventListener("click", (e) => {
+if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+navLinks.classList.remove("active");
+}
+});
+</script>
+
+</body>
+</html>

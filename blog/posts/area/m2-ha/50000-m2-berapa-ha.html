@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>50000 m² Berapa Hektar? (5.0 ha)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="50000 meter persegi berapa hektar? Jawaban 5.0 ha.">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"50000 meter persegi berapa hektar?","acceptedAnswer":{"@type":"Answer","text":"50000 m² = 5.0 hektar."}},
+{"@type":"Question","name":"Apakah semua m2 bisa ke hektar?","acceptedAnswer":{"@type":"Answer","text":"Ya, semua nilai dapat dikonversi."}},
+{"@type":"Question","name":"Cara konversi m2 ke hektar?","acceptedAnswer":{"@type":"Answer","text":"Bagi nilai meter persegi dengan 10.000."}},
+{"@type":"Question","name":"1 hektar berapa m2?","acceptedAnswer":{"@type":"Answer","text":"1 hektar = 10.000 m²."}}]}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<div class="hero">
+<div class="hero-text">
+<h1>50000 m² Berapa Hektar?</h1>
+<p>Konversi meter persegi ke hektar secara cepat</p>
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>📏 Jawaban Cepat</h2>
+<p><strong>50000 m² = 5.0 ha</strong></p>
+
+<h2>⚡ Kalkulator</h2>
+<div class="input-group">
+<input type="number" value="50000" id="m2Input" oninput="convert()"> m²
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>🧠 Penjelasan</h2>
+<p>50000 meter persegi sama dengan 5.0 hektar karena 1 hektar = 10.000 m².</p>
+
+<h2>⚙️ Cara Hitung</h2>
+<p>50000 ÷ 10.000 = 5.0 ha</p>
+
+<h3>🔗 Konversi Terkait</h3>
+<p class="internal-link">
+<a class="btn neu" href="10000-m2-berapa-ha.html">10000 m²</a>
+<a class="btn neu" href="20000-m2-berapa-ha.html">20000 m²</a>
+<a class="btn neu" href="75000-m2-berapa-ha.html">75000 m²</a>
+</p>
+<h3>🔁 Jelajahi</h3>
+<p class="internal-link">
+<a class="btn neu" href="75000-m2-berapa-ha.html">75000 m²</a>
+<a class="btn neu" href="150000-m2-berapa-ha.html">150000 m²</a>
+</p>
+<h3>🔁 Kalkulator Lainnya</h3>
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/weight/kalkulator-kg-g.html">kg ke gram</a>
+<a class="btn neu" href="/labs/calc/fraction/pecahan-ke-desimal.html">pecahan ke desimal</a>
+<a class="btn neu" href="/labs/calc/index.html">semua kalkulator</a>
+</p>
+
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+<h2>❓ FAQ</h2>
+<h3>50000 meter persegi berapa hektar?</h3><p>50000 m² = 5.0 hektar.</p>
+<h3>Apakah semua m2 bisa ke hektar?</h3><p>Ya, semua nilai dapat dikonversi.</p>
+<h3>Cara konversi m2 ke hektar?</h3><p>Bagi nilai meter persegi dengan 10.000.</p>
+<h3>1 hektar berapa m2?</h3><p>1 hektar = 10.000 m².</p>
+
+</div>
+</div>
+
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+function convert(){
+let v=document.getElementById("m2Input").value;
+if(!v) return;
+let ha=parseFloat(v)/10000;
+ha=parseFloat(ha.toFixed(10));
+document.getElementById("result").innerText=ha+" ha";
+}
+window.onload=convert;
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+menuToggle.addEventListener("click", () => {navLinks.classList.toggle("active");});
+document.addEventListener("click", (e) => {
+if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+navLinks.classList.remove("active");
+}
+});
+</script>
+
+</body>
+</html>

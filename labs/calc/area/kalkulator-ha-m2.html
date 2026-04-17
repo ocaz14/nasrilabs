@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kalkulator Hektar ke Meter Persegi (Konversi Cepat & Akurat)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Kalkulator hektar ke meter persegi (ha ke m2). Konversi cepat dan akurat. 1 hektar = 10.000 meter persegi.">
+<meta name="keywords" content="hektar ke meter persegi, ha ke m2, konversi hektar, 1 hektar berapa meter persegi">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"WebApplication",
+"name":"Kalkulator Hektar ke Meter Persegi",
+"applicationCategory":"Calculator",
+"operatingSystem":"All"
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Kalkulator Hektar ke Meter Persegi</h1>
+<p>
+Konversi <strong>hektar ke meter persegi (ha ke m²)</strong> secara instan, cepat, dan akurat.
+Cocok untuk kebutuhan tanah, properti, dan perhitungan luas.
+</p>
+</div>
+</div>
+
+<!-- KALKULATOR -->
+<div class="section">
+<div class="page">
+
+<h2>📏 Konversi ha ke m²</h2>
+
+<div class="input-group">
+<input 
+type="number" 
+id="haInput" 
+placeholder="Masukkan nilai hektar..."
+step="any"
+oninput="convert()"
+> hektar
+</div>
+
+<div class="button-group">
+<button class="btn neu" onclick="convert()">Hitung</button>
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+</div>
+</div>
+
+<!-- PENJELASAN -->
+<div class="section">
+<div class="page">
+
+<h2>🧠 Cara Konversi Hektar ke Meter Persegi</h2>
+
+<p>
+Konversi <strong>hektar ke meter persegi</strong> dilakukan dengan mengalikan nilai hektar dengan 10.000,
+karena dalam sistem pengukuran luas <strong>1 hektar = 10.000 meter persegi</strong>.
+</p>
+
+<p><strong>Rumus:</strong></p>
+<p>ha × 10.000 = m²</p>
+
+<ul>
+<li>1 ha = 10.000 m²</li>
+<li>2 ha = 20.000 m²</li>
+<li>0.5 ha = 5.000 m²</li>
+</ul>
+
+<p>
+Kalkulator ini memudahkan Anda menghitung <strong>konversi hektar ke meter persegi</strong>
+tanpa perlu menghitung manual, sangat berguna untuk kebutuhan properti, pertanian, dan konstruksi.
+</p>
+
+<!-- Internal Links -->
+<h3>🔗 Konversi Terkait</h3>
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/weight/kalkulator-kg-g.html">kg ke gram</a>
+<a class="btn neu" href="/labs/calc/weight/kalkulator-g-kg.html">gram ke kg</a>
+<a class="btn neu" href="/labs/calc/index.html">Semua kalkulator</a>
+</p>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ Hektar ke Meter Persegi</h2>
+
+<h3>1 hektar berapa meter persegi?</h3>
+<p>1 hektar = 10.000 meter persegi.</p>
+
+<h3>2 hektar berapa meter persegi?</h3>
+<p>2 hektar = 20.000 m².</p>
+
+<h3>Kenapa dikali 10.000?</h3>
+<p>Karena 1 hektar didefinisikan sebagai 10.000 meter persegi dalam sistem metrik.</p>
+
+<h3>Kapan konversi ini digunakan?</h3>
+<p>Digunakan dalam pengukuran tanah, pertanian, properti, dan konstruksi.</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function convert() {
+  const ha = parseFloat(document.getElementById("haInput").value);
+
+  if (isNaN(ha)) {
+    document.getElementById("result").innerText = "-";
+    return;
+  }
+
+  let m2 = parseFloat((ha * 10000).toFixed(10));
+
+  if (Math.abs(m2) < 1e-7 && m2 !== 0) {
+    m2 = m2.toExponential(3);
+  }
+
+  document.getElementById("result").innerText = m2 + " m²";
+}
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
