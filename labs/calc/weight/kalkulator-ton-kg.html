@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kalkulator Ton ke Kilogram (Cepat & Akurat)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Kalkulator ton ke kilogram (ton ke kg). Konversi cepat dan akurat. 1 ton = 1000 kg.">
+<meta name="keywords" content="ton ke kg, ton ke kilogram, konversi ton ke kg, 1 ton berapa kg">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"WebApplication",
+"name":"Kalkulator ton ke kilogram",
+"applicationCategory":"Calculator",
+"operatingSystem":"All"
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR (LOCKED) -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Kalkulator Ton ke Kilogram</h1>
+<p>
+Konversi <strong>ton ke kilogram (ton ke kg)</strong> secara instan dan akurat.
+Cocok untuk kebutuhan logistik, industri, dan pendidikan.
+</p>
+</div>
+</div>
+
+<!-- KALKULATOR -->
+<div class="section">
+<div class="page">
+
+<h2>⚖️ Konversi Ton ke Kg</h2>
+
+<div class="input-group">
+<input 
+type="number" 
+id="tonInput" 
+placeholder="Masukkan nilai ton..."
+step="any"
+oninput="convert()"
+> ton
+</div>
+
+<div class="button-group">
+<button class="btn neu" onclick="convert()">Hitung</button>
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+</div>
+</div>
+
+<!-- PENJELASAN -->
+<div class="section">
+<div class="page">
+
+<h2>🧠 Cara Konversi Ton ke Kilogram</h2>
+
+<p>
+Konversi <strong>ton ke kilogram</strong> dilakukan dengan mengalikan nilai ton dengan 1000,
+karena <strong>1 ton = 1000 kilogram</strong>.
+</p>
+
+<p><strong>Rumus:</strong></p>
+<p>ton × 1000 = kg</p>
+
+<ul>
+<li>1 ton = 1000 kg</li>
+<li>2 ton = 2000 kg</li>
+<li>0.5 ton = 500 kg</li>
+</ul>
+
+<p>
+Kalkulator ini membantu Anda menghitung <strong>konversi ton ke kg</strong> secara cepat tanpa perlu menghitung manual.
+</p>
+
+<!-- Internal Links -->
+<h3>🔗 Konversi Terkait</h3>
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/weight/kalkulator-kg-g.html">kg ke gram</a>
+<a class="btn neu" href="/labs/calc/weight/kalkulator-g-kg.html">gram ke kg</a>
+<a class="btn neu" href="/labs/calc/index.html">semua kalkulator</a>
+</p>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ Ton ke Kilogram</h2>
+
+<h3>1 ton berapa kg?</h3>
+<p>1 ton = 1000 kilogram.</p>
+
+<h3>2 ton berapa kg?</h3>
+<p>2 ton = 2000 kg.</p>
+
+<h3>Bagaimana cara konversi ton ke kg?</h3>
+<p>Kalikan nilai ton dengan 1000.</p>
+
+<h3>Apakah ton dan kilogram sama?</h3>
+<p>Tidak, 1 ton setara dengan 1000 kilogram.</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function convert() {
+  const ton = parseFloat(document.getElementById("tonInput").value);
+
+  if (isNaN(ton)) {
+    document.getElementById("result").innerText = "-";
+    return;
+  }
+
+  let kg = parseFloat((ton * 1000).toFixed(10));
+
+  if (Math.abs(kg) < 1e-7 && kg !== 0) {
+    kg = kg.toExponential(3);
+  }
+
+  document.getElementById("result").innerText = kg + " kg";
+}
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>

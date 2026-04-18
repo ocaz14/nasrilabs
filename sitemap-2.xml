@@ -1,6 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/53-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+<url><loc>https://nasrilabs.com/labs/calc/index.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nasrilabs.com/labs/calc/area/index.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nasrilabs.com/labs/calc/fraction/index.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nasrilabs.com/labs/calc/length/index.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nasrilabs.com/labs/calc/temperature/index.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nasrilabs.com/labs/calc/time/index.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nasrilabs.com/labs/calc/volume/index.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nasrilabs.com/labs/calc/weight/index.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+
+
+<!-- <url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/53-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/54-5-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/54-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/55-5-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -99,5 +111,6 @@
 <url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/97-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/98-5-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/98-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/99-5-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nasrilabs.com/blog/posts/length/cm-mm/99-5-cm-berapa-mm.html</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url> -->
+
 </urlset>

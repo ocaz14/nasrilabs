@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>1 Ton Berapa Kg? (1000 kg)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="1 ton berapa kg? Jawaban 1000 kg.">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"1 ton berapa kg?","acceptedAnswer":{"@type":"Answer","text":"1 ton = 1000 kilogram."}},
+{"@type":"Question","name":"Apakah ton lebih besar dari kg?","acceptedAnswer":{"@type":"Answer","text":"Ya, 1 ton setara 1000 kilogram."}},
+{"@type":"Question","name":"Cara konversi ton ke kg?","acceptedAnswer":{"@type":"Answer","text":"Kalikan nilai ton dengan 1000."}},
+{"@type":"Question","name":"1 ton berapa kg?","acceptedAnswer":{"@type":"Answer","text":"1 ton = 1000 kg."}}]}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<div class="hero">
+<div class="hero-text">
+<h1>1 Ton Berapa Kg?</h1>
+<p>Konversi ton ke kilogram secara cepat dan akurat</p>
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>📏 Jawaban Cepat</h2>
+<p><strong>1 ton = 1000 kg</strong></p>
+
+<h2>⚡ Kalkulator</h2>
+<div class="input-group">
+<input type="number" value="1" id="tonInput" oninput="convert()"> ton
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>🧠 Penjelasan</h2>
+<p>1 ton sama dengan 1000 kilogram karena 1 ton = 1000 kg.</p>
+
+<h2>⚙️ Cara Hitung</h2>
+<p>1 × 1000 = 1000 kg</p>
+
+<h3>🔗 Konversi Terkait</h3>
+<p class="internal-link">
+<a class="btn neu" href="2-ton-berapa-kg.html">2 ton</a>
+<a class="btn neu" href="2-5-ton-berapa-kg.html">2.5 ton</a>
+</p>
+
+<h3>🔁 Jelajahi</h3>
+<p class="internal-link">
+<a class="btn neu" href="1-5-ton-berapa-kg.html">1.5 ton</a>
+<a class="btn neu" href="2-5-ton-berapa-kg.html">2.5 ton</a>
+</p>
+
+<h3>🔁 Kalkulator Lainnya</h3>
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/weight/kalkulator-kg-g.html">kg ke gram</a>
+<a class="btn neu" href="/labs/calc/weight/kalkulator-g-kg.html">gram ke kg</a>
+<a class="btn neu" href="/labs/calc/index.html">semua kalkulator</a>
+</p>
+
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+<h2>❓ FAQ</h2>
+<h3>1 ton berapa kg?</h3><p>1 ton = 1000 kilogram.</p>
+<h3>Apakah ton lebih besar dari kg?</h3><p>Ya, 1 ton setara 1000 kilogram.</p>
+<h3>Cara konversi ton ke kg?</h3><p>Kalikan nilai ton dengan 1000.</p>
+<h3>1 ton berapa kg?</h3><p>1 ton = 1000 kg.</p>
+
+</div>
+</div>
+
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+function convert(){
+let v=document.getElementById("tonInput").value;
+if(!v) return;
+let kg=parseFloat(v)*1000;
+kg=parseFloat(kg.toFixed(10));
+document.getElementById("result").innerText=kg+" kg";
+}
+window.onload=convert;
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+menuToggle.addEventListener("click", () => {navLinks.classList.toggle("active");});
+document.addEventListener("click", (e) => {
+if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+navLinks.classList.remove("active");
+}
+});
+</script>
+
+</body>
+</html>
