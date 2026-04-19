@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12.6 cm Berapa mm? Jawaban + Cara Hitung</title>
+<meta name="description" content="12.6 cm berapa mm? Jawaban lengkap dan cara menghitung konversi cm ke mm.">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{"@type":"Question","name":"12.6 cm berapa mm?","acceptedAnswer":{"@type":"Answer","text":"12.6 cm = 126.0 mm"}}
+]
+}
+</script>
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"Article",
+"headline":"12.6 cm berapa mm",
+"author":{"@type":"Person","name":"Nasri Labs"},
+"publisher":{"@type":"Organization","name":"Nasri Labs"}
+}
+</script>
+
+</head>
+<body>
+<div class="container">
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<div class="hero">
+<div class="hero-text">
+<h1>12.6 cm Berapa mm?</h1>
+<p>Konversi cepat cm ke mm.</p>
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+  
+<h2>📏 Jawaban</h2>
+<p><strong>12.6 cm = 126.0 mm</strong></p>
+
+<h2>📏 Konversi cm ke mm</h2>
+<p>
+Gunakan kalkulator ini untuk mengubah <strong>cm ke mm</strong>,
+atau <strong>sentimeter ke millimeter</strong> dengan cepat. 
+Jika kamu ingin tahu <strong>berapa millimeter dari sentimeter</strong>,
+cukup masukkan angka dan hasil akan langsung muncul.
+</p>
+
+<div class="input-group">
+<input 
+type="number" 
+id="cmInput" 
+value="12.6"
+placeholder="Masukkan nilai cm..."
+oninput="convert()"
+> cm
+</div>
+
+<div class="button-group">
+<button class="btn neu" onclick="convert()">Hitung</button>
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>⚙️ Cara Menghitung</h2>
+<p>Kalikan nilai centimeter dengan 10.</p>
+<p>12.6 × 10 = 126.0 mm</p>
+
+<h2>📊 Contoh Konversi Cm ke Mm</h2>
+<ul>
+  <li>1 cm = 10 mm</li>
+  <li>2 cm = 20 mm</li>
+  <li>5 cm = 50 mm</li>
+  <li>10 cm = 100 mm</li>
+  <li>12.6 cm = 126.0 mm</li>
+</ul>
+
+<h2>📋 Tabel Konversi Cm ke Mm</h2>
+<table>
+<tr><th>Centimeter</th><th>Millimeter</th></tr>
+<tr><td>12.6</td><td>126.0</td></tr>
+<tr><td>13.6</td><td>136.0</td></tr>
+<tr><td>14.6</td><td>146.0</td></tr>
+<tr><td>15.6</td><td>156.0</td></tr>
+</table>
+
+<h2>🧠 Penjelasan</h2>
+<p>Dalam sistem metrik, 1 cm setara dengan 10 mm.</p>
+<p>Artinya setiap centimeter terdiri dari sepuluh bagian millimeter. Konversi ini sering digunakan dalam pengukuran presisi seperti teknik, desain, dan kebutuhan sehari-hari.</p>
+
+<h2>📈 Kesimpulan</h2>
+<p><strong>cm × 10 = mm</strong></p>
+
+<h2>❓ FAQ</h2>
+<p><strong>Apakah 12.6 cm selalu sama dengan 126.0 mm?</strong><br>Ya, karena sistem metrik bersifat tetap.</p>
+<p><strong>Bagaimana cara cepat menghitung?</strong><br>Cukup kalikan dengan 10.</p>
+
+<h2>🔗 Konversi Lainnya</h2>
+<p class="internal-link">
+<a class="btn neu" href="12-4-cm-berapa-mm.html">12.4 cm berapa mm ?</a>
+<a class="btn neu" href="12-5-cm-berapa-mm.html">12.5 cm berapa mm ?</a>
+<a class="btn neu" href="12-7-cm-berapa-mm.html">12.7 cm berapa mm ?</a>
+<a class="btn neu" href="84-5-cm-berapa-mm.html">84.5 cm berapa mm ?</a>
+<a class="btn neu" href="57-5-cm-berapa-mm.html">57.5 cm berapa mm ?</a>
+<a class="btn neu" href="10-3-cm-berapa-mm.html">10.3 cm berapa mm ?</a>
+
+</p>
+
+</div>
+</div>
+
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+function convert() {
+  const cm = parseFloat(document.getElementById("cmInput").value);
+
+  if (isNaN(cm)) {
+    document.getElementById("result").innerText = "-";
+    return;
+  }
+
+  let mm = Number(cm * 10).toPrecision(10);
+ mm  = parseFloat(mm);
+
+  if (Math.abs(mm) < 1e-7) {
+    mm = Number(mm).toExponential(3);
+  }
+
+  document.getElementById("result").innerText = mm + " mm";
+}
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
