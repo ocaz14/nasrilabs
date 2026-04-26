@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Konversi Menit ke Detik Lengkap + Kalkulator (Panduan Terlengkap)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Konversi menit ke detik lengkap dengan kalkulator, rumus, dan daftar nilai populer seperti 1 menit, 5 menit, 60 menit, hingga 1440 menit.">
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR (UNCHANGED) -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <h1>Konversi Menit ke Detik</h1>
+    <p>Panduan lengkap + kalkulator + daftar konversi populer</p>
+  </div>
+</div>
+
+<!-- INTRO + CALCULATOR -->
+<div class="section">
+<div class="page">
+
+<p>
+Halaman ini berisi daftar konversi <strong>menit ke detik</strong> yang paling sering dicari,
+mulai dari 1 menit, 5 menit, hingga 1440 menit (1 hari).
+Gunakan kalkulator di bawah untuk menghitung secara cepat dan akurat.
+</p>
+
+<h2>⚡ Kalkulator Menit ke Detik</h2>
+
+<div class="input-group">
+  <input type="number" value="1" id="mInput" oninput="convert()"> menit
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>🧠 Rumus Konversi</h2>
+<p><strong>menit × 60 = detik</strong></p>
+
+</div>
+</div>
+
+<!-- GRID LINK -->
+<div class="section">
+<div class="page">
+
+<h2>🔁 Konversi Populer</h2>
+
+<div class="grid-links">
+
+<a class="card neu" href="1-menit-berapa-detik.html">1 menit → detik</a>
+<a class="card neu" href="2-menit-berapa-detik.html">2 menit → detik</a>
+<a class="card neu" href="3-menit-berapa-detik.html">3 menit → detik</a>
+<a class="card neu" href="5-menit-berapa-detik.html">5 menit → detik</a>
+<a class="card neu" href="10-menit-berapa-detik.html">10 menit → detik</a>
+<a class="card neu" href="15-menit-berapa-detik.html">15 menit → detik</a>
+<a class="card neu" href="30-menit-berapa-detik.html">30 menit → detik</a>
+<a class="card neu" href="45-menit-berapa-detik.html">45 menit → detik</a>
+<a class="card neu" href="60-menit-berapa-detik.html">60 menit → detik</a>
+<a class="card neu" href="90-menit-berapa-detik.html">90 menit → detik</a>
+
+<a class="card neu" href="120-menit-berapa-detik.html">120 menit → detik</a>
+<a class="card neu" href="150-menit-berapa-detik.html">150 menit → detik</a>
+<a class="card neu" href="180-menit-berapa-detik.html">180 menit → detik</a>
+<a class="card neu" href="300-menit-berapa-detik.html">300 menit → detik</a>
+<a class="card neu" href="360-menit-berapa-detik.html">360 menit → detik</a>
+<a class="card neu" href="480-menit-berapa-detik.html">480 menit → detik</a>
+<a class="card neu" href="720-menit-berapa-detik.html">720 menit → detik</a>
+<a class="card neu" href="1440-menit-berapa-detik.html">1440 menit → detik</a>
+
+</div>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ</h2>
+
+<h3>1 menit berapa detik?</h3>
+<p>1 menit = 60 detik.</p>
+
+<h3>5 menit berapa detik?</h3>
+<p>5 menit = 300 detik.</p>
+
+<h3>10 menit berapa detik?</h3>
+<p>10 menit = 600 detik.</p>
+
+<h3>60 menit berapa detik?</h3>
+<p>60 menit = 3600 detik.</p>
+
+<h3>Cara mengubah menit ke detik?</h3>
+<p>Kalikan jumlah menit dengan 60.</p>
+
+<h3>Kenapa dikali 60?</h3>
+<p>Karena 1 menit terdiri dari 60 detik.</p>
+
+<h3>Apakah bisa dibalik?</h3>
+<p>Ya, detik ke menit dibagi 60.</p>
+
+<h3>Apakah sering digunakan?</h3>
+<p>Sangat sering digunakan dalam kehidupan sehari-hari.</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function convert(){
+  let v=document.getElementById("mInput").value;
+  if(!v) return;
+  let s=v*60;
+  s=parseFloat(s.toFixed(10));
+  document.getElementById("result").innerText=s+" detik";
+}
+window.onload=convert;
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>

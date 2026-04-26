@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Konversi Menit ke Jam Lengkap + Kalkulator (Panduan Terlengkap)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Konversi menit ke jam lengkap dengan kalkulator, rumus, dan daftar nilai populer seperti 60 menit, 120 menit, hingga 1440 menit.">
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR (UNCHANGED) -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>Konversi Menit ke Jam</h1>
+<p>Panduan lengkap + kalkulator + daftar konversi populer</p>
+</div>
+</div>
+
+<!-- INTRO -->
+<div class="section">
+<div class="page">
+
+<p>
+Halaman ini berisi daftar konversi <strong>menit ke jam</strong> yang paling sering dicari, 
+mulai dari 15 menit, 30 menit, hingga 1440 menit (1 hari). 
+Gunakan kalkulator di bawah untuk menghitung secara cepat.
+</p>
+
+<h2>⚡ Kalkulator Menit ke Jam</h2>
+
+<div class="input-group">
+<input type="number" value="60" id="mInput" oninput="convert()"> menit
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>🧠 Rumus Konversi</h2>
+<p><strong>menit ÷ 60 = jam</strong></p>
+
+</div>
+</div>
+
+<!-- GRID LINK -->
+<div class="section">
+<div class="page">
+
+<h2>🔁 Konversi Populer</h2>
+
+<div class="grid-links">
+
+<a class="card neu" href="60-menit-berapa-jam.html">60 menit → jam</a>
+<a class="card neu" href="120-menit-berapa-jam.html">120 menit → jam</a>
+<a class="card neu" href="180-menit-berapa-jam.html">180 menit → jam</a>
+<a class="card neu" href="240-menit-berapa-jam.html">240 menit → jam</a>
+<a class="card neu" href="300-menit-berapa-jam.html">300 menit → jam</a>
+<a class="card neu" href="360-menit-berapa-jam.html">360 menit → jam</a>
+<a class="card neu" href="480-menit-berapa-jam.html">480 menit → jam</a>
+<a class="card neu" href="600-menit-berapa-jam.html">600 menit → jam</a>
+<a class="card neu" href="720-menit-berapa-jam.html">720 menit → jam</a>
+<a class="card neu" href="1440-menit-berapa-jam.html">1440 menit → jam</a>
+
+<a class="card neu" href="30-menit-berapa-jam.html">30 menit → jam</a>
+<a class="card neu" href="90-menit-berapa-jam.html">90 menit → jam</a>
+<a class="card neu" href="150-menit-berapa-jam.html">150 menit → jam</a>
+<a class="card neu" href="450-menit-berapa-jam.html">450 menit → jam</a>
+<a class="card neu" href="15-menit-berapa-jam.html">15 menit → jam</a>
+<a class="card neu" href="45-menit-berapa-jam.html">45 menit → jam</a>
+<a class="card neu" href="540-menit-berapa-jam.html">540 menit → jam</a>
+<a class="card neu" href="960-menit-berapa-jam.html">960 menit → jam</a>
+
+</div>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ</h2>
+
+<h3>1 menit berapa jam?</h3>
+<p>1 menit = 1/60 jam atau sekitar 0.0167 jam.</p>
+
+<h3>60 menit berapa jam?</h3>
+<p>60 menit = 1 jam.</p>
+
+<h3>120 menit berapa jam?</h3>
+<p>120 menit = 2 jam.</p>
+
+<h3>Cara mengubah menit ke jam?</h3>
+<p>Bagi jumlah menit dengan 60.</p>
+
+<h3>Kenapa dibagi 60?</h3>
+<p>Karena 1 jam terdiri dari 60 menit.</p>
+
+<h3>Apakah bisa dibalik?</h3>
+<p>Ya, jam ke menit dikalikan 60.</p>
+
+<h3>Apakah ini sering digunakan?</h3>
+<p>Sangat sering digunakan dalam kehidupan sehari-hari.</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function convert(){
+let v=document.getElementById("mInput").value;
+if(!v) return;
+let h=v/60;
+h=parseFloat(h.toFixed(10));
+document.getElementById("result").innerText=h+" jam";
+}
+window.onload=convert;
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+navLinks.classList.remove("active");
+}
+});
+</script>
+
+</body>
+</html>

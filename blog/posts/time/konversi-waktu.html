@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Konversi Waktu Lengkap (Detik, Menit, Jam, Hari) + Kalkulator</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Konversi waktu lengkap dari detik, menit, jam, hingga hari. Dilengkapi kalkulator dan daftar konversi populer.">
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <h1>Konversi Waktu Lengkap</h1>
+    <p>Detik • Menit • Jam • Hari (Semua dalam satu halaman)</p>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="section">
+<div class="page">
+
+<p>
+Halaman ini adalah pusat konversi <strong>satuan waktu</strong>, mulai dari detik, menit, jam, hingga hari. 
+Gunakan kalkulator di bawah atau pilih konversi yang kamu butuhkan.
+</p>
+
+<h2>⚡ Kalkulator Waktu</h2>
+
+<div class="input-group">
+  <input type="number" value="1" id="inputValue" oninput="convert()"> 
+  <select id="fromUnit" onchange="convert()">
+    <option value="detik">detik</option>
+    <option value="menit">menit</option>
+    <option value="jam">jam</option>
+    <option value="hari">hari</option>
+  </select>
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+</div>
+</div>
+
+<!-- DETIK -->
+<div class="section">
+<div class="page">
+
+<h2>⏱️ Detik</h2>
+
+<div class="grid-links">
+<a class="card neu" href="/detik-menit/detik-ke-menit.html">Detik → Menit</a>
+<a class="card neu" href="/menit-detik/menit-ke-detik.html">Menit → Detik</a>
+</div>
+
+</div>
+</div>
+
+<!-- MENIT -->
+<div class="section">
+<div class="page">
+
+<h2>⏳ Menit</h2>
+
+<div class="grid-links">
+<a class="card neu" href="/menit-jam/menit-ke-jam.html">Menit → Jam</a>
+<a class="card neu" href="/jam-menit/jam-ke-menit.html">Jam → Menit</a>
+</div>
+
+</div>
+</div>
+
+<!-- JAM -->
+<div class="section">
+<div class="page">
+
+<h2>🕒 Jam</h2>
+
+<div class="grid-links">
+<a class="card neu" href="/jam-hari/jam-ke-hari.html">Jam → Hari</a>
+<a class="card neu" href="/hari-jam/hari-ke-jam.html">Hari → Jam</a>
+</div>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ</h2>
+
+<h3>1 menit berapa detik?</h3>
+<p>1 menit = 60 detik.</p>
+
+<h3>1 jam berapa menit?</h3>
+<p>1 jam = 60 menit.</p>
+
+<h3>1 hari berapa jam?</h3>
+<p>1 hari = 24 jam.</p>
+
+<h3>Cara konversi waktu?</h3>
+<p>Gunakan perkalian atau pembagian sesuai satuan.</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function convert(){
+  let v = parseFloat(document.getElementById("inputValue").value);
+  let unit = document.getElementById("fromUnit").value;
+  let result = "";
+
+  if(unit === "detik"){
+    result = (v/60)+" menit | "+(v/3600)+" jam";
+  }
+  if(unit === "menit"){
+    result = (v*60)+" detik | "+(v/60)+" jam";
+  }
+  if(unit === "jam"){
+    result = (v*60)+" menit | "+(v/24)+" hari";
+  }
+  if(unit === "hari"){
+    result = (v*24)+" jam | "+(v*1440)+" menit";
+  }
+
+  document.getElementById("result").innerText = result;
+}
+
+window.onload = convert;
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>

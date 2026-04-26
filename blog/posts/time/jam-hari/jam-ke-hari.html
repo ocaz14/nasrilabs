@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Konversi Jam ke Hari Lengkap + Kalkulator (Panduan Terlengkap)</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Konversi jam ke hari lengkap dengan kalkulator, rumus, dan daftar nilai populer seperti 24 jam, 48 jam, hingga 720 jam.">
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR (UNCHANGED) -->
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <h1>Konversi Jam ke Hari</h1>
+    <p>Panduan lengkap + kalkulator + daftar konversi populer</p>
+  </div>
+</div>
+
+<!-- INTRO + CALCULATOR -->
+<div class="section">
+<div class="page">
+
+<p>
+Halaman ini berisi daftar konversi <strong>jam ke hari</strong> yang paling sering dicari,
+mulai dari 12 jam, 24 jam (1 hari), hingga 720 jam (1 bulan).
+Gunakan kalkulator di bawah untuk menghitung secara cepat dan akurat.
+</p>
+
+<h2>⚡ Kalkulator Jam ke Hari</h2>
+
+<div class="input-group">
+  <input type="number" value="24" id="hInput" oninput="convert()"> jam
+</div>
+
+<h3>Hasil: <strong id="result">-</strong></h3>
+
+<h2>🧠 Rumus Konversi</h2>
+<p><strong>jam ÷ 24 = hari</strong></p>
+
+</div>
+</div>
+
+<!-- GRID LINK -->
+<div class="section">
+<div class="page">
+
+<h2>🔁 Konversi Populer</h2>
+
+<div class="grid-links">
+
+<a class="card neu" href="24-jam-berapa-hari.html">24 jam → hari</a>
+<a class="card neu" href="48-jam-berapa-hari.html">48 jam → hari</a>
+<a class="card neu" href="72-jam-berapa-hari.html">72 jam → hari</a>
+<a class="card neu" href="120-jam-berapa-hari.html">120 jam → hari</a>
+<a class="card neu" href="168-jam-berapa-hari.html">168 jam → hari</a>
+<a class="card neu" href="240-jam-berapa-hari.html">240 jam → hari</a>
+<a class="card neu" href="336-jam-berapa-hari.html">336 jam → hari</a>
+<a class="card neu" href="720-jam-berapa-hari.html">720 jam → hari</a>
+
+<a class="card neu" href="12-jam-berapa-hari.html">12 jam → hari</a>
+<a class="card neu" href="36-jam-berapa-hari.html">36 jam → hari</a>
+<a class="card neu" href="60-jam-berapa-hari.html">60 jam → hari</a>
+<a class="card neu" href="84-jam-berapa-hari.html">84 jam → hari</a>
+<a class="card neu" href="96-jam-berapa-hari.html">96 jam → hari</a>
+<a class="card neu" href="144-jam-berapa-hari.html">144 jam → hari</a>
+<a class="card neu" href="192-jam-berapa-hari.html">192 jam → hari</a>
+<a class="card neu" href="360-jam-berapa-hari.html">360 jam → hari</a>
+
+</div>
+
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ</h2>
+
+<h3>24 jam berapa hari?</h3>
+<p>24 jam = 1 hari.</p>
+
+<h3>48 jam berapa hari?</h3>
+<p>48 jam = 2 hari.</p>
+
+<h3>72 jam berapa hari?</h3>
+<p>72 jam = 3 hari.</p>
+
+<h3>168 jam berapa hari?</h3>
+<p>168 jam = 7 hari (1 minggu).</p>
+
+<h3>Cara mengubah jam ke hari?</h3>
+<p>Bagi jumlah jam dengan 24.</p>
+
+<h3>Kenapa dibagi 24?</h3>
+<p>Karena 1 hari terdiri dari 24 jam.</p>
+
+<h3>Apakah bisa dibalik?</h3>
+<p>Ya, hari ke jam dikalikan 24.</p>
+
+<h3>Apakah sering digunakan?</h3>
+<p>Sangat sering digunakan dalam perencanaan waktu.</p>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function convert(){
+  let v=document.getElementById("hInput").value;
+  if(!v) return;
+  let d=v/24;
+  d=parseFloat(d.toFixed(10));
+  document.getElementById("result").innerText=d+" hari";
+}
+window.onload=convert;
+</script>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+  if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    navLinks.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
