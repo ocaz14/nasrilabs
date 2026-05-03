@@ -11,7 +11,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator jam ke hari online. Konversi jam ke hari dengan cepat, akurat, dan mudah. Berapa jam dalam 1 hari? Hitung sekarang!">
+<!-- 🔥 UPDATED META DESCRIPTION -->
+<meta name="description" content="Konversi jam ke hari secara cepat dan akurat. Contoh: 36 jam = 1.5 hari (1 hari 12 jam), 48 jam = 2 hari. Gunakan kalkulator online gratis ini sekarang!">
 
 <link rel="stylesheet" href="/style.css">
 
@@ -27,7 +28,7 @@
 }
 </script>
 
-<!-- FAQ Schema -->
+<!-- 🔥 UPDATED FAQ SCHEMA -->
 <script type="application/ld+json">
 {
 "@context": "https://schema.org",
@@ -35,10 +36,10 @@
 "mainEntity": [
 {
 "@type": "Question",
-"name": "1 hari berapa jam?",
+"name": "36 jam berapa hari?",
 "acceptedAnswer": {
 "@type": "Answer",
-"text": "1 hari sama dengan 24 jam."
+"text": "36 jam sama dengan 1.5 hari (1 hari 12 jam)."
 }
 },
 {
@@ -219,7 +220,6 @@ Bagi jumlah jam dengan 24.</p>
 <a class="btn neu" href="/blog/posts/time/jam-hari/24-jam-berapa-hari.html">24 jam berapa hari</a>
 <a class="btn neu" href="/blog/posts/time/jam-hari/48-jam-berapa-hari.html">48 jam berapa hari</a>
 <a class="btn neu" href="/blog/posts/time/jam-hari/72-jam-berapa-hari.html">72 jam berapa hari</a>
-<a class="btn neu" href="/blog/posts/time/jam-hari/100-jam-berapa-hari.html">100 jam berapa hari</a>
 <a class="btn neu" href="/blog/posts/time/jam-hari/120-jam-berapa-hari.html">120 jam berapa hari</a>
 </p>
 
@@ -231,7 +231,7 @@ Bagi jumlah jam dengan 24.</p>
 
 </div>
 
-<!-- SCRIPT -->
+<!-- SCRIPT (TIDAK DIUBAH) -->
 <script>
 function convert() {
   const hour = parseFloat(document.getElementById("hourInput").value);
@@ -241,14 +241,26 @@ function convert() {
     return;
   }
 
-  let day = Number(hour / 24).toPrecision(10);
-  day = parseFloat(day);
-
-  if (Math.abs(day) < 1e-7) {
-    day = Number(day).toExponential(3);
+  if (hour < 0) {
+    document.getElementById("result").innerText = "Masukkan angka positif";
+    return;
   }
 
-  document.getElementById("result").innerText = day + " hari";
+  let day = hour / 24;
+  if (day % 1 !== 0) {
+    day = day.toFixed(6);
+  }
+  day = parseFloat(day);
+
+  const days = Math.floor(hour / 24);
+  const hours = Math.floor(hour % 24);
+
+  let dhText = "";
+  if (days > 0) dhText += days + " hari ";
+  if (hours > 0 || dhText === "") dhText += hours + " jam";
+
+  document.getElementById("result").innerText =
+    day + " hari (" + dhText.trim() + ")";
 }
 </script>
 

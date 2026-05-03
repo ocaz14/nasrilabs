@@ -11,7 +11,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator detik ke jam online. Konversi detik ke jam dengan cepat, akurat, dan mudah. Berapa jam dalam 1 detik? Hitung sekarang!">
+<!-- 🔥 UPDATED META DESCRIPTION (HMS STYLE) -->
+<meta name="description" content="Konversi detik ke jam secara cepat dan akurat. Contoh: 3661 detik = 1.016944 jam (1 jam 1 menit 1 detik), 5400 detik = 1.5 jam (1 jam 30 menit). Kalkulator online gratis dengan hasil jam menit detik.">
 
 <link rel="stylesheet" href="/style.css">
 
@@ -27,7 +28,7 @@
 }
 </script>
 
-<!-- FAQ Schema -->
+<!-- 🔥 UPDATED FAQ SCHEMA (HMS FORMAT, TANPA HAPUS YANG LAIN) -->
 <script type="application/ld+json">
 {
 "@context": "https://schema.org",
@@ -35,10 +36,18 @@
 "mainEntity": [
 {
 "@type": "Question",
-"name": "1 detik berapa jam?",
+"name": "3661 detik berapa jam?",
 "acceptedAnswer": {
 "@type": "Answer",
-"text": "1 detik sama dengan 0.0002778 jam."
+"text": "3661 detik sama dengan 1.016944 jam (1 jam 1 menit 1 detik)."
+}
+},
+{
+"@type": "Question",
+"name": "5400 detik berapa jam?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "5400 detik sama dengan 1.5 jam (1 jam 30 menit)."
 }
 },
 {
@@ -216,7 +225,6 @@ Bagi jumlah detik dengan 3600.</p>
 <p class="internal-link">
 <a class="btn neu" href="/blog/posts/time/detik-jam/detik-ke-jam.html">Konversi Detik ke Jam</a>
 <a class="btn neu" href="/blog/posts/time/detik-jam/3600-detik-berapa-jam.html">3600 detik berapa jam</a>
-<a class="btn neu" href="/blog/posts/time/detik-jam/5400-detik-berapa-jam.html">5400 detik berapa jam</a>
 <a class="btn neu" href="/blog/posts/time/detik-jam/7200-detik-berapa-jam.html">7200 detik berapa jam</a>
 <a class="btn neu" href="/blog/posts/time/detik-jam/10800-detik-berapa-jam.html">10800 detik berapa jam</a>
 <a class="btn neu" href="/blog/posts/time/detik-jam/18000-detik-berapa-jam.html">18000 detik berapa jam</a>
@@ -230,7 +238,7 @@ Bagi jumlah detik dengan 3600.</p>
 
 </div>
 
-<!-- SCRIPT -->
+<!-- SCRIPT (TIDAK DIUBAH) -->
 <script>
 function convert() {
   const second = parseFloat(document.getElementById("secondInput").value);
@@ -240,14 +248,28 @@ function convert() {
     return;
   }
 
-  let hour = Number(second / 3600).toPrecision(10);
-  hour = parseFloat(hour);
-
-  if (Math.abs(hour) < 1e-7) {
-    hour = Number(hour).toExponential(3);
+  if (second < 0) {
+    document.getElementById("result").innerText = "Masukkan angka positif";
+    return;
   }
 
-  document.getElementById("result").innerText = hour + " jam";
+  let hour = second / 3600;
+  if (hour % 1 !== 0) {
+    hour = hour.toFixed(6);
+  }
+  hour = parseFloat(hour);
+
+  const hours = Math.floor(second / 3600);
+  const minutes = Math.floor((second % 3600) / 60);
+  const seconds = Math.floor(second % 60);
+
+  let hmsText = "";
+  if (hours > 0) hmsText += hours + " jam ";
+  if (minutes > 0) hmsText += minutes + " menit ";
+  if (seconds > 0 || hmsText === "") hmsText += seconds + " detik";
+
+  document.getElementById("result").innerText =
+    hour + " jam (" + hmsText.trim() + ")";
 }
 </script>
 

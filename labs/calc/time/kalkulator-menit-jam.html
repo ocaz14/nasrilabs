@@ -11,7 +11,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Kalkulator menit ke jam online. Konversi menit ke jam dengan cepat, akurat, dan mudah. Berapa jam dalam 1 menit? Hitung sekarang!">
+<!-- 🔥 UPDATED META DESCRIPTION -->
+<meta name="description" content="Konversi menit ke jam secara cepat dan akurat. Contoh: 90 menit = 1.5 jam (1 jam 30 menit), 120 menit = 2 jam. Gunakan kalkulator online gratis ini sekarang!">
 
 <link rel="stylesheet" href="/style.css">
 
@@ -27,7 +28,7 @@
 }
 </script>
 
-<!-- FAQ Schema -->
+<!-- 🔥 UPDATED FAQ SCHEMA -->
 <script type="application/ld+json">
 {
 "@context": "https://schema.org",
@@ -35,10 +36,10 @@
 "mainEntity": [
 {
 "@type": "Question",
-"name": "1 menit berapa jam?",
+"name": "90 menit berapa jam?",
 "acceptedAnswer": {
 "@type": "Answer",
-"text": "1 menit sama dengan 0.0167 jam."
+"text": "90 menit sama dengan 1.5 jam (1 jam 30 menit)."
 }
 },
 {
@@ -230,7 +231,7 @@ Bagi jumlah menit dengan 60.</p>
 
 </div>
 
-<!-- SCRIPT -->
+<!-- 🔥 UPDATED SCRIPT -->
 <script>
 function convert() {
   const minute = parseFloat(document.getElementById("minuteInput").value);
@@ -240,14 +241,28 @@ function convert() {
     return;
   }
 
-  let hour = Number(minute / 60).toPrecision(10);
-  hour = parseFloat(hour);
-
-  if (Math.abs(hour) < 1e-7) {
-    hour = Number(hour).toExponential(3);
+  if (minute < 0) {
+    document.getElementById("result").innerText = "Masukkan angka positif";
+    return;
   }
 
-  document.getElementById("result").innerText = hour + " jam";
+  // DESIMAL
+  let hour = minute / 60;
+  if (hour % 1 !== 0) {
+    hour = hour.toFixed(6);
+  }
+  hour = parseFloat(hour);
+
+  // JAM + MENIT
+  const hours = Math.floor(minute / 60);
+  const minutes = Math.floor(minute % 60);
+
+  let hmText = "";
+  if (hours > 0) hmText += hours + " jam ";
+  if (minutes > 0 || hmText === "") hmText += minutes + " menit";
+
+  document.getElementById("result").innerText =
+    hour + " jam (" + hmText.trim() + ")";
 }
 </script>
 
