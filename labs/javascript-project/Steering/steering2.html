@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Predator Prey Simulation</title>
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #0f172a;
+    color: white;
+    font-family: Arial;
+}
+#info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div id="info">
+    Predator: <span id="predCount"></span><br>
+    Prey: <span id="preyCount"></span>
+</div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// ================= VECTOR =================
+class Vector {
+    constructor(x, y) { this.x = x; this.y = y; }
+    add(v){ this.x+=v.x; this.y+=v.y; return this; }
+    sub(v){ this.x-=v.x; this.y-=v.y; return this; }
+    mult(n){ this.x*=n; this.y*=n; return this; }
+    div(n){ this.x/=n; this.y/=n; return this; }
+    mag(){ return Math.sqrt(this.x*this.x + this.y*this.y); }
+    normalize(){ let m=this.mag(); if(m) this.div(m); return this;}
+    limit(max){ if(this.mag()>max){ this.normalize().mult(max);} return this;}
+    copy(){ return new Vector(this.x,this.y); }
+    static sub(a,b){ return new Vector(a.x-b.x, a.y-b.y); }
+    static random2D(){
+        let a=Math.random()*Math.PI*2;
+        return new Vector(Math.cos(a), Math.sin(a));
+    }
+}
+
+// ================= BASE AGENT =================
+class Agent {
+    constructor(x,y){
+        this.pos = new Vector(x,y);
+        this.vel = Vector.random2D();
+        this.acc = new Vector(0,0);
+        this.maxSpeed = 2;
+        this.maxForce = 0.1;
+    }
+
+    applyForce(f){ this.acc.add(f); }
+
+    update(){
+        this.vel.add(this.acc);
+        this.vel.limit(this.maxSpeed);
+        this.pos.add(this.vel);
+        this.acc.mult(0);
+        this.edges();
+    }
+
+    edges(){
+        if(this.pos.x>canvas.width) this.pos.x=0;
+        if(this.pos.x<0) this.pos.x=canvas.width;
+        if(this.pos.y>canvas.height) this.pos.y=0;
+        if(this.pos.y<0) this.pos.y=canvas.height;
+    }
+
+    seek(target){
+        let desired = Vector.sub(target, this.pos);
+        desired.normalize().mult(this.maxSpeed);
+        let steer = Vector.sub(desired, this.vel);
+        return steer.limit(this.maxForce);
+    }
+
+    flee(target){
+        let desired = Vector.sub(this.pos, target);
+        let d = desired.mag();
+        if(d < 100){
+            desired.normalize().mult(this.maxSpeed);
+            let steer = Vector.sub(desired, this.vel);
+            return steer.limit(this.maxForce * 2);
+        }
+        return new Vector(0,0);
+    }
+}
+
+// ================= PREY =================
+class Prey extends Agent {
+    constructor(x,y){
+        super(x,y);
+        this.maxSpeed = 2.5;
+    }
+
+    behave(predators){
+        let fleeForce = new Vector(0,0);
+        predators.forEach(p=>{
+            fleeForce.add(this.flee(p.pos));
+        });
+        this.applyForce(fleeForce);
+    }
+
+    draw(){
+        ctx.fillStyle = "#22c55e";
+        ctx.beginPath();
+        ctx.arc(this.pos.x, this.pos.y, 4, 0, Math.PI*2);
+        ctx.fill();
+    }
+}
+
+// ================= PREDATOR =================
+class Predator extends Agent {
+    constructor(x,y){
+        super(x,y);
+        this.maxSpeed = 3;
+        this.energy = 100;
+    }
+
+    behave(preys){
+        let closest = null;
+        let minDist = Infinity;
+
+        preys.forEach(p=>{
+            let d = Vector.sub(p.pos, this.pos).mag();
+            if(d < minDist){
+                minDist = d;
+                closest = p;
+            }
+        });
+
+        if(closest){
+            let force = this.seek(closest.pos);
+            this.applyForce(force);
+
+            if(minDist < 6){
+                // makan prey
+                let index = preys.indexOf(closest);
+                if(index > -1) preys.splice(index,1);
+                this.energy += 50;
+            }
+        }
+
+        this.energy -= 0.1;
+    }
+
+    draw(){
+        ctx.fillStyle = "#ef4444";
+        ctx.beginPath();
+        ctx.arc(this.pos.x, this.pos.y, 6, 0, Math.PI*2);
+        ctx.fill();
+    }
+}
+
+// ================= SETUP =================
+let preys = [];
+let predators = [];
+
+for(let i=0;i<50;i++){
+    preys.push(new Prey(Math.random()*canvas.width, Math.random()*canvas.height));
+}
+
+for(let i=0;i<5;i++){
+    predators.push(new Predator(Math.random()*canvas.width, Math.random()*canvas.height));
+}
+
+// ================= LOOP =================
+function animate(){
+    ctx.fillStyle = "#0f172a";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    preys.forEach(p=>{
+        p.behave(predators);
+        p.update();
+        p.draw();
+
+        // reproduce
+        if(Math.random() < 0.001){
+            preys.push(new Prey(p.pos.x, p.pos.y));
+        }
+    });
+
+    predators = predators.filter(pred=>{
+        pred.behave(preys);
+        pred.update();
+        pred.draw();
+        return pred.energy > 0;
+    });
+
+    // predator reproduce
+    if(Math.random() < 0.005){
+        predators.push(new Predator(Math.random()*canvas.width, Math.random()*canvas.height));
+    }
+
+    document.getElementById("preyCount").innerText = preys.length;
+    document.getElementById("predCount").innerText = predators.length;
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>

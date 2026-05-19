@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Turret Defense - Clean Spawn Fix</title>
+<style>
+body { margin:0; background:#0b0f1a; overflow:hidden; }
+canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// =====================
+// CONFIG
+// =====================
+const BULLET_SPEED = 6;
+const MAX_SPEED = 2.5;
+const SPAWN_INTERVAL = 70;
+
+// =====================
+// OBJECTS
+// =====================
+let turret = {
+    x: canvas.width/2,
+    y: canvas.height - 80,
+    angle: 0,
+    alive: true,
+    respawnTimer: 0
+};
+
+let aircrafts = [];
+let bullets = [];
+let explosions = [];
+
+// =====================
+// SPAWN FROM EDGES
+// =====================
+function spawnAircraft(){
+    let side = Math.floor(Math.random()*3);
+    let x,y,vx,vy;
+
+    if(side === 0){ // LEFT
+        x = -20;
+        y = Math.random() * (canvas.height/2);
+        vx = 2 + Math.random();
+        vy = (Math.random()-0.5);
+    }
+    else if(side === 1){ // RIGHT
+        x = canvas.width + 20;
+        y = Math.random() * (canvas.height/2);
+        vx = -2 - Math.random();
+        vy = (Math.random()-0.5);
+    }
+    else { // TOP
+        x = Math.random() * canvas.width;
+        y = -20;
+        vx = (Math.random()-0.5)*2;
+        vy = 2 + Math.random();
+    }
+
+    aircrafts.push({
+        x,y,vx,vy,
+        angle:0,
+        alive:true,
+        wanderAngle: Math.random()*Math.PI*2
+    });
+}
+
+// =====================
+// STEERING
+// =====================
+function updateSteering(a){
+    a.wanderAngle += (Math.random()-0.5)*0.2;
+
+    a.vx += Math.cos(a.wanderAngle)*0.03;
+    a.vy += Math.sin(a.wanderAngle)*0.03;
+
+    let speed = Math.hypot(a.vx,a.vy);
+    if(speed > MAX_SPEED){
+        a.vx = (a.vx/speed)*MAX_SPEED;
+        a.vy = (a.vy/speed)*MAX_SPEED;
+    }
+
+    a.angle = Math.atan2(a.vy,a.vx);
+
+    a.x += a.vx;
+    a.y += a.vy;
+}
+
+// =====================
+// DRAW
+// =====================
+function drawAircraft(a){
+    ctx.save();
+    ctx.translate(a.x,a.y);
+    ctx.rotate(a.angle);
+
+    ctx.fillStyle = "cyan";
+
+    ctx.beginPath();
+    ctx.moveTo(15,0);
+    ctx.lineTo(-10,7);
+    ctx.lineTo(-10,-7);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+}
+
+function drawTurret(){
+    if(!turret.alive) return;
+
+    ctx.fillStyle="gray";
+    ctx.beginPath();
+    ctx.arc(turret.x,turret.y,20,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.strokeStyle="white";
+    ctx.lineWidth=4;
+    ctx.beginPath();
+    ctx.moveTo(turret.x,turret.y);
+    ctx.lineTo(
+        turret.x + Math.cos(turret.angle)*50,
+        turret.y + Math.sin(turret.angle)*50
+    );
+    ctx.stroke();
+}
+
+function drawBullets(){
+    ctx.strokeStyle="yellow";
+    bullets.forEach(b=>{
+        ctx.beginPath();
+        ctx.moveTo(b.x,b.y);
+        ctx.lineTo(b.x - b.vx*2, b.y - b.vy*2);
+        ctx.stroke();
+    });
+}
+
+function drawExplosions(){
+    explosions.forEach(e=>{
+        ctx.beginPath();
+        ctx.arc(e.x,e.y,e.radius,0,Math.PI*2);
+        ctx.strokeStyle="orange";
+        ctx.stroke();
+    });
+}
+
+// =====================
+// TARGETING
+// =====================
+function getLeadTarget(a){
+    const dx = a.x - turret.x;
+    const dy = a.y - turret.y;
+    const dist = Math.hypot(dx,dy);
+    const t = dist / BULLET_SPEED;
+
+    return {
+        x: a.x + a.vx*t,
+        y: a.y + a.vy*t
+    };
+}
+
+function getClosestTarget(){
+    let best = null;
+    let min = Infinity;
+
+    aircrafts.forEach(a=>{
+        let d = Math.hypot(a.x - turret.x, a.y - turret.y);
+        if(d < min){
+            min = d;
+            best = a;
+        }
+    });
+
+    return best;
+}
+
+// =====================
+// UPDATE
+// =====================
+function updateAircraft(){
+    aircrafts.forEach(updateSteering);
+}
+
+function updateTurret(){
+    if(!turret.alive){
+        turret.respawnTimer--;
+        if(turret.respawnTimer < 0){
+            turret.alive = true;
+            turret.x = Math.random()*canvas.width;
+            turret.y = Math.random()*canvas.height;
+        }
+        return;
+    }
+
+    let target = getClosestTarget();
+    if(!target) return;
+
+    let lead = getLeadTarget(target);
+    turret.angle = Math.atan2(lead.y - turret.y, lead.x - turret.x);
+}
+
+function shoot(){
+    if(!turret.alive) return;
+
+    let target = getClosestTarget();
+    if(!target) return;
+
+    bullets.push({
+        x: turret.x,
+        y: turret.y,
+        vx: Math.cos(turret.angle)*BULLET_SPEED,
+        vy: Math.sin(turret.angle)*BULLET_SPEED
+    });
+}
+
+// =====================
+// COLLISION
+// =====================
+function updateBullets(){
+    bullets.forEach(b=>{
+        b.x+=b.vx;
+        b.y+=b.vy;
+
+        aircrafts = aircrafts.filter(a=>{
+            if(Math.hypot(b.x-a.x,b.y-a.y)<15){
+                explosions.push({x:a.x,y:a.y,radius:5});
+                return false; // 🔥 remove aircraft
+            }
+            return true;
+        });
+    });
+
+    bullets = bullets.filter(b=>
+        b.x>0 && b.x<canvas.width &&
+        b.y>0 && b.y<canvas.height
+    );
+}
+
+function updateExplosions(){
+    explosions.forEach(e=>e.radius+=1.5);
+    explosions = explosions.filter(e=>e.radius<20);
+}
+
+// =====================
+// LOOP
+// =====================
+let spawnTimer = 0;
+let shootTimer = 0;
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // spawn from edges
+    spawnTimer++;
+    if(spawnTimer > SPAWN_INTERVAL){
+        spawnAircraft();
+        spawnTimer = 0;
+    }
+
+    updateAircraft();
+    updateTurret();
+    updateBullets();
+    updateExplosions();
+
+    aircrafts.forEach(drawAircraft);
+    drawTurret();
+    drawBullets();
+    drawExplosions();
+
+    shootTimer++;
+    if(shootTimer > 15){
+        shoot();
+        shootTimer = 0;
+    }
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+</body>
+</html>

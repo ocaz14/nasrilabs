@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Turret Defense</title>
+<style>
+body { margin:0; background:#0b0f1a; overflow:hidden; }
+canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// =====================
+// CONFIG
+// =====================
+const BULLET_SPEED = 6;
+const ENEMY_SPEED = 2.2;
+const NUM_AIRCRAFT = 5;
+
+// =====================
+// OBJECTS
+// =====================
+let turret = {
+    x: canvas.width/2,
+    y: canvas.height - 80,
+    alive: true,
+    respawnTimer: 0
+};
+
+let bullets = [];
+let enemyBullets = [];
+let explosions = [];
+
+let aircrafts = [];
+
+// =====================
+// SPAWN AIRCRAFT
+// =====================
+function spawnAircraft() {
+    aircrafts.push({
+        x: -100,
+        y: Math.random() * (canvas.height/2),
+        vx: ENEMY_SPEED + Math.random(),
+        vy: (Math.random()-0.5)*0.5,
+        alive: true,
+        shootCooldown: Math.random()*100
+    });
+}
+
+for(let i=0;i<NUM_AIRCRAFT;i++) spawnAircraft();
+
+// =====================
+// DRAW FUNCTIONS
+// =====================
+function drawAircraft(a) {
+    ctx.fillStyle = a.alive ? "cyan" : "orange";
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(a.x-20, a.y+10);
+    ctx.lineTo(a.x-20, a.y-10);
+    ctx.closePath();
+    ctx.fill();
+}
+
+function drawTurret() {
+    if(!turret.alive) return;
+
+    ctx.fillStyle = "gray";
+    ctx.beginPath();
+    ctx.arc(turret.x, turret.y, 20, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(turret.x, turret.y);
+    ctx.lineTo(
+        turret.x + Math.cos(turret.angle)*50,
+        turret.y + Math.sin(turret.angle)*50
+    );
+    ctx.stroke();
+}
+
+function drawBullets() {
+    ctx.strokeStyle = "yellow";
+    bullets.forEach(b=>{
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - b.vx*2, b.y - b.vy*2);
+        ctx.stroke();
+    });
+
+    ctx.strokeStyle = "red";
+    enemyBullets.forEach(b=>{
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - b.vx*2, b.y - b.vy*2);
+        ctx.stroke();
+    });
+}
+
+function drawExplosions() {
+    explosions.forEach(e=>{
+        ctx.beginPath();
+        ctx.arc(e.x, e.y, e.radius, 0, Math.PI*2);
+        ctx.strokeStyle = "orange";
+        ctx.stroke();
+    });
+}
+
+// =====================
+// AI LEAD TARGETING
+// =====================
+function getLeadTarget(a) {
+    const dx = a.x - turret.x;
+    const dy = a.y - turret.y;
+
+    const distance = Math.sqrt(dx*dx + dy*dy);
+    const time = distance / BULLET_SPEED;
+
+    return {
+        x: a.x + a.vx * time,
+        y: a.y + a.vy * time
+    };
+}
+
+// =====================
+// UPDATE
+// =====================
+function updateAircraft() {
+    aircrafts.forEach(a=>{
+        if(!a.alive) return;
+
+        a.x += a.vx;
+        a.y += a.vy;
+
+        if(a.x > canvas.width + 100) {
+            a.x = -100;
+            a.y = Math.random()*(canvas.height/2);
+        }
+
+        // enemy shoot turret
+        a.shootCooldown--;
+        if(a.shootCooldown < 0 && turret.alive) {
+            const angle = Math.atan2(turret.y - a.y, turret.x - a.x);
+            enemyBullets.push({
+                x: a.x,
+                y: a.y,
+                vx: Math.cos(angle)*4,
+                vy: Math.sin(angle)*4
+            });
+            a.shootCooldown = 100 + Math.random()*50;
+        }
+    });
+}
+
+function updateTurret() {
+    if(!turret.alive) {
+        turret.respawnTimer--;
+        if(turret.respawnTimer < 0) {
+            turret.alive = true;
+            turret.x = Math.random()*canvas.width;
+        }
+        return;
+    }
+
+    let target = aircrafts.find(a=>a.alive);
+    if(!target) return;
+
+    let lead = getLeadTarget(target);
+
+    turret.angle = Math.atan2(lead.y - turret.y, lead.x - turret.x);
+}
+
+function shoot() {
+    if(!turret.alive) return;
+
+    bullets.push({
+        x: turret.x,
+        y: turret.y,
+        vx: Math.cos(turret.angle)*BULLET_SPEED,
+        vy: Math.sin(turret.angle)*BULLET_SPEED
+    });
+}
+
+function updateBullets() {
+    bullets.forEach(b=>{
+        b.x += b.vx;
+        b.y += b.vy;
+
+        aircrafts.forEach(a=>{
+            if(!a.alive) return;
+
+            let dx = b.x - a.x;
+            let dy = b.y - a.y;
+
+            if(Math.sqrt(dx*dx + dy*dy) < 15) {
+                a.alive = false;
+                explosions.push({x:a.x,y:a.y,radius:5});
+            }
+        });
+    });
+
+    enemyBullets.forEach(b=>{
+        b.x += b.vx;
+        b.y += b.vy;
+
+        if(turret.alive) {
+            let dx = b.x - turret.x;
+            let dy = b.y - turret.y;
+
+            if(Math.sqrt(dx*dx + dy*dy) < 20) {
+                turret.alive = false;
+                turret.respawnTimer = 120;
+                explosions.push({x:turret.x,y:turret.y,radius:10});
+            }
+        }
+    });
+
+    bullets = bullets.filter(b=>b.x>0&&b.x<canvas.width&&b.y>0&&b.y<canvas.height);
+    enemyBullets = enemyBullets.filter(b=>b.x>0&&b.x<canvas.width&&b.y>0&&b.y<canvas.height);
+}
+
+function updateExplosions() {
+    explosions.forEach(e=>{
+        e.radius += 1.5;
+    });
+
+    explosions = explosions.filter(e=>e.radius < 20);
+}
+
+// =====================
+// LOOP
+// =====================
+let shootTimer = 0;
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    updateAircraft();
+    updateTurret();
+    updateBullets();
+    updateExplosions();
+
+    aircrafts.forEach(drawAircraft);
+    drawTurret();
+    drawBullets();
+    drawExplosions();
+
+    shootTimer++;
+    if(shootTimer > 15) {
+        shoot();
+        shootTimer = 0;
+    }
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+</body>
+</html>

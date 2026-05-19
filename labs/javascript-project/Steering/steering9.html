@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Predator Prey - Balanced Species</title>
+<style>
+body { margin:0; overflow:hidden; background:#0f172a; color:white; font-family:Arial;}
+#info { position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.4); padding:10px; border-radius:8px;}
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div id="info">
+Fast: <span id="fastCount"></span><br>
+Smart: <span id="smartCount"></span><br>
+Prey: <span id="preyCount"></span><br>
+Debug: Press D
+</div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let DEBUG=false;
+window.addEventListener("keydown",e=>{
+if(e.key.toLowerCase()==="d") DEBUG=!DEBUG;
+});
+
+// VECTOR
+class Vector{
+constructor(x,y){this.x=x;this.y=y;}
+add(v){this.x+=v.x;this.y+=v.y;return this;}
+sub(v){this.x-=v.x;this.y-=v.y;return this;}
+mult(n){this.x*=n;this.y*=n;return this;}
+div(n){this.x/=n;this.y/=n;return this;}
+mag(){return Math.sqrt(this.x*this.x+this.y*this.y);}
+normalize(){let m=this.mag();if(m)this.div(m);return this;}
+limit(max){if(this.mag()>max){this.normalize().mult(max);}return this;}
+copy(){return new Vector(this.x,this.y);}
+static sub(a,b){return new Vector(a.x-b.x,a.y-b.y);}
+static random2D(){
+let a=Math.random()*Math.PI*2;
+return new Vector(Math.cos(a),Math.sin(a));
+}
+}
+
+// BASE
+class Agent{
+constructor(x,y,s=1,v=1){
+this.pos=new Vector(x,y);
+this.vel=Vector.random2D();
+this.acc=new Vector(0,0);
+
+this.speedGene=s;
+this.visionGene=v;
+
+this.baseSpeed=2;
+this.maxSpeed=this.baseSpeed*this.speedGene;
+this.maxForce=0.12;
+
+this.visionRange=140*this.visionGene;
+}
+
+applyForce(f){this.acc.add(f);}
+
+update(){
+this.vel.add(this.acc);
+this.vel.limit(this.maxSpeed);
+this.pos.add(this.vel);
+this.acc.mult(0);
+this.wrap();
+}
+
+wrap(){
+if(this.pos.x>canvas.width)this.pos.x=0;
+if(this.pos.x<0)this.pos.x=canvas.width;
+if(this.pos.y>canvas.height)this.pos.y=0;
+if(this.pos.y<0)this.pos.y=canvas.height;
+}
+
+seek(t){
+let d=Vector.sub(t,this.pos);
+d.normalize().mult(this.maxSpeed);
+return Vector.sub(d,this.vel).limit(this.maxForce);
+}
+
+flee(t){
+let d=Vector.sub(this.pos,t);
+if(d.mag()<this.visionRange){
+d.normalize().mult(this.maxSpeed);
+return Vector.sub(d,this.vel).limit(this.maxForce*2);
+}
+return new Vector(0,0);
+}
+
+separation(a){
+let steer=new Vector(0,0),count=0;
+a.forEach(o=>{
+let d=Vector.sub(this.pos,o.pos).mag();
+if(o!==this && d<20 && d>0){
+let diff=Vector.sub(this.pos,o.pos);
+diff.normalize().div(d);
+steer.add(diff);
+count++;
+}
+});
+if(count>0)steer.div(count);
+return steer.limit(this.maxForce);
+}
+
+inVision(t){
+let dir=this.vel.copy().normalize();
+let to=Vector.sub(t,this.pos);
+if(to.mag()>this.visionRange)return false;
+to.normalize();
+return Math.acos(dir.x*to.x+dir.y*to.y)<Math.PI/3;
+}
+
+predict(p,v,f=8){
+return p.copy().add(v.copy().mult(f));
+}
+
+wander(){return Vector.random2D().mult(0.05);}
+}
+
+// PREY
+class Prey extends Agent{
+constructor(x,y,s,v){
+super(x,y,s,v);
+this.baseSpeed=2.5;
+this.isTargeted=false;
+}
+
+behave(preds,preys){
+this.isTargeted=false;
+
+let flee=new Vector(0,0),panic=false;
+preds.forEach(p=>{
+let d=Vector.sub(this.pos,p.pos).mag();
+if(d<70)panic=true;
+flee.add(this.flee(p.pos));
+});
+
+this.maxSpeed=(panic?4:this.baseSpeed)*this.speedGene;
+this.applyForce(flee);
+this.applyForce(this.separation(preys).mult(0.7));
+}
+
+draw(){
+let a=Math.atan2(this.vel.y,this.vel.x);
+ctx.save();
+ctx.translate(this.pos.x,this.pos.y);
+ctx.rotate(a);
+
+ctx.beginPath();
+ctx.moveTo(8,0);
+ctx.lineTo(-5,4);
+ctx.lineTo(-5,-4);
+ctx.closePath();
+
+if(DEBUG && this.isTargeted){
+ctx.fillStyle="yellow";
+}else{
+let g=Math.min(255,100+this.speedGene*80);
+ctx.fillStyle=`rgb(0,${g},100)`;
+}
+
+ctx.fill();
+ctx.restore();
+}
+}
+
+// BASE PREDATOR
+class PredatorBase extends Agent{
+constructor(x,y,s,v){
+super(x,y,s,v);
+this.energy=120;
+this.memory=null;
+this.memoryTimer=0;
+}
+
+hunt(preys,factor){
+let closest=null,min=Infinity;
+
+preys.forEach(p=>{
+let d=Vector.sub(p.pos,this.pos).mag();
+if(this.inVision(p.pos)&&d<min){
+min=d;closest=p;
+}
+});
+
+if(closest){
+closest.isTargeted=true;
+this.memory=closest.pos.copy();
+this.memoryTimer=150;
+
+this.applyForce(this.seek(this.predict(closest.pos,closest.vel,factor)));
+
+if(min<7){
+preys.splice(preys.indexOf(closest),1);
+this.energy+=100;
+}
+}
+else if(this.memory && this.memoryTimer>0){
+this.applyForce(this.seek(this.memory));
+this.memoryTimer--;
+}
+}
+}
+
+// FAST
+class FastPredator extends PredatorBase{
+constructor(x,y,s,v){
+super(x,y,s,v);
+this.maxSpeed=4*this.speedGene;
+this.visionRange=110*this.visionGene;
+}
+behave(preys){
+this.hunt(preys,10);
+this.applyForce(this.wander());
+this.energy-=0.45; // nerf
+}
+draw(){
+let a=Math.atan2(this.vel.y,this.vel.x);
+ctx.save(); ctx.translate(this.pos.x,this.pos.y); ctx.rotate(a);
+ctx.beginPath();
+ctx.moveTo(10,0); ctx.lineTo(-6,5); ctx.lineTo(-6,-5); ctx.closePath();
+ctx.fillStyle="#ff4d4d"; ctx.fill();
+ctx.restore();
+
+if(DEBUG){
+ctx.strokeStyle="rgba(255,100,100,0.2)";
+ctx.beginPath();
+ctx.arc(this.pos.x,this.pos.y,this.visionRange,a-Math.PI/3,a+Math.PI/3);
+ctx.stroke();
+}
+}
+}
+
+// SMART
+class SmartPredator extends PredatorBase{
+constructor(x,y,s,v){
+super(x,y,s,v);
+this.maxSpeed=2.6*this.speedGene;
+this.visionRange=180*this.visionGene;
+}
+behave(preys){
+this.hunt(preys,6);
+this.memoryTimer+=2; // buff
+this.applyForce(this.wander());
+this.energy-=0.12; // buff
+}
+draw(){
+let a=Math.atan2(this.vel.y,this.vel.x);
+ctx.save(); ctx.translate(this.pos.x,this.pos.y); ctx.rotate(a);
+ctx.beginPath();
+ctx.moveTo(10,0); ctx.lineTo(-6,5); ctx.lineTo(-6,-5); ctx.closePath();
+ctx.fillStyle="#a855f7"; ctx.fill();
+ctx.restore();
+
+if(DEBUG){
+ctx.strokeStyle="rgba(168,85,247,0.2)";
+ctx.beginPath();
+ctx.arc(this.pos.x,this.pos.y,this.visionRange,a-Math.PI/3,a+Math.PI/3);
+ctx.stroke();
+}
+}
+}
+
+// MUTATION (bias)
+function mutateFast(p){
+return {
+speed: Math.max(0.6,Math.min(2,p.speedGene+(Math.random()*0.2))),
+vision: Math.max(0.6,Math.min(2,p.visionGene+(Math.random()*0.1-0.05)))
+};
+}
+
+function mutateSmart(p){
+return {
+speed: Math.max(0.6,Math.min(2,p.speedGene+(Math.random()*0.1-0.05))),
+vision: Math.max(0.6,Math.min(2,p.visionGene+(Math.random()*0.2)))
+};
+}
+
+// INIT
+let preys=[],fastPreds=[],smartPreds=[];
+
+for(let i=0;i<100;i++)
+preys.push(new Prey(Math.random()*canvas.width,Math.random()*canvas.height,1,1));
+
+for(let i=0;i<6;i++)
+fastPreds.push(new FastPredator(Math.random()*canvas.width,Math.random()*canvas.height,1.2,1));
+
+for(let i=0;i<4;i++)
+smartPreds.push(new SmartPredator(Math.random()*canvas.width,Math.random()*canvas.height,1,1.3));
+
+// LOOP
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#0f172a";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+// PREY
+preys.forEach(p=>{
+p.behave([...fastPreds,...smartPreds],preys);
+p.update();
+p.draw();
+
+let density=1-(preys.length/500);
+if(preys.length<500 && Math.random()<0.0015*density){
+preys.push(new Prey(p.pos.x,p.pos.y,p.speedGene,p.visionGene));
+}
+});
+
+// FAST reproduce (scale down if dominant)
+fastPreds=fastPreds.filter(pr=>{
+pr.behave(preys); pr.update(); pr.draw();
+
+if(pr.energy>0){
+let factor=1-(fastPreds.length/(smartPreds.length+1));
+if(Math.random()<0.003*factor){
+let g=mutateFast(pr);
+fastPreds.push(new FastPredator(pr.pos.x,pr.pos.y,g.speed,g.vision));
+}
+return true;
+}
+return false;
+});
+
+// SMART reproduce (boost if rare)
+smartPreds=smartPreds.filter(pr=>{
+pr.behave(preys); pr.update(); pr.draw();
+
+if(pr.energy>0){
+let factor=1-(smartPreds.length/(fastPreds.length+1));
+if(Math.random()<0.004*factor){
+let g=mutateSmart(pr);
+smartPreds.push(new SmartPredator(pr.pos.x,pr.pos.y,g.speed,g.vision));
+}
+return true;
+}
+return false;
+});
+
+// UI
+document.getElementById("preyCount").innerText=preys.length;
+document.getElementById("fastCount").innerText=fastPreds.length;
+document.getElementById("smartCount").innerText=smartPreds.length;
+
+requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Turret vs Aircraft Simulation</title>
+<style>
+    body {
+        margin: 0;
+        background: #0b0f1a;
+        overflow: hidden;
+    }
+    canvas {
+        display: block;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// =======================
+// OBJECTS
+// =======================
+
+// ✈️ Aircraft
+const aircraft = {
+    x: -100,
+    y: 100,
+    speed: 2.5
+};
+
+// 🔫 Turret
+const turret = {
+    x: canvas.width / 2,
+    y: canvas.height - 80,
+    angle: 0
+};
+
+// 💥 Bullets
+let bullets = [];
+
+// =======================
+// FUNCTIONS
+// =======================
+
+function drawAircraft() {
+    ctx.fillStyle = "cyan";
+    
+    ctx.beginPath();
+    ctx.moveTo(aircraft.x, aircraft.y);
+    ctx.lineTo(aircraft.x - 20, aircraft.y + 10);
+    ctx.lineTo(aircraft.x - 20, aircraft.y - 10);
+    ctx.closePath();
+    ctx.fill();
+}
+
+function drawTurret() {
+    // base
+    ctx.fillStyle = "gray";
+    ctx.beginPath();
+    ctx.arc(turret.x, turret.y, 20, 0, Math.PI * 2);
+    ctx.fill();
+
+    // barrel
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(turret.x, turret.y);
+    ctx.lineTo(
+        turret.x + Math.cos(turret.angle) * 50,
+        turret.y + Math.sin(turret.angle) * 50
+    );
+    ctx.stroke();
+}
+
+function updateTurret() {
+    const dx = aircraft.x - turret.x;
+    const dy = aircraft.y - turret.y;
+    turret.angle = Math.atan2(dy, dx);
+}
+
+function shoot() {
+    bullets.push({
+        x: turret.x,
+        y: turret.y,
+        vx: Math.cos(turret.angle) * 6,
+        vy: Math.sin(turret.angle) * 6
+    });
+}
+
+function updateBullets() {
+    bullets.forEach(b => {
+        b.x += b.vx;
+        b.y += b.vy;
+    });
+
+    bullets = bullets.filter(b =>
+        b.x > 0 && b.x < canvas.width &&
+        b.y > 0 && b.y < canvas.height
+    );
+}
+
+function drawBullets() {
+    ctx.strokeStyle = "yellow";
+    ctx.lineWidth = 2;
+
+    bullets.forEach(b => {
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - b.vx * 2, b.y - b.vy * 2); // trail
+        ctx.stroke();
+    });
+}
+
+function updateAircraft() {
+    aircraft.x += aircraft.speed;
+
+    if (aircraft.x > canvas.width + 100) {
+        aircraft.x = -100;
+        aircraft.y = Math.random() * (canvas.height / 2);
+    }
+}
+
+// =======================
+// MAIN LOOP
+// =======================
+
+let shootTimer = 0;
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    updateAircraft();
+    updateTurret();
+    updateBullets();
+
+    drawAircraft();
+    drawTurret();
+    drawBullets();
+
+    // auto shooting
+    shootTimer++;
+    if (shootTimer > 20) {
+        shoot();
+        shootTimer = 0;
+    }
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>

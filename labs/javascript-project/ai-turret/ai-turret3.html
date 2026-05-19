@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { margin:0; background:#0b0f1a; overflow:hidden; }
+canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+function resize(){
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+resize();
+addEventListener("resize", resize);
+
+// =====================
+// TIME SYSTEM
+// =====================
+let lastTime = performance.now();
+
+// =====================
+// CONSTANTS
+// =====================
+const POP = 10;
+const GEN_TIME = 15; // seconds
+const BULLET_SPEED = 400; // px/sec
+const FIRE_RATE = 10; // bullets/sec
+const FIRE_INTERVAL = 1 / FIRE_RATE;
+const TURN_SPEED = Math.PI / 2; // 90°/sec
+const AIRCRAFT_COUNT = 20;
+const BARREL_LENGTH = 50;
+
+// =====================
+// DNA
+// =====================
+function randDNA(){
+  return {
+    lead: 0.8 + Math.random()*0.6,
+    aimNoise: Math.random()*0.1
+  };
+}
+
+function mutate(d){
+  return {
+    lead: d.lead + (Math.random()-0.5)*0.2,
+    aimNoise: Math.max(0, d.aimNoise + (Math.random()-0.5)*0.05)
+  };
+}
+
+// =====================
+let turrets = [];
+let gen = 1;
+let timeAlive = 0;
+
+function init(){
+  turrets = [];
+  for(let i=0;i<POP;i++){
+    turrets.push({
+      dna: randDNA(),
+      score: 0,
+      shots: 0,
+      fitness: 0,
+      fireTimer: 0,
+      angle: 0
+    });
+  }
+}
+init();
+
+// =====================
+// AIRCRAFT
+// =====================
+let aircrafts = [];
+
+function spawnAircraft(){
+  let x = Math.random()*canvas.width;
+  let y = Math.random()*canvas.height;
+  let angle = Math.random()*Math.PI*2;
+
+  aircrafts.push({
+    x,y,
+    vx: Math.cos(angle)*100,
+    vy: Math.sin(angle)*100,
+    angle
+  });
+}
+
+function initAircrafts(){
+  aircrafts = [];
+  for(let i=0;i<AIRCRAFT_COUNT;i++){
+    spawnAircraft();
+  }
+}
+
+function updateAircraft(dt){
+  aircrafts.forEach(a=>{
+    a.vx += (Math.random()-0.5)*50 * dt;
+    a.vy += (Math.random()-0.5)*50 * dt;
+
+    let speed = Math.hypot(a.vx,a.vy);
+    if(speed > 100){
+      a.vx = (a.vx/speed)*100;
+      a.vy = (a.vy/speed)*100;
+    }
+
+    a.angle = Math.atan2(a.vy,a.vx);
+
+    a.x += a.vx * dt;
+    a.y += a.vy * dt;
+
+    if(a.x<0||a.x>canvas.width) a.vx*=-1;
+    if(a.y<0||a.y>canvas.height) a.vy*=-1;
+  });
+}
+
+// =====================
+// BULLET (SINGLE)
+// =====================
+let bullet = null;
+
+function shoot(t){
+  let cx = canvas.width/2;
+  let cy = canvas.height/2;
+
+  let bx = cx + Math.cos(t.angle)*BARREL_LENGTH;
+  let by = cy + Math.sin(t.angle)*BARREL_LENGTH;
+
+  bullet = {
+    x: bx,
+    y: by,
+    vx: Math.cos(t.angle)*BULLET_SPEED,
+    vy: Math.sin(t.angle)*BULLET_SPEED,
+    owner: t
+  };
+
+  t.shots++;
+}
+
+function updateBullet(dt){
+  if(!bullet) return;
+
+  bullet.x += bullet.vx * dt;
+  bullet.y += bullet.vy * dt;
+
+  for(let i=0;i<aircrafts.length;i++){
+    let a = aircrafts[i];
+
+    if(Math.hypot(bullet.x-a.x, bullet.y-a.y) < 10){
+      bullet.owner.score++;
+      bullet = null;
+
+      a.x = Math.random()*canvas.width;
+      a.y = Math.random()*canvas.height;
+      return;
+    }
+  }
+
+  if(
+    bullet.x<0||bullet.x>canvas.width||
+    bullet.y<0||bullet.y>canvas.height
+  ){
+    bullet = null;
+  }
+}
+
+// =====================
+// TURRET
+// =====================
+function updateTurrets(dt){
+  turrets.forEach((t,i)=>{
+
+    let target = aircrafts[i % aircrafts.length];
+
+    let dx = target.x - canvas.width/2;
+    let dy = target.y - canvas.height/2;
+    let dist = Math.hypot(dx,dy);
+
+    let tHit = dist / BULLET_SPEED;
+
+    let tx = target.x + target.vx*tHit*t.dna.lead;
+    let ty = target.y + target.vy*tHit*t.dna.lead;
+
+    let desired = Math.atan2(ty - canvas.height/2, tx - canvas.width/2);
+    desired += (Math.random()-0.5)*t.dna.aimNoise;
+
+    let diff = normalize(desired - t.angle);
+
+    // 🔥 90°/sec constraint
+    let maxTurn = TURN_SPEED * dt;
+    diff = Math.max(-maxTurn, Math.min(maxTurn, diff));
+
+    t.angle += diff;
+
+    // 🔫 FIRE RATE BASED
+    t.fireTimer -= dt;
+
+    if(!bullet && t.fireTimer <= 0 && Math.abs(diff) < 0.2){
+      shoot(t);
+      t.fireTimer = FIRE_INTERVAL;
+    }
+  });
+}
+
+// =====================
+// EVOLUTION
+// =====================
+function evolve(){
+  turrets.forEach(t=>{
+    t.fitness = t.score - t.shots*0.3;
+  });
+
+  turrets.sort((a,b)=>b.fitness-a.fitness);
+  let best = turrets.slice(0,4);
+
+  let newPop = [];
+  for(let i=0;i<POP;i++){
+    let parent = best[Math.floor(Math.random()*best.length)];
+    newPop.push({
+      dna: mutate(parent.dna),
+      score:0,
+      shots:0,
+      fitness:0,
+      fireTimer:0,
+      angle:0
+    });
+  }
+
+  turrets = newPop;
+  gen++;
+  timeAlive = 0;
+  initAircrafts();
+}
+
+// =====================
+// DRAW
+// =====================
+function drawAircraft(a){
+  ctx.save();
+  ctx.translate(a.x,a.y);
+  ctx.rotate(a.angle);
+
+  ctx.fillStyle="cyan";
+  ctx.beginPath();
+  ctx.moveTo(12,0);
+  ctx.lineTo(-8,5);
+  ctx.lineTo(-8,-5);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawTurret(t){
+  let x = canvas.width/2;
+  let y = canvas.height/2;
+
+  ctx.fillStyle="gray";
+  ctx.beginPath();
+  ctx.arc(x,y,20,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.strokeStyle="white";
+  ctx.lineWidth=4;
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+  ctx.lineTo(
+    x + Math.cos(t.angle)*BARREL_LENGTH,
+    y + Math.sin(t.angle)*BARREL_LENGTH
+  );
+  ctx.stroke();
+}
+
+function drawBullet(){
+  if(!bullet) return;
+
+  ctx.strokeStyle="yellow";
+  ctx.beginPath();
+  ctx.moveTo(bullet.x, bullet.y);
+  ctx.lineTo(bullet.x - bullet.vx*0.05, bullet.y - bullet.vy*0.05);
+  ctx.stroke();
+}
+
+function drawUI(){
+  let best = turrets[0] || {};
+  let avg = turrets.reduce((s,t)=>s+(t.fitness||0),0)/turrets.length;
+
+  ctx.fillStyle="white";
+  ctx.font="12px monospace";
+
+  ctx.fillText(`Gen: ${gen}`,10,20);
+  ctx.fillText(`Best fitness: ${(best.fitness||0).toFixed(2)}`,10,40);
+  ctx.fillText(`Avg fitness: ${avg.toFixed(2)}`,10,55);
+
+  ctx.fillText(`Hits:${best.score||0}`,10,80);
+  ctx.fillText(`Shots:${best.shots||0}`,10,95);
+}
+
+// =====================
+function normalize(a){
+  return Math.atan2(Math.sin(a),Math.cos(a));
+}
+
+// =====================
+function loop(now){
+  let dt = (now - lastTime)/1000;
+  lastTime = now;
+
+  timeAlive += dt;
+
+  updateAircraft(dt);
+  updateTurrets(dt);
+  updateBullet(dt);
+
+  if(timeAlive > GEN_TIME){
+    evolve();
+  }
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  aircrafts.forEach(drawAircraft);
+  drawTurret(turrets[0]);
+  drawBullet();
+  drawUI();
+
+  requestAnimationFrame(loop);
+}
+
+initAircrafts();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

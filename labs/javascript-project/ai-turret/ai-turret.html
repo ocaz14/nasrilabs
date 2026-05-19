@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { margin:0; background:#0b0f1a; overflow:hidden; }
+canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+// =====================
+// CONFIG
+// =====================
+const POP_SIZE = 12;
+const GENERATION_TIME = 600; // frames
+const BULLET_SPEED = 6;
+
+// =====================
+// DNA + POPULATION
+// =====================
+function randomDNA(){
+    return {
+        leadFactor: 0.5 + Math.random(),
+        fireDelay: 10 + Math.random()*30,
+        aimNoise: Math.random()*0.2
+    };
+}
+
+let population = [];
+let generation = 1;
+let frame = 0;
+
+function initPopulation(){
+    population = [];
+    for(let i=0;i<POP_SIZE;i++){
+        population.push({
+            dna: randomDNA(),
+            score: 0
+        });
+    }
+}
+initPopulation();
+
+// =====================
+// SIMPLE TARGET (dummy aircraft)
+// =====================
+let target = {
+    x: 100,
+    y: 100,
+    vx: 2,
+    vy: 1.2
+};
+
+function updateTarget(){
+    target.x += target.vx;
+    target.y += target.vy;
+
+    if(target.x<0||target.x>canvas.width) target.vx*=-1;
+    if(target.y<0||target.y>canvas.height) target.vy*=-1;
+}
+
+// =====================
+// BULLETS
+// =====================
+let bullets = [];
+
+function shoot(turret){
+    bullets.push({
+        x: turret.x,
+        y: turret.y,
+        vx: Math.cos(turret.angle)*BULLET_SPEED,
+        vy: Math.sin(turret.angle)*BULLET_SPEED,
+        owner: turret
+    });
+}
+
+function updateBullets(){
+    bullets.forEach(b=>{
+        b.x+=b.vx;
+        b.y+=b.vy;
+
+        let d = Math.hypot(b.x-target.x,b.y-target.y);
+        if(d<10){
+            b.owner.score += 1;
+            target.x = Math.random()*canvas.width;
+            target.y = Math.random()*canvas.height;
+        }
+    });
+
+    bullets = bullets.filter(b=>b.x>0&&b.x<canvas.width&&b.y>0&&b.y<canvas.height);
+}
+
+// =====================
+// UPDATE TURRETS
+// =====================
+function updateTurrets(){
+
+    population.forEach((p,i)=>{
+        let turret = {
+            x: canvas.width/2,
+            y: canvas.height/2
+        };
+
+        let dx = target.x - turret.x;
+        let dy = target.y - turret.y;
+
+        let dist = Math.hypot(dx,dy);
+        let t = dist / BULLET_SPEED;
+
+        // predictive aim
+        let tx = target.x + target.vx * t * p.dna.leadFactor;
+        let ty = target.y + target.vy * t * p.dna.leadFactor;
+
+        let angle = Math.atan2(ty - turret.y, tx - turret.x);
+
+        // noise
+        angle += (Math.random()-0.5)*p.dna.aimNoise;
+
+        p.angle = angle;
+
+        // shoot
+        if(frame % Math.floor(p.dna.fireDelay) === 0){
+            shoot({x:turret.x,y:turret.y,angle,score:p});
+        }
+    });
+}
+
+// =====================
+// EVOLUTION
+// =====================
+function evolve(){
+    population.sort((a,b)=>b.score-a.score);
+
+    let survivors = population.slice(0,4);
+
+    let newPop = [];
+
+    while(newPop.length < POP_SIZE){
+        let parent = survivors[Math.floor(Math.random()*survivors.length)];
+
+        newPop.push({
+            dna: mutate(parent.dna),
+            score: 0
+        });
+    }
+
+    population = newPop;
+    generation++;
+    frame = 0;
+}
+
+function mutate(dna){
+    return {
+        leadFactor: dna.leadFactor + (Math.random()-0.5)*0.2,
+        fireDelay: dna.fireDelay + (Math.random()-0.5)*5,
+        aimNoise: Math.max(0, dna.aimNoise + (Math.random()-0.5)*0.05)
+    };
+}
+
+// =====================
+// DRAW
+// =====================
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // target
+    ctx.fillStyle="cyan";
+    ctx.beginPath();
+    ctx.arc(target.x,target.y,6,0,Math.PI*2);
+    ctx.fill();
+
+    // bullets
+    ctx.strokeStyle="yellow";
+    bullets.forEach(b=>{
+        ctx.beginPath();
+        ctx.moveTo(b.x,b.y);
+        ctx.lineTo(b.x-b.vx*2,b.y-b.vy*2);
+        ctx.stroke();
+    });
+
+    ctx.fillStyle="white";
+    ctx.fillText("Gen: "+generation, 10,20);
+    ctx.fillText("Best score: "+population[0].score, 10,40);
+}
+
+// =====================
+// LOOP
+// =====================
+function loop(){
+    frame++;
+
+    updateTarget();
+    updateTurrets();
+    updateBullets();
+
+    if(frame > GENERATION_TIME){
+        evolve();
+    }
+
+    draw();
+    requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

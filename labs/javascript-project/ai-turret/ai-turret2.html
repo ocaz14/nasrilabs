@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { margin:0; background:#0b0f1a; overflow:hidden; }
+canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+// =====================
+const POP = 10;
+const GEN_TIME = 700;
+const BULLET_SPEED = 6;
+
+// =====================
+// DNA
+// =====================
+function randTurretDNA(){
+    return {
+        lead: 0.8 + Math.random()*0.6,
+        fireDelay: 10 + Math.random()*20,
+        noise: Math.random()*0.2
+    };
+}
+
+function randAircraftDNA(){
+    return {
+        evade: 0.5 + Math.random()*1.5,
+        turn: 0.02 + Math.random()*0.04
+    };
+}
+
+// =====================
+let turrets = [];
+let aircrafts = [];
+
+function init(){
+    turrets = [];
+    aircrafts = [];
+
+    for(let i=0;i<POP;i++){
+        turrets.push({dna: randTurretDNA(), score:0, cooldown:0, activeBullet:null});
+        aircrafts.push({dna: randAircraftDNA(), score:0});
+    }
+}
+init();
+
+// =====================
+let bullets = [];
+let frame = 0;
+let gen = 1;
+
+// =====================
+function resetMatch(){
+    bullets = [];
+
+    aircrafts.forEach(a=>{
+        a.x = Math.random()*canvas.width;
+        a.y = Math.random()*canvas.height;
+        a.vx = (Math.random()-0.5)*2;
+        a.vy = (Math.random()-0.5)*2;
+        a.alive = true;
+        a.timeAlive = 0;
+    });
+
+    turrets.forEach(t=>{
+        t.cooldown = 0;
+        t.activeBullet = null;
+        t.score = 0;
+    });
+}
+
+// =====================
+// TURRET UPDATE
+// =====================
+function updateTurrets(){
+
+    turrets.forEach((t,i)=>{
+
+        let turretX = canvas.width/2;
+        let turretY = canvas.height/2;
+
+        let target = aircrafts[i];
+        if(!target.alive) return;
+
+        let dx = target.x - turretX;
+        let dy = target.y - turretY;
+        let dist = Math.hypot(dx,dy);
+
+        let tHit = dist / BULLET_SPEED;
+
+        let tx = target.x + target.vx*tHit*t.dna.lead;
+        let ty = target.y + target.vy*tHit*t.dna.lead;
+
+        let angle = Math.atan2(ty - turretY, tx - turretX);
+        angle += (Math.random()-0.5)*t.dna.noise;
+
+        // 🔥 SINGLE BULLET LOGIC
+        if(!t.activeBullet){
+            t.cooldown--;
+            if(t.cooldown <= 0){
+                let b = {
+                    x: turretX,
+                    y: turretY,
+                    vx: Math.cos(angle)*BULLET_SPEED,
+                    vy: Math.sin(angle)*BULLET_SPEED,
+                    owner: t
+                };
+                bullets.push(b);
+                t.activeBullet = b;
+                t.cooldown = t.dna.fireDelay;
+            }
+        }
+    });
+}
+
+// =====================
+// AIRCRAFT UPDATE
+// =====================
+function updateAircraft(){
+    aircrafts.forEach(a=>{
+        if(!a.alive) return;
+
+        let evadeX = 0, evadeY = 0;
+
+        bullets.forEach(b=>{
+            let dx = a.x - b.x;
+            let dy = a.y - b.y;
+            let d = Math.hypot(dx,dy);
+
+            if(d < 120){
+                let tHit = d / BULLET_SPEED;
+
+                let fx = b.x + b.vx*tHit;
+                let fy = b.y + b.vy*tHit;
+
+                let ex = a.x - fx;
+                let ey = a.y - fy;
+                let mag = Math.hypot(ex,ey);
+
+                if(mag > 0){
+                    evadeX += (ex/mag) * a.dna.evade;
+                    evadeY += (ey/mag) * a.dna.evade;
+                }
+            }
+        });
+
+        let desired = Math.atan2(evadeY, evadeX);
+        let current = Math.atan2(a.vy, a.vx);
+
+        let diff = normalize(desired - current);
+        diff = Math.max(-a.dna.turn, Math.min(a.dna.turn, diff));
+
+        let angle = current + diff;
+
+        a.vx = Math.cos(angle)*2;
+        a.vy = Math.sin(angle)*2;
+
+        a.x += a.vx;
+        a.y += a.vy;
+
+        if(a.x<0)a.x=canvas.width;
+        if(a.x>canvas.width)a.x=0;
+        if(a.y<0)a.y=canvas.height;
+        if(a.y>canvas.height)a.y=0;
+
+        a.timeAlive++;
+    });
+}
+
+// =====================
+// BULLETS
+// =====================
+function updateBullets(){
+    bullets.forEach(b=>{
+        b.x+=b.vx;
+        b.y+=b.vy;
+
+        aircrafts.forEach(a=>{
+            if(!a.alive) return;
+
+            if(Math.hypot(b.x-a.x,b.y-a.y)<10){
+                a.alive = false;
+                b.owner.score += 1;
+                b.owner.activeBullet = null; // 🔥 allow next shot
+            }
+        });
+    });
+
+    bullets = bullets.filter(b=>{
+        let alive = b.x>0&&b.x<canvas.width&&b.y>0&&b.y<canvas.height;
+        if(!alive && b.owner){
+            b.owner.activeBullet = null; // 🔥 reset if miss
+        }
+        return alive;
+    });
+}
+
+// =====================
+// EVOLUTION
+// =====================
+function evolve(){
+
+    aircrafts.forEach(a=>a.score = a.timeAlive);
+
+    turrets.sort((a,b)=>b.score-a.score);
+    aircrafts.sort((a,b)=>b.score-a.score);
+
+    let bestT = turrets.slice(0,3);
+    let bestA = aircrafts.slice(0,3);
+
+    turrets = [];
+    aircrafts = [];
+
+    for(let i=0;i<POP;i++){
+        turrets.push({
+            dna: mutateT(bestT[Math.floor(Math.random()*3)].dna),
+            score:0,
+            cooldown:0,
+            activeBullet:null
+        });
+
+        aircrafts.push({
+            dna: mutateA(bestA[Math.floor(Math.random()*3)].dna),
+            score:0
+        });
+    }
+
+    gen++;
+    frame=0;
+    resetMatch();
+}
+
+function mutateT(d){
+    return {
+        lead: d.lead + (Math.random()-0.5)*0.2,
+        fireDelay: d.fireDelay + (Math.random()-0.5)*5,
+        noise: Math.max(0, d.noise + (Math.random()-0.5)*0.05)
+    };
+}
+
+function mutateA(d){
+    return {
+        evade: d.evade + (Math.random()-0.5)*0.3,
+        turn: d.turn + (Math.random()-0.5)*0.01
+    };
+}
+
+// =====================
+// DRAW + PROGRESS UI
+// =====================
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // aircraft
+    ctx.fillStyle="cyan";
+    aircrafts.forEach(a=>{
+        if(!a.alive) return;
+        ctx.beginPath();
+        ctx.arc(a.x,a.y,5,0,Math.PI*2);
+        ctx.fill();
+    });
+
+    // bullets
+    ctx.strokeStyle="yellow";
+    bullets.forEach(b=>{
+        ctx.beginPath();
+        ctx.moveTo(b.x,b.y);
+        ctx.lineTo(b.x-b.vx*2,b.y-b.vy*2);
+        ctx.stroke();
+    });
+
+    // ===== PROGRESS =====
+    let avgT = turrets.reduce((s,t)=>s+t.score,0)/turrets.length;
+    let avgA = aircrafts.reduce((s,a)=>s+a.score,0)/aircrafts.length;
+
+    ctx.fillStyle="white";
+    ctx.font="12px monospace";
+
+    ctx.fillText(`Gen: ${gen}`, 10,20);
+    ctx.fillText(`Turret best: ${turrets[0].score}`, 10,40);
+    ctx.fillText(`Turret avg: ${avgT.toFixed(2)}`, 10,55);
+
+    ctx.fillText(`Aircraft best: ${aircrafts[0].score}`, 10,80);
+    ctx.fillText(`Aircraft avg: ${avgA.toFixed(2)}`, 10,95);
+
+    // DNA insight
+    let tDNA = turrets[0].dna;
+    let aDNA = aircrafts[0].dna;
+
+    ctx.fillText(`T DNA → lead:${tDNA.lead.toFixed(2)} delay:${tDNA.fireDelay.toFixed(1)}`, 10,120);
+    ctx.fillText(`A DNA → evade:${aDNA.evade.toFixed(2)} turn:${aDNA.turn.toFixed(3)}`, 10,140);
+}
+
+// =====================
+function normalize(a){
+    return Math.atan2(Math.sin(a),Math.cos(a));
+}
+
+// =====================
+function loop(){
+    frame++;
+
+    updateTurrets();
+    updateAircraft();
+    updateBullets();
+
+    if(frame > GEN_TIME){
+        evolve();
+    }
+
+    draw();
+    requestAnimationFrame(loop);
+}
+
+resetMatch();
+loop();
+</script>
+</body>
+</html>

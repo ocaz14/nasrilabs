@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { margin:0; background:#0b0f1a; overflow:hidden; }
+canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+function resize(){
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+resize();
+addEventListener("resize", resize);
+
+let lastTime = performance.now();
+
+const BULLET_SPEED = 400;
+const FIRE_RATE = 5;
+const FIRE_INTERVAL = 1 / FIRE_RATE;
+const TURN_SPEED = Math.PI / 2;
+const AIRCRAFT_COUNT = 20;
+const BARREL_LENGTH = 40;
+const TIMEOUT = 30;
+
+// =====================
+// DNA
+// =====================
+function randomDNA(){
+  return {
+    lead: 1,
+    aimNoise: 0.05,
+    fireThreshold: 0.2,
+    learningRate: 0.5
+  };
+}
+
+function mutate(d){
+  return {
+    lead: d.lead + (Math.random()-0.5)*0.2,
+    aimNoise: Math.max(0, d.aimNoise + (Math.random()-0.5)*0.05),
+    fireThreshold: Math.max(0.05, d.fireThreshold + (Math.random()-0.5)*0.1),
+    learningRate: Math.max(0.1, d.learningRate + (Math.random()-0.5)*0.2)
+  };
+}
+
+// =====================
+let turret;
+let currentDNA;
+let bestDNA = randomDNA();
+
+let gen = 1;
+let timeAlive = 0;
+let clearedTime = null;
+
+let bullets = [];
+let aircrafts = [];
+
+let bestScore = -Infinity;
+let currentScore = 0;
+let status = "IN PROGRESS";
+
+// 🔥 NEW TRACKING
+let bestShots = Infinity;
+let bestTime = Infinity;
+
+// =====================
+function resetTurret(dna){
+  turret = {
+    x: canvas.width/2,
+    y: canvas.height/2,
+    angle: 0,
+    fireTimer: 0,
+    shots: 0,
+    kills: 0,
+    dna,
+    target: null,
+    errorMemory: 0
+  };
+}
+
+// =====================
+// AIRCRAFT
+// =====================
+function spawnAircraft(){
+  let x = Math.random()*canvas.width;
+  let y = Math.random()*canvas.height;
+  let angle = Math.random()*Math.PI*2;
+
+  aircrafts.push({
+    x,y,
+    vx: Math.cos(angle)*100,
+    vy: Math.sin(angle)*100,
+    angle,
+    alive: true
+  });
+}
+
+function initAircrafts(){
+  aircrafts = [];
+  for(let i=0;i<AIRCRAFT_COUNT;i++){
+    spawnAircraft();
+  }
+}
+
+function updateAircraft(dt){
+  aircrafts.forEach(a=>{
+    if(!a.alive) return;
+
+    a.vx += (Math.random()-0.5)*50 * dt;
+    a.vy += (Math.random()-0.5)*50 * dt;
+
+    let speed = Math.hypot(a.vx,a.vy);
+    if(speed > 100){
+      a.vx = (a.vx/speed)*100;
+      a.vy = (a.vy/speed)*100;
+    }
+
+    a.angle = Math.atan2(a.vy,a.vx);
+
+    a.x += a.vx * dt;
+    a.y += a.vy * dt;
+
+    if(a.x<0||a.x>canvas.width) a.vx*=-1;
+    if(a.y<0||a.y>canvas.height) a.vy*=-1;
+  });
+}
+
+// =====================
+// BULLETS
+// =====================
+function shoot(){
+  let bx = turret.x + Math.cos(turret.angle)*BARREL_LENGTH;
+  let by = turret.y + Math.sin(turret.angle)*BARREL_LENGTH;
+
+  bullets.push({
+    x: bx,
+    y: by,
+    vx: Math.cos(turret.angle)*BULLET_SPEED,
+    vy: Math.sin(turret.angle)*BULLET_SPEED
+  });
+
+  turret.shots++;
+}
+
+function updateBullets(dt){
+  for(let i = bullets.length - 1; i >= 0; i--){
+    let b = bullets[i];
+
+    b.x += b.vx * dt;
+    b.y += b.vy * dt;
+
+    let remove = false;
+
+    for(let j=0;j<aircrafts.length;j++){
+      let a = aircrafts[j];
+      if(!a.alive) continue;
+
+      if(Math.hypot(b.x-a.x,b.y-a.y) < 10){
+        a.alive = false;
+        turret.kills++;
+        remove = true;
+        turret.errorMemory *= 0.5;
+        break;
+      }
+    }
+
+    if(!remove){
+      turret.errorMemory += 0.02;
+    }
+
+    if(remove || b.x<0||b.x>canvas.width||b.y<0||b.y>canvas.height){
+      bullets.splice(i,1);
+    }
+  }
+}
+
+// =====================
+// TARGET (EASIEST)
+// =====================
+function chooseTarget(){
+  let best = null;
+  let bestScore = Infinity;
+
+  aircrafts.forEach(a=>{
+    if(!a.alive) return;
+
+    let dx = a.x - turret.x;
+    let dy = a.y - turret.y;
+
+    let dist = Math.hypot(dx,dy);
+    let speed = Math.hypot(a.vx,a.vy);
+    let angle = Math.atan2(dy,dx);
+    let align = Math.abs(normalize(angle - turret.angle));
+
+    let score = dist + speed*2 + align*200;
+
+    if(score < bestScore){
+      bestScore = score;
+      best = a;
+    }
+  });
+
+  return best;
+}
+
+// =====================
+// TURRET
+// =====================
+function updateTurret(dt){
+
+  turret.target = chooseTarget();
+  let target = turret.target;
+  if(!target) return;
+
+  let dx = target.x - turret.x;
+  let dy = target.y - turret.y;
+  let dist = Math.hypot(dx,dy);
+
+  let tHit = dist / BULLET_SPEED;
+
+  let correctedLead = turret.dna.lead + turret.errorMemory * turret.dna.learningRate;
+
+  let tx = target.x + target.vx*tHit*correctedLead;
+  let ty = target.y + target.vy*tHit*correctedLead;
+
+  let desired = Math.atan2(ty - turret.y, tx - turret.x);
+  desired += (Math.random()-0.5)*turret.dna.aimNoise;
+
+  let diff = normalize(desired - turret.angle);
+
+  let maxTurn = TURN_SPEED * dt;
+  diff = Math.max(-maxTurn, Math.min(maxTurn, diff));
+
+  turret.angle += diff;
+
+  turret.fireTimer -= dt;
+
+  if(turret.fireTimer <= 0 && Math.abs(diff) < turret.dna.fireThreshold){
+    shoot();
+    turret.fireTimer = FIRE_INTERVAL;
+  }
+}
+
+// =====================
+// EVOLUTION
+// =====================
+function evolve(reason){
+
+  let timeUsed = clearedTime ?? timeAlive;
+
+  currentScore =
+    turret.kills * 10
+    - turret.shots * 0.5
+    - timeUsed * 0.7;
+
+  let improved = currentScore > bestScore;
+
+  if(improved){
+    bestScore = currentScore;
+    bestDNA = currentDNA;
+
+    // 🔥 SAVE BEST METRICS
+    bestShots = turret.shots;
+    bestTime = timeUsed;
+  }
+
+  status = reason + (improved ? " | IMPROVED ✅" : " | WORSE ❌");
+
+  currentDNA = mutate(bestDNA);
+
+  gen++;
+  timeAlive = 0;
+  clearedTime = null;
+  bullets = [];
+
+  resetTurret(currentDNA);
+  initAircrafts();
+}
+
+// =====================
+function normalize(a){
+  return Math.atan2(Math.sin(a),Math.cos(a));
+}
+
+// =====================
+function draw(){
+  aircrafts.forEach(a=>{
+    if(!a.alive) return;
+    ctx.save();
+    ctx.translate(a.x,a.y);
+    ctx.rotate(a.angle);
+    ctx.fillStyle="cyan";
+    ctx.beginPath();
+    ctx.moveTo(12,0);
+    ctx.lineTo(-8,5);
+    ctx.lineTo(-8,-5);
+    ctx.fill();
+    ctx.restore();
+  });
+
+  ctx.fillStyle="gray";
+  ctx.beginPath();
+  ctx.arc(turret.x,turret.y,12,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.strokeStyle="white";
+  ctx.beginPath();
+  ctx.moveTo(turret.x,turret.y);
+  ctx.lineTo(
+    turret.x + Math.cos(turret.angle)*BARREL_LENGTH,
+    turret.y + Math.sin(turret.angle)*BARREL_LENGTH
+  );
+  ctx.stroke();
+
+  ctx.strokeStyle="yellow";
+  bullets.forEach(b=>{
+    ctx.beginPath();
+    ctx.moveTo(b.x,b.y);
+    ctx.lineTo(b.x - b.vx*0.02, b.y - b.vy*0.02);
+    ctx.stroke();
+  });
+
+  ctx.fillStyle="white";
+  ctx.font="12px monospace";
+
+  ctx.fillText(`Gen: ${gen}`,10,20);
+
+  ctx.fillText(`--- CURRENT ---`,10,40);
+  ctx.fillText(`Kills: ${turret.kills}/20`,10,55);
+  ctx.fillText(`Shots: ${turret.shots}`,10,70);
+  ctx.fillText(`Time: ${timeAlive.toFixed(2)}s`,10,85);
+
+  ctx.fillText(`--- BEST ---`,10,110);
+  ctx.fillText(`Best Shots: ${bestShots === Infinity ? "-" : bestShots}`,10,125);
+  ctx.fillText(`Best Time: ${bestTime === Infinity ? "-" : bestTime.toFixed(2)+"s"}`,10,140);
+
+  ctx.fillText(`Score: ${currentScore.toFixed(2)}`,10,165);
+  ctx.fillText(`Best Score: ${bestScore.toFixed(2)}`,10,180);
+  ctx.fillText(status,10,200);
+}
+
+// =====================
+function loop(now){
+  let dt = (now - lastTime)/1000;
+  lastTime = now;
+
+  timeAlive += dt;
+
+  updateAircraft(dt);
+  updateTurret(dt);
+  updateBullets(dt);
+
+  if(!clearedTime){
+    let alive = aircrafts.some(a=>a.alive);
+    if(!alive){
+      clearedTime = timeAlive;
+      evolve("CLEARED");
+    }
+  }
+
+  if(timeAlive > TIMEOUT){
+    evolve("TIMEOUT");
+  }
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  draw();
+
+  requestAnimationFrame(loop);
+}
+
+// =====================
+currentDNA = mutate(bestDNA);
+resetTurret(currentDNA);
+initAircrafts();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
