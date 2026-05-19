@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thinking - Nasri Labs</title>
+
+<title>Belajar Instrumentasi Industri - Nasri Labs</title>
+
 <link rel="icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-16.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon.png">
-<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Belajar instrumentasi industri mulai dari signal 4-20 mA, thermocouple, RTD, LRV dan URV, hingga dasar sistem kontrol industri.">
+
 </head>
 
 <body>
@@ -22,7 +28,6 @@
     <span>NasriLabs.com</span>
   </div>
 
-  <!-- Hamburger -->
   <div class="menu-toggle" id="menuToggle">
     ☰
   </div>
@@ -38,76 +43,115 @@
 <!-- HERO -->
 <div class="hero">
     <div class="hero-text">
-        <h1>How I Think</h1>
+        <h1>Belajar Instrumentasi Industri</h1>
         <p>
-            I approach problems as systems — breaking them into parts, 
-            building solutions that actually work, and refining them over time.
+            Memahami signal analog, sensor temperatur, 
+            transmitter, dan dasar sistem kontrol industri modern.
         </p>
     </div>
 </div>
 
-<!-- THINKING CONTENT -->
+<!-- CONTENT -->
 <div class="section">
+
+    <h2 class="section-title">⚡ Dasar Signal Analog</h2>
 
     <div class="grid">
 
-        <div class="card neu">
-            <h3>🧠 Problem First</h3>
+        <a class="card neu" href="/thinking/kenapa-menggunakan-4-20ma-bukan-0-20ma.html">
+            <h3>Kenapa Menggunakan 4-20 mA Bukan 0-20 mA?</h3>
             <p>
-                I don’t start with tools. I start with the problem.
-                Understanding the real issue is more important than choosing technology.
+                Memahami konsep live zero, fault detection, 
+                dan alasan 4-20 mA menjadi standar industri.
             </p>
-        </div>
+        </a>
 
-        <div class="card neu">
-            <h3>⚙️ System Thinking</h3>
+        <a class="card neu" href="/thinking/kenapa-signal-analog-menggunakan-ma-bukan-volt.html">
+            <h3>Kenapa Signal Analog Menggunakan mA Bukan Volt?</h3>
             <p>
-                Every solution is a system:
-                Input → Process → Output → Feedback.
-                I design with flow, not just features.
+                Pelajari kenapa current signal lebih tahan noise 
+                dibanding voltage signal pada lingkungan industri.
             </p>
-        </div>
+        </a>
 
-        <div class="card neu">
-            <h3>🏗️ Build for Reality</h3>
+        <a class="card neu" href="/thinking/apa-itu-lrv-dan-urv.html">
+            <h3>Apa Itu LRV dan URV?</h3>
             <p>
-                A solution must work in real conditions.
-                Reliability and simplicity always come before complexity.
+                Memahami scaling transmitter, range, span, 
+                dan hubungan LRV/URV dengan signal 4-20 mA.
             </p>
-        </div>
-
-        <div class="card neu">
-            <h3>🔄 Iterate Fast</h3>
-            <p>
-                I improve systems through testing and feedback.
-                Small iterations lead to stable and scalable results.
-            </p>
-        </div>
-
-        <div class="card neu">
-            <h3>🧩 Simplify Complexity</h3>
-            <p>
-                Complex problems are broken into smaller parts.
-                Simpler systems are easier to maintain and improve.
-            </p>
-        </div>
-
-        <div class="card neu">
-            <h3>📊 Measure & Improve</h3>
-            <p>
-                If it can’t be measured, it can’t be improved.
-                I rely on data and results, not assumptions.
-            </p>
-        </div>
+        </a>
 
     </div>
 
 </div>
 
+<div class="section">
+
+    <h2 class="section-title">🌡️ Sensor Temperatur</h2>
+
+    <div class="grid">
+
+        <a class="card neu" href="/thinking/apa-itu-thermocouple.html">
+            <h3>Apa Itu Thermocouple?</h3>
+            <p>
+                Cara kerja thermocouple menggunakan efek Seebeck 
+                serta jenis-jenis thermocouple industri.
+            </p>
+        </a>
+
+        <a class="card neu" href="/thinking/apa-itu-rtd.html">
+            <h3>Apa Itu Sensor RTD?</h3>
+            <p>
+                Pelajari RTD, PT100, PT1000, wiring RTD, 
+                dan perbedaannya dengan thermocouple.
+            </p>
+        </a>
+
+        <a class="card neu" href="/thinking/thermocouple-reading-problem.html">
+            <h3>Thermocouple Harusnya 200°C Tapi Terbaca 70°C</h3>
+            <p>
+                Penyebab umum pembacaan thermocouple salah 
+                dan cara troubleshooting di lapangan.
+            </p>
+        </a>
+
+    </div>
+
+</div>
+
+<!-- <div class="section">
+
+    <h2 class="section-title">🏭 Sistem Industri</h2>
+
+    <div class="grid">
+
+        <a class="card neu" href="/thinking/apa-itu-slc-notifier.html">
+            <h3>Apa Itu SLC Pada Notifier?</h3>
+            <p>
+                Memahami Signaling Line Circuit pada 
+                sistem fire alarm addressable.
+            </p>
+        </a>
+
+        <a class="card neu" href="/thinking/apa-itu-itm-ac-central.html">
+            <h3>Apa Itu ITM Pada AC Central?</h3>
+            <p>
+                Penjelasan fungsi ITM dan penggunaannya 
+                pada sistem HVAC dan AC central.
+            </p>
+        </a>
+
+    </div>
+
+</div> -->
+
 <!-- CTA -->
 <div class="cta">
-    <h2>Want to solve a complex problem?</h2>
-    <button class="btn neu">Let’s build something</button>
+    <h2>Want to understand industrial systems better?</h2>
+    <button class="btn neu">
+        Explore More Topics
+    </button>
 </div>
 
 <!-- FOOTER -->
@@ -118,19 +162,18 @@
 </div>
 
 <script>
-  const menuToggle = document.getElementById("menuToggle");
-  const navLinks = document.getElementById("navLinks");
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
 
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
+menuToggle.addEventListener("click", () => {
+navLinks.classList.toggle("active");
+});
 
-  // klik luar = close
-  document.addEventListener("click", (e) => {
-    if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-      navLinks.classList.remove("active");
-    }
-  });
+document.addEventListener("click", (e) => {
+if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+navLinks.classList.remove("active");
+}
+});
 </script>
 
 </body>
