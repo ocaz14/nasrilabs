@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kenapa Menggunakan Signal 4-20 mA Bukan 0-20 mA?</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Kenapa industri menggunakan signal 4-20 mA dibanding 0-20 mA? Pelajari alasan live zero, deteksi kabel putus, noise immunity, dan standar instrumentasi industri.">
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{
+"@type":"Question",
+"name":"Kenapa signal 4-20 mA lebih umum dibanding 0-20 mA?",
+"acceptedAnswer":{
+"@type":"Answer",
+"text":"Karena 4-20 mA memiliki live zero sehingga lebih mudah mendeteksi kabel putus dan fault pada sistem instrumentasi."
+}
+},
+{
+"@type":"Question",
+"name":"Apa itu live zero pada 4-20 mA?",
+"acceptedAnswer":{
+"@type":"Answer",
+"text":"Live zero adalah kondisi dimana nilai minimum proses direpresentasikan oleh 4 mA, bukan 0 mA."
+}
+},
+{
+"@type":"Question",
+"name":"Apa yang terjadi jika signal 0 mA?",
+"acceptedAnswer":{
+"@type":"Answer",
+"text":"Biasanya 0 mA menandakan kabel putus, power hilang, atau transmitter fault."
+}
+},
+{
+"@type":"Question",
+"name":"Apakah 0-20 mA masih digunakan?",
+"acceptedAnswer":{
+"@type":"Answer",
+"text":"Masih ada pada beberapa aplikasi lama, tetapi 4-20 mA jauh lebih umum digunakan di industri modern."
+}
+}
+]
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<div class="hero">
+<div class="hero-text">
+<h1>Kenapa Menggunakan Signal 4-20 mA Bukan 0-20 mA?</h1>
+<p>Alasan utama standar industri menggunakan 4-20 mA pada sistem instrumentasi dan kontrol</p>
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>⚡ Jawaban Singkat</h2>
+
+<p>
+Signal <strong>4-20 mA</strong> digunakan karena memiliki fitur <strong>live zero</strong>, 
+sehingga sistem dapat membedakan antara:
+</p>
+
+<ul>
+<li>Nilai proses minimum → 4 mA</li>
+<li>Kabel putus atau transmitter mati → 0 mA</li>
+</ul>
+
+<p>
+Jika menggunakan 0-20 mA, maka sistem sulit mengetahui apakah:
+</p>
+
+<ul>
+<li>proses benar-benar 0%</li>
+<li>atau kabel mengalami fault</li>
+</ul>
+
+<h2>🧠 Apa Itu Live Zero?</h2>
+
+<p>
+Pada signal 4-20 mA:
+</p>
+
+<ul>
+<li>4 mA = nilai minimum proses</li>
+<li>20 mA = nilai maksimum proses</li>
+</ul>
+
+<p>
+Contoh:
+</p>
+
+<ul>
+<li>0 bar = 4 mA</li>
+<li>10 bar = 20 mA</li>
+</ul>
+
+<p>
+Artinya transmitter tetap mengirim arus meskipun nilai proses berada di titik minimum.
+Inilah yang disebut <strong>live zero</strong>.
+</p>
+
+<h2>🔍 Kenapa Tidak Menggunakan 0-20 mA?</h2>
+
+<p>
+Jika menggunakan 0-20 mA:
+</p>
+
+<ul>
+<li>0 mA bisa berarti proses 0%</li>
+<li>0 mA juga bisa berarti kabel putus</li>
+<li>0 mA bisa berarti transmitter mati</li>
+<li>0 mA bisa berarti power supply hilang</li>
+</ul>
+
+<p>
+Akibatnya sistem kontrol tidak bisa membedakan kondisi normal dan kondisi fault.
+</p>
+
+<h2>⚙️ Keuntungan Signal 4-20 mA</h2>
+
+<h3>✅ 1. Mudah Deteksi Kabel Putus</h3>
+
+<p>
+Jika PLC membaca 0 mA atau sangat rendah, operator langsung tahu ada masalah pada loop instrument.
+</p>
+
+<h3>✅ 2. Lebih Andal di Industri</h3>
+
+<p>
+Current signal lebih tahan terhadap noise dibanding voltage signal seperti 0-10V.
+Karena itu 4-20 mA sangat populer pada:
+</p>
+
+<ul>
+<li>plant industri</li>
+<li>oil & gas</li>
+<li>power plant</li>
+<li>water treatment</li>
+<li>factory automation</li>
+</ul>
+
+<h3>✅ 3. Bisa Supply Power Sekaligus</h3>
+
+<p>
+Banyak transmitter 2-wire menggunakan loop 4-20 mA untuk:
+</p>
+
+<ul>
+<li>mengirim signal</li>
+<li>sekaligus menerima power</li>
+</ul>
+
+<p>
+Karena masih ada arus minimum 4 mA, transmitter tetap dapat beroperasi.
+</p>
+
+<h2>📈 Contoh Scaling 4-20 mA</h2>
+
+<p>
+Misalnya pressure transmitter 0-10 bar:
+</p>
+
+<ul>
+<li>4 mA = 0 bar</li>
+<li>12 mA = 5 bar</li>
+<li>20 mA = 10 bar</li>
+</ul>
+
+<h2>🏭 Kenapa Menjadi Standar Industri?</h2>
+
+<p>
+4-20 mA menjadi standar karena:
+</p>
+
+<ul>
+<li>lebih aman untuk troubleshooting</li>
+<li>mudah integrasi dengan PLC/DCS</li>
+<li>andal untuk jarak kabel panjang</li>
+<li>lebih tahan interference</li>
+<li>memiliki deteksi fault alami</li>
+</ul>
+
+<p>
+Karena alasan tersebut, hampir semua instrument industri modern mendukung signal 4-20 mA.
+</p>
+
+<h2>🔗 Artikel Terkait</h2>
+
+<p class="internal-link">
+<a class="btn neu" href="/thinking/apa-itu-slc-notifier.html">apa itu SLC</a>
+<a class="btn neu" href="/thinking/thermocouple-reading-problem.html">masalah thermocouple</a>
+<a class="btn neu" href="/thinking/apa-itu-itm-ac-central.html">apa itu ITM</a>
+</p>
+
+<h2>🔁 Jelajahi</h2>
+
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/index.html">semua kalkulator</a>
+<a class="btn neu" href="/works.html">engineering works</a>
+<a class="btn neu" href="/thinking.html">thinking</a>
+</p>
+
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ</h2>
+
+<h3>Kenapa signal 4-20 mA lebih umum dibanding 0-20 mA?</h3>
+<p>
+Karena 4-20 mA memiliki live zero sehingga lebih mudah mendeteksi kabel putus dan fault pada sistem instrumentasi.
+</p>
+
+<h3>Apa itu live zero pada 4-20 mA?</h3>
+<p>
+Live zero adalah kondisi dimana nilai minimum proses direpresentasikan oleh 4 mA, bukan 0 mA.
+</p>
+
+<h3>Apa yang terjadi jika signal 0 mA?</h3>
+<p>
+Biasanya 0 mA menandakan kabel putus, power hilang, atau transmitter fault.
+</p>
+
+<h3>Apakah 0-20 mA masih digunakan?</h3>
+<p>
+Masih ada pada beberapa aplikasi lama, tetapi 4-20 mA jauh lebih umum digunakan di industri modern.
+</p>
+
+</div>
+</div>
+
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+navLinks.classList.remove("active");
+}
+});
+</script>
+
+</body>
+</html>

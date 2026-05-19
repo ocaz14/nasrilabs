@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Apa Itu LRV dan URV Pada Signal Analog?</title>
+
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/style.css">
+
+<meta name="description" content="Pelajari apa itu LRV dan URV pada signal analog 4-20 mA. Memahami Lower Range Value dan Upper Range Value dalam instrumentasi industri.">
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{
+"@type":"Question",
+"name":"Apa itu LRV?",
+"acceptedAnswer":{
+"@type":"Answer",
+"text":"LRV atau Lower Range Value adalah nilai minimum pengukuran pada transmitter yang direpresentasikan sebagai 4 mA."
+}
+},
+{
+"@type":"Question",
+"name":"Apa itu URV?",
+"acceptedAnswer":{
+"@type":"Answer",
+"text":"URV atau Upper Range Value adalah nilai maksimum pengukuran pada transmitter yang direpresentasikan sebagai 20 mA."
+}
+},
+{
+"@type":"Question",
+"name":"Apa hubungan LRV dan URV dengan 4-20 mA?",
+"acceptedAnswer":{
+"@type":"Answer",
+"text":"LRV mewakili 4 mA dan URV mewakili 20 mA pada scaling signal analog."
+}
+},
+{
+"@type":"Question",
+"name":"Apa bedanya range dan span?",
+"acceptedAnswer":{
+"@type":"Answer",
+"text":"Range adalah batas minimum dan maksimum pengukuran, sedangkan span adalah selisih antara URV dan LRV."
+}
+}
+]
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="navbar">
+  <div class="logo">
+    <img src="/logo.png" alt="NasriLabs Logo">
+    <span>NasriLabs.com</span>
+  </div>
+
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/index.html">Home</a>
+    <a href="/labs.html">Labs</a>
+    <a href="/works.html">Works</a>
+    <a href="/thinking.html">Thinking</a>
+  </div>
+</div>
+
+<div class="hero">
+<div class="hero-text">
+<h1>Apa Itu LRV dan URV Pada Signal Analog?</h1>
+<p>Memahami Lower Range Value dan Upper Range Value pada instrumentasi 4-20 mA</p>
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>⚡ Jawaban Singkat</h2>
+
+<p>
+Pada signal analog 4-20 mA:
+</p>
+
+<ul>
+<li><strong>LRV (Lower Range Value)</strong> = nilai minimum pengukuran → 4 mA</li>
+<li><strong>URV (Upper Range Value)</strong> = nilai maksimum pengukuran → 20 mA</li>
+</ul>
+
+<p>
+LRV dan URV digunakan untuk menentukan scaling transmitter.
+</p>
+
+<h2>🧠 Apa Itu LRV?</h2>
+
+<p>
+LRV adalah singkatan dari:
+</p>
+
+<p>
+<strong>Lower Range Value</strong>
+</p>
+
+<p>
+Artinya:
+</p>
+
+<p>
+nilai proses paling rendah yang akan diukur transmitter.
+</p>
+
+<p>
+Pada sistem 4-20 mA:
+</p>
+
+<p>
+<strong>LRV selalu dikaitkan dengan 4 mA</strong>
+</p>
+
+<h3>📏 Contoh</h3>
+
+<p>
+Pressure transmitter:
+</p>
+
+<ul>
+<li>LRV = 0 bar</li>
+<li>maka 0 bar = 4 mA</li>
+</ul>
+
+<h2>⚙️ Apa Itu URV?</h2>
+
+<p>
+URV adalah singkatan dari:
+</p>
+
+<p>
+<strong>Upper Range Value</strong>
+</p>
+
+<p>
+Artinya:
+</p>
+
+<p>
+nilai proses paling tinggi yang akan diukur transmitter.
+</p>
+
+<p>
+Pada sistem 4-20 mA:
+</p>
+
+<p>
+<strong>URV selalu dikaitkan dengan 20 mA</strong>
+</p>
+
+<h3>📏 Contoh</h3>
+
+<p>
+Pressure transmitter:
+</p>
+
+<ul>
+<li>URV = 10 bar</li>
+<li>maka 10 bar = 20 mA</li>
+</ul>
+
+<h2>📈 Contoh Scaling Lengkap</h2>
+
+<p>
+Misalnya transmitter pressure:
+</p>
+
+<ul>
+<li>LRV = 0 bar</li>
+<li>URV = 10 bar</li>
+</ul>
+
+<p>
+Maka scaling menjadi:
+</p>
+
+<ul>
+<li>0 bar = 4 mA</li>
+<li>5 bar = 12 mA</li>
+<li>10 bar = 20 mA</li>
+</ul>
+
+<h2>🔍 Apa Itu Span?</h2>
+
+<p>
+Span adalah selisih antara:
+</p>
+
+<p>
+<strong>URV − LRV</strong>
+</p>
+
+<h3>📏 Contoh</h3>
+
+<ul>
+<li>LRV = 0 bar</li>
+<li>URV = 10 bar</li>
+</ul>
+
+<p>
+Maka:
+</p>
+
+<p>
+<strong>Span = 10 bar</strong>
+</p>
+
+<h2>⚡ Kenapa LRV dan URV Penting?</h2>
+
+<p>
+LRV dan URV digunakan untuk:
+</p>
+
+<ul>
+<li>scaling PLC</li>
+<li>kalibrasi transmitter</li>
+<li>konfigurasi DCS</li>
+<li>display HMI</li>
+<li>alarm process</li>
+</ul>
+
+<p>
+Jika setting LRV dan URV salah, maka pembacaan process juga akan salah.
+</p>
+
+<h2>🏭 Contoh di Industri</h2>
+
+<h3>Pressure Transmitter</h3>
+
+<ul>
+<li>LRV = 0 bar</li>
+<li>URV = 16 bar</li>
+</ul>
+
+<h3>Level Transmitter</h3>
+
+<ul>
+<li>LRV = 0 meter</li>
+<li>URV = 5 meter</li>
+</ul>
+
+<h3>Temperature Transmitter</h3>
+
+<ul>
+<li>LRV = 0°C</li>
+<li>URV = 200°C</li>
+</ul>
+
+<h2>🔗 Artikel Terkait</h2>
+
+<p class="internal-link">
+<a class="btn neu" href="/thinking/kenapa-menggunakan-4-20ma-bukan-0-20ma.html">4-20 mA vs 0-20 mA</a>
+<a class="btn neu" href="/thinking/kenapa-signal-analog-menggunakan-ma-bukan-volt.html">mA vs Volt</a>
+<a class="btn neu" href="/thinking/thermocouple-reading-problem.html">masalah thermocouple</a>
+</p>
+
+<h2>🔁 Jelajahi</h2>
+
+<p class="internal-link">
+<a class="btn neu" href="/labs/calc/index.html">semua kalkulator</a>
+<a class="btn neu" href="/works.html">engineering works</a>
+<a class="btn neu" href="/thinking.html">thinking</a>
+</p>
+
+</div>
+</div>
+
+<div class="section">
+<div class="page">
+
+<h2>❓ FAQ</h2>
+
+<h3>Apa itu LRV?</h3>
+<p>
+LRV atau Lower Range Value adalah nilai minimum pengukuran pada transmitter yang direpresentasikan sebagai 4 mA.
+</p>
+
+<h3>Apa itu URV?</h3>
+<p>
+URV atau Upper Range Value adalah nilai maksimum pengukuran pada transmitter yang direpresentasikan sebagai 20 mA.
+</p>
+
+<h3>Apa hubungan LRV dan URV dengan 4-20 mA?</h3>
+<p>
+LRV mewakili 4 mA dan URV mewakili 20 mA pada scaling signal analog.
+</p>
+
+<h3>Apa bedanya range dan span?</h3>
+<p>
+Range adalah batas minimum dan maksimum pengukuran, sedangkan span adalah selisih antara URV dan LRV.
+</p>
+
+</div>
+</div>
+
+<div class="footer">© 2026 Nasri Labs</div>
+
+</div>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+navLinks.classList.toggle("active");
+});
+
+document.addEventListener("click", (e) => {
+if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+navLinks.classList.remove("active");
+}
+});
+</script>
+
+</body>
+</html>
