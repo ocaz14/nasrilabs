@@ -11,77 +11,128 @@
       href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/project/todolist/lists-style.css">
-
-    <script
-      data-ad-client="ca-pub-4121909078887048"
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-    ></script>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4121909078887048"
-    crossorigin="anonymous"> 
-    </script>
-    <script async src="https://cse.google.com/cse.js?cx=17656d558951068bd"></script>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      .neu{
+        box-shadow: 2px 2px 8px #a3b1c6,
+                    -2px -2px 8px #ffffff;
+      }
+      .neu:hover{
+        box-shadow: 3px 3px 10px #a3b1c6,
+                    -3px -3px 10px #ffffff;
+      }
+      .todo-text{
+        text-align: start;
+      }
+    </style>
     
   </head>
-  <body>
-    
-    <div class="background">
-      <!-- <img src="/img/s.png" alt=""> -->    
-      <div class="back-color"></div>
+<body>
+
+<div class="container">
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="/logo.png" alt="NasriLabs Logo">
+            <span>NasriLabs.com</span>
+        </div>
+
+        <div class="menu-toggle" id="menuToggle">☰</div>
+
+        <div class="nav-links" id="navLinks">
+            <a href="/index.html">Home</a>
+            <a href="/labs.html" class="active">Labs</a>
+            <a href="/works.html">Works</a>
+            <a href="/thinking.html">Thinking</a>
+        </div>
     </div>
-    <div class="to-do-list">
-      <div class="menu">
-        <a href="/index"><img src="/img/logo.svg" alt=""></a>  
-        <a href="/project"><div class="project-nav">Our Projects</div> </a>  
-      </div>
-      <div class="bagian1">
-        <div class="input-cont">
-          <div id="UTC" class="UTC">UTC</div>
-          <div class="header">
-            <h2>DAILIST</h2>
-          </div>
-          <div class="input-todolist">
-            <input
-              class="input"
-              id="input"
-              type="text"
-              placeholder="Write your DAILY here"
-            />
-            <div class="time-container">
-              <input class="time" id="hour" type="number" placeholder="hh" />
-              <input class="time" id="minute" type="number" placeholder="mm" />
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Daily Task Planner</h1>
+            <p>
+                Kelola aktivitas harian, atur waktu pengerjaan,
+                dan tandai tugas yang telah selesai.
+            </p>
+        </div>
+    </div>
+
+    <!-- INPUT -->
+    <div class="section">
+
+        <div class="page">
+
+            <h2>Add New Daily</h2>
+
+            <p id="UTC" class="utc-clock">00 : 00 : 00</p>
+
+            <div class="todo-input">
+
+                <input
+                    id="input"
+                    type="text"
+                    placeholder="Write your daily task..."
+                >
+
+                <div class="todo-time">
+
+                    <input
+                        id="hour"
+                        type="number"
+                        placeholder="HH"
+                    >
+
+                    <span>:</span>
+
+                    <input
+                        id="minute"
+                        type="number"
+                        placeholder="MM"
+                    >
+
+                </div>
+
+                <button
+                    class="btn neu"
+                    onclick="submitTodolist()"
+                >
+                    Add Task
+                </button>
+
             </div>
-          </div>
-          <div class="submit">
-            <button type="submit" onclick="submitTodolist()">SET</button>
-          </div>
+
         </div>
 
-        <div class="ads">
-          <div class="top-ads">
-            <!-- melekmatika_Display -->
-            <ins class="adsbygoogle"
-                style="display: flex; justify-content: center; align-items: center"
-                data-ad-client="ca-pub-4121909078887048"
-                data-ad-slot="1435845377"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-          </div>
-        </div>
-      </div>
-
-      <div class="bagian2">
-        <h5>Your Daily LIST</h5>
-        <p id="test"></p>
-        <div id="display-todolist" class="display-todolist"></div>
-      </div>
     </div>
-  </body>
+
+    <!-- LIST -->
+
+    <div class="section">
+
+        <div class="page">
+
+            <h2>Your Daily List</h2>
+
+            <p id="test"></p>
+
+            <div
+                id="display-todolist"
+                class="todo-list">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 NasriLabs
+    </div>
+
+</div>
+
+</body>
   <script>
     var todolist = JSON.parse(localStorage.getItem("daily-todolist"));
     var daybefore = JSON.parse(localStorage.getItem("daybefore"));
@@ -205,23 +256,46 @@
           var timerCol = "normal";
         }
 
-        list[i] =
-          "<div class='display-child'><div class='time-display " +
-          timerCol +
-          " '>" +
-          time_disp +
-          "</div><div id='list' class='list'><p>" +
-          dailytask +
-          "</p></div>" +
-          "<div class='nav' style='display: " +
-          nav_display +
-          "'> " +
-          "<div class='done' onclick='listDone(" +
-          i +
-          ")'><p>o</p></div>" +
-          "<div class='delete' onclick='listHapus(" +
-          i +
-          ")'><p>x</p></div></div></div>";
+list[i] =
+`
+<div class="card neu todo-card">
+
+    <div class="todo-time ${timerCol}">
+        ${time_disp}
+    </div>
+
+    <div class="todo-text">
+        ${dailytask}
+    </div>
+
+    <div class="todo-action" style="display:${nav_display}">
+        <button class="btn btn-done" onclick="listDone(${i})">✓</button>
+
+        <button class="btn btn-delete" onclick="listHapus(${i})">✕</button>
+    </div>
+
+</div>
+`;
+
+        // list[i] =
+        //   "<div class='display-child'><div class='time-display " +
+        //   timerCol +
+        //   " '>" +
+        //   time_disp +
+        //   "</div><div id='list' class='list'><p>" +
+        //   dailytask +
+        //   "</p></div>" +
+        //   "<div class='nav' style='display: " +
+        //   nav_display +
+        //   "'> " +
+        //   "<div class='done' onclick='listDone(" +
+        //   i +
+        //   ")'><p>o</p></div>" +
+        //   "<div class='delete' onclick='listHapus(" +
+        //   i +
+        //   ")'><p>x</p></div></div></div>";
+
+
       }
       var listReverse = list.reverse();
       document.getElementById("display-todolist").innerHTML = listReverse.join(
