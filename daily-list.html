@@ -175,6 +175,11 @@
       display_ss = make2dgt(ss);
       utc.innerText = display_hh + " : " + display_mm + " : " + display_ss;
 
+      // Cek reminder hanya setiap awal menit
+      if (ss === 0) {
+          checkReminder();
+      }
+
       //reset list
       // if (hh === 10 && mm === 15 && ss === 0) {
       //   activeAll();
@@ -197,6 +202,24 @@
     }
 
     displayTodolist();
+
+// ================================
+// Notification Permission
+// ================================
+
+if ("Notification" in window) {
+
+    if (Notification.permission === "default") {
+
+        Notification.requestPermission().then(permission => {
+
+            console.log("Notification:", permission);
+
+        });
+
+    }
+
+}
     // if (donelist === null) {
     //   donelist = [];
     //   updateStorage();
@@ -226,6 +249,7 @@
           inputArray[1] = hour;
           inputArray[2] = minute;
           inputArray[3] = "flex";
+          inputArray[4] = [];         // Notification history
           todolist[todolist.length] = inputArray;
           document.getElementById("input").value = "";
           updateStorage();
@@ -343,11 +367,19 @@ list[i] =
     }
 
     function activeAll() {
-      for (var i = 0; i < todolist.length; i++) {
-        todolist[i][3] = "flex";
-      }
-      updateStorage();
+
+        for (var i = 0; i < todolist.length; i++) {
+
+            todolist[i][3] = "flex";
+
+            todolist[i][4] = [];
+
+        }
+
+        updateStorage();
+
     }
+
     function sortFunction(a, b) {
       //numerical order
       if (b[1] != a[1]) {
@@ -365,6 +397,55 @@ list[i] =
       //     return a[1] > b[1] ? -1 : 1;
       //   }
     }
+
+    function sendNotification(title, body) {
+        if (!("Notification" in window)) return;
+        if (Notification.permission !== "granted") return;
+        new Notification(title, {
+            body: body,
+            icon: "/img/icon-192.png",
+            badge: "/img/icon-192.png"
+        });
+
+    }
+
+    function checkReminder() {
+        for (let i = 0; i < todolist.length; i++) {
+            if (todolist[i][3] === "none") continue;
+            let task = todolist[i][0];
+            let hour = Number(todolist[i][1]);
+            let minute = Number(todolist[i][2]);
+            let targetMinute = hour * 60 + minute;
+            let currentMinute = hh * 60 + mm;
+            let diff = targetMinute - currentMinute;
+            // reminder 10 menit
+            if (diff === 10 && !todolist[i][4].includes("10")) {
+                sendNotification(
+                    "⏰ Upcoming Task",
+                    task + " starts in 10 minutes."
+                );
+                todolist[i][4].push("10");
+            }
+            // reminder 5 menit
+            if (diff === 5 && !todolist[i][4].includes("5")) {
+                sendNotification(
+                    "⏰ Upcoming Task",
+                    task + " starts in 5 minutes."
+                );
+                todolist[i][4].push("5");
+            }
+            // saat waktunya
+            if (diff === 0 && !todolist[i][4].includes("0")) {
+                sendNotification(
+                    "🚀 Time to Start",
+                    task
+                );
+                todolist[i][4].push("0");
+            }
+        }
+        updateStorage();
+    } 
+
     function make2dgt(n) {
       if (n < 10) {
         return (display_n = "0" + n);
