@@ -126,6 +126,8 @@
 
     </div>
 
+    <button onclick="testNotification()">Test Notification</button>
+
     <div class="footer">
         © 2026 NasriLabs
     </div>
@@ -453,6 +455,13 @@ list[i] =
         return (display_n = n);
       }
     }
+
+    function testNotification(){
+        sendNotification(
+            "Test",
+            "Notification Works!"
+        );
+    }
   </script>
-  <script src="/js/meta.js"></script>
+
 </html>
