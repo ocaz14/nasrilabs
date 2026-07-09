@@ -146,6 +146,7 @@
     var ss = d.getSeconds();
     var dd = d.getDate();//day in month
     //var dd = d.getDay();//day in week
+    let lastCheckedMinute = -1;
 
     var dailyrefresh;
     var test = document.getElementById("test");        
@@ -160,10 +161,20 @@
     var timer = setInterval(function () {
       ss = ss + 1;
 
-      if (ss == 60) {
-        ss = 0;
-        mm += 1;
-      }
+var now = new Date();
+
+hh = now.getHours();
+mm = now.getMinutes();
+ss = now.getSeconds();
+
+if (mm !== lastCheckedMinute) {
+
+    lastCheckedMinute = mm;
+
+    checkReminder();
+
+}
+
       if (mm == 60) {
         mm = 0;
         hh += 1;
